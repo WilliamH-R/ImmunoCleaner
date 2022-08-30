@@ -1,10 +1,10 @@
-Package: mypkgname
-Title: What the Package Does (One Line, Title Case)
+Package: TCRSequencesFunctions
+Title: TCR-Sequences Functions (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("William", "Hagedorn-Rasmussen", , "s194545@dtu.dk", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: The package is a collection of functions which clean and handle a large database of TCR sequences.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
