@@ -12,8 +12,8 @@ RoxygenNote: 7.2.1
 Imports: 
     usethis,
     testthat (>= 3.0.0),
-    magrittr
-Suggests: 
+    magrittr,
+    tidyverse,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
