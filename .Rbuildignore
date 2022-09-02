@@ -4,3 +4,4 @@ dev/load.R
 ^LICENSE\.md$
 ^doc$
 ^Meta$
+^data-raw$

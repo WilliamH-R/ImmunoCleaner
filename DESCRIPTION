@@ -13,7 +13,11 @@ Imports:
     usethis,
     testthat (>= 3.0.0),
     magrittr,
-    tidyverse,
     knitr,
-    rmarkdown
+    rmarkdown,
+    stringr,
+    purrr
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+LazyData: true
