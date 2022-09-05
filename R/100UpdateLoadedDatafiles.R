@@ -1,4 +1,4 @@
-#library("tidyverse")
+library("tidyverse")
 
 list.files("data-raw", full.names = TRUE) %>%
   stringr::str_extract(".+\\.R") %>% 
