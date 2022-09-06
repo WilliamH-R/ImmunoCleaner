@@ -20,7 +20,7 @@ A data frame with 77854 rows and 118 variables:
 vdj_v1_hs_aggregated_donor2_binarized_matrix
 }
 \description{
-A dataset containing roughly 80 000 TCR alpha- and \b sequences for
+A dataset containing roughly 80 000 TCR alpha- and beta sequences for
 Donor 2 along with different coding regions.
 }
 \keyword{datasets}

@@ -1,5 +1,4 @@
-EnsureOneAlphaBetaPair <- function(data){ 
+RemoveBinders <- function(data){ 
   data %>% 
-    select(-matches("_binder")) %>% 
-    View()
+    select(-matches("_binder"))
 }
