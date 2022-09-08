@@ -19,9 +19,9 @@ incomplete/wrong TRA:TRB pairs and removing all the binding assessments.
 The following functions are run:
 \itemize{
 \item 210Clean_EnsureOneAlphaBetaPair.R
-*220Clean_SplitTCRSequences.R
+\item 220Clean_SplitTCRSequences.R
 \item 230Clean_RemovePrefix.R
-*240Clean_RemoveBinders.R
+\item 240Clean_RemoveBinders.R
 }
 }
 \examples{

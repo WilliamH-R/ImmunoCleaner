@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param data 
+#' @inheritParams 
 #'
 #' @return The input data set, but only observations whith exactly one TRA and TRB
 #' @export
