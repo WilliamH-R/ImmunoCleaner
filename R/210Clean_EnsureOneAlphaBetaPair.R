@@ -1,8 +1,11 @@
 #' Title
 #'
-#' @inheritParams 
+#' @inheritParams RunAllClean
 #'
 #' @return The input data set, but only observations whith exactly one TRA and TRB
+#' 
+#' @family Cleaning functions
+#' 
 #' @export
 #'
 EnsureOneAlphaBetaPair <- function(data){ 

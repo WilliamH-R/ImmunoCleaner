@@ -7,7 +7,7 @@
 EnsureOneAlphaBetaPair(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{is a data structure which need cleaning}
 }
 \value{
 The input data set, but only observations whith exactly one TRA and TRB
@@ -15,3 +15,8 @@ The input data set, but only observations whith exactly one TRA and TRB
 \description{
 Title
 }
+\seealso{
+Other Cleaning functions: 
+\code{\link{RunAllClean}()}
+}
+\concept{Cleaning functions}

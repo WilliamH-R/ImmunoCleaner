@@ -7,14 +7,19 @@
 RunAllClean(data)
 }
 \arguments{
-\item{data}{is a data structure which need cleaning according to what
-the other functions do.}
+\item{data}{is a data structure which need cleaning}
 }
 \value{
-a cleaned data structure
+A cleaned data structure, of the same type as the input.
+The output has the following differences:
+\itemize{
+\item Observations are removed if they do not have a TRA:TRB pair
+\item Two new columns are added, one for TRA and one for TRB
+\item The binding assessments are removed
+}
 }
 \description{
-RunAllClean() cleans the data structure it is given by removing
+\code{RunAllClean()} cleans the data structure it is given by removing
 incomplete/wrong TRA:TRB pairs and removing all the binding assessments.
 The following functions are run:
 \itemize{
@@ -27,3 +32,8 @@ The following functions are run:
 \examples{
 RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 }
+\seealso{
+Other Cleaning functions: 
+\code{\link{EnsureOneAlphaBetaPair}()}
+}
+\concept{Cleaning functions}
