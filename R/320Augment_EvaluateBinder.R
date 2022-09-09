@@ -7,8 +7,7 @@ EvaluateBinder <- function(data,
       max_binder > threshold &
         max_binder > non_specific_threshold*max_non_specific_binder ~ TRUE,
       TRUE ~ FALSE
-    )) %>% 
-    View()
+    ))
 }
 
 
