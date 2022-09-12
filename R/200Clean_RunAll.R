@@ -22,9 +22,14 @@
 #' @examples
 #' RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 RunAllClean <- function(data){ 
-  data %>% 
+  data_clean <- 
+    data %>% 
     EnsureOneAlphaBetaPair() %>% 
     SplitTCRSequences() %>% 
     RemovePrefix() %>% 
-    RemoveBinders()
+    RemoveBinders() %>% 
+    pivot_longer_allele() %>% 
+    allele_names() %>% 
+    find_non_specific_binders() %>% 
+  return(data_clean)
 }
