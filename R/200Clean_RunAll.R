@@ -24,10 +24,10 @@
 RunAllClean <- function(data){ 
   data_clean <- 
     data %>% 
-    EnsureOneAlphaBetaPair() %>% 
-    SplitTCRSequences() %>% 
-    RemovePrefix() %>% 
-    RemoveBinders() %>% 
+    ensure_one_alpha_beta_pair() %>% 
+    split_TCR_sequences() %>% 
+    remove_prefix() %>% 
+    remove_binders() %>% 
     pivot_longer_allele() %>% 
     allele_names() %>% 
     find_non_specific_binders() %>% 

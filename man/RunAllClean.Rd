@@ -34,6 +34,6 @@ RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{EnsureOneAlphaBetaPair}()}
+\code{\link{ensure_one_alpha_beta_pair}()}
 }
 \concept{Cleaning functions}
