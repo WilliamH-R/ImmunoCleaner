@@ -10,7 +10,8 @@ split_TCR_sequences(data)
 \item{data}{is a data structure which need cleaning}
 }
 \value{
-The input data, but each TCR-pair is split into a TRA and TRB column
+Returns the input data, but "cell_clono_cdr3_aa" is split for each
+TCR-sequence.
 }
 \description{
 Title
@@ -18,9 +19,10 @@ Title
 \seealso{
 Other Cleaning functions: 
 \code{\link{RunAllClean}()},
-\code{\link{ensure_one_alpha_beta_pair}()},
+\code{\link{add_chain_ident_remove_prefix}()},
+\code{\link{allele_names}()},
+\code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
-\code{\link{remove_binders}()},
-\code{\link{remove_prefix}()}
+\code{\link{remove_unnecessary_binders}()}
 }
 \concept{Cleaning functions}

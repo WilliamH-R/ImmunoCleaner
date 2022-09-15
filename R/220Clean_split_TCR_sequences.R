@@ -2,7 +2,8 @@
 #'
 #' @inheritParams RunAllClean 
 #'
-#' @return The input data, but each TCR-pair is split into a TRA and TRB column
+#' @return Returns the input data, but "cell_clono_cdr3_aa" is split for each
+#'     TCR-sequence.
 #' 
 #' @family Cleaning functions
 #'

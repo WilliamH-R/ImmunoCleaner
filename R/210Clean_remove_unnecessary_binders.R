@@ -2,8 +2,8 @@
 #'
 #' @inheritParams RunAllClean 
 #'
-#' @return The input data, but without all the binding assessments and nucleotide
-#'     sequences
+#' @return Returns the input data, but without all the binding assessments and
+#'     nucleotide sequences
 #' 
 #' @family Cleaning functions
 #'

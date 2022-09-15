@@ -2,8 +2,8 @@
 #'
 #' @inheritParams RunAllClean 
 #'
-#' @return A pivot longer version of the data with UMI counts as rows instead
-#'     of columns.
+#' @return Return a pivot longer version of the data with UMI counts as rows
+#'     instead of columns.
 #' 
 #' @family Cleaning functions
 #'
