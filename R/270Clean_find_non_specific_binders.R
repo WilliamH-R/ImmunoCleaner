@@ -9,7 +9,7 @@ find_non_specific_binders <- function(data){
                                          "A0201_KLQCVDLHV_PSA146-154",
                                          "B0702_TPRVTGGGAM_pp65_CMV")
 
-  data_augment <- 
+  data_clean <- 
     data %>% 
     mutate(non_specific_binder_UMI_count = case_when(
       is.element(allele_info, non_specific_binders_vector) == TRUE ~ UMI_count,

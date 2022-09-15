@@ -10,7 +10,7 @@ RunAllClean(data)
 \item{data}{is a data structure which need cleaning}
 }
 \value{
-A cleaned data structure, of the same type as the input.
+Return a cleaned data structure, of the same type as the input.
 The output has the following differences:
 \itemize{
 \item Observations are removed if they do not have a TRA:TRB pair
@@ -34,6 +34,10 @@ RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{ensure_one_alpha_beta_pair}()}
+\code{\link{ensure_one_alpha_beta_pair}()},
+\code{\link{pivot_longer_allele}()},
+\code{\link{remove_binders}()},
+\code{\link{remove_prefix}()},
+\code{\link{split_TCR_sequences}()}
 }
 \concept{Cleaning functions}

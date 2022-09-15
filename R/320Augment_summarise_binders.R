@@ -1,10 +1,12 @@
-summarise_binders <- function(data){ 
-  data %>% 
-    evaluate_binder() %>% 
+summarise_binders <- function(data, var1 = barcode){ 
+  data_augment <-
+    data %>% 
+    EvaluateBinder() %>% 
     filter(is_binder == TRUE) %>%
-    select(barcode, allele_info, is_binder) %>% 
+    select({{var1}}, allele_info, is_binder) %>% 
     group_by(allele_info) %>%
-    count() %>%
-    View()
-  return(data_clean)
+    count()
+  return(data_augment)
 }
+
+# Non-standard evaluation

@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @inheritParams RunAllClean 
+#'
+#' @return A pivot longer version of the data with UMI counts as rows instead
+#'     of columns.
+#' 
+#' @family Cleaning functions
+#'
+#'
 pivot_longer_allele <- function(data){
   data_clean <-
     data %>% 

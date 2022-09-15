@@ -10,7 +10,7 @@
 #'  
 #' @param data is a data structure which need cleaning
 #'
-#' @return A cleaned data structure, of the same type as the input.
+#' @return Return a cleaned data structure, of the same type as the input.
 #'  The output has the following differences:
 #'  * Observations are removed if they do not have a TRA:TRB pair
 #'  * Two new columns are added, one for TRA and one for TRB
