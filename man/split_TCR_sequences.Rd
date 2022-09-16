@@ -18,11 +18,11 @@ Title
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{RunAllClean}()},
 \code{\link{add_chain_ident_remove_prefix}()},
-\code{\link{allele_names}()},
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
-\code{\link{remove_unnecessary_binders}()}
+\code{\link{remove_unnecessary_columns}()},
+\code{\link{run_all_clean}()},
+\code{\link{tidy_allele_names}()}
 }
 \concept{Cleaning functions}

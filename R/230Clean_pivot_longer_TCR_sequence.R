@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams RunAllClean 
+#' @inheritParams run_all_clean 
 #'
 #' @return A pivot longer version of the data with TCR sequences as rows instead
 #'     of columns.

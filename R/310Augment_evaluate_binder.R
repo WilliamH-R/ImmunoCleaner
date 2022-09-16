@@ -7,8 +7,7 @@ evaluate_binder <- function(data_clean,
     data_clean %>% 
     group_by(barcode) %>% 
     mutate(is_binder = case_when(UMI_count > threshold & 
-                                   UMI_count > non_specific_threshold * max(non_specific_binder_UMI_count,
-                                                                            na.rm = TRUE) &
+                                   UMI_count > non_specific_threshold * max_non_specific_binder &
                                    UMI_count == max(UMI_count,
                                                     na.rm = TRUE) ~ TRUE,
                                  TRUE ~ FALSE))

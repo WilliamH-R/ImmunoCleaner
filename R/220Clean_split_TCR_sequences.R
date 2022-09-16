@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams RunAllClean 
+#' @inheritParams run_all_clean
 #'
 #' @return Returns the input data, but "cell_clono_cdr3_aa" is split for each
 #'     TCR-sequence.

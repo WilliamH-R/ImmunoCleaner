@@ -9,5 +9,5 @@
 library(testthat)
 library(TCRSequenceFunctions)
 
-test_check("TCRSequencesFunctions")
+test_check("TCRSequenceFunctions")
 
