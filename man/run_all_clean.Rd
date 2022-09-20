@@ -35,10 +35,10 @@ RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 \seealso{
 Other Cleaning functions: 
 \code{\link{add_chain_ident_remove_prefix}()},
-\code{\link{allele_names}()},
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
-\code{\link{remove_unnecessary_binders}()},
-\code{\link{split_TCR_sequences}()}
+\code{\link{remove_unnecessary_columns}()},
+\code{\link{split_TCR_sequences}()},
+\code{\link{tidy_allele_names}()}
 }
 \concept{Cleaning functions}

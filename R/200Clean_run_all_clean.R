@@ -24,12 +24,12 @@
 run_all_clean <- function(data){ 
   data_clean <- 
     data %>% 
-    remove_unnecessary_binders() %>% 
+    remove_unnecessary_columns() %>% 
     split_TCR_sequences() %>% 
     pivot_longer_TCR_sequences() %>% 
     add_chain_ident_remove_prefix() %>%
     pivot_longer_allele() %>% 
-    allele_names() %>% 
-    find_non_specific_binders() %>% 
+    add_max_non_specific_binder() %>% 
+    tidy_allele_names() %>%
   return(data_clean)
 }

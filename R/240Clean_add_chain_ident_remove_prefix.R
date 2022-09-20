@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams RunAllClean 
+#' @inheritParams run_all_clean 
 #'
 #' @return Return the input data with a column added indicating the chain, 
 #'     and with the prefix "TRA" and "TRB" removed.
