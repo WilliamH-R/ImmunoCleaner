@@ -6,9 +6,6 @@
 \usage{
 allele_names(data)
 }
-\arguments{
-\item{data}{is a data structure which need cleaning}
-}
 \value{
 Return a data frame with the "allele_info" split into three columns:
 \itemize{
@@ -23,11 +20,11 @@ Title
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{RunAllClean}()},
 \code{\link{add_chain_ident_remove_prefix}()},
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_binders}()},
+\code{\link{run_all_clean}()},
 \code{\link{split_TCR_sequences}()}
 }
 \concept{Cleaning functions}

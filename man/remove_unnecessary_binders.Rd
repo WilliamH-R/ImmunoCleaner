@@ -10,9 +10,6 @@ remove_unnecessary_binders(
   column2 = "cell_clono_cdr3_nt"
 )
 }
-\arguments{
-\item{data}{is a data structure which need cleaning}
-}
 \value{
 Returns the input data, but without all the binding assessments and
 nucleotide sequences
@@ -22,11 +19,11 @@ Title
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{RunAllClean}()},
 \code{\link{add_chain_ident_remove_prefix}()},
 \code{\link{allele_names}()},
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
+\code{\link{run_all_clean}()},
 \code{\link{split_TCR_sequences}()}
 }
 \concept{Cleaning functions}

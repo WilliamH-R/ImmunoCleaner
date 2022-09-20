@@ -6,9 +6,6 @@
 \usage{
 pivot_longer_TCR_sequences(data)
 }
-\arguments{
-\item{data}{is a data structure which need cleaning}
-}
 \value{
 A pivot longer version of the data with TCR sequences as rows instead
 of columns.
@@ -18,11 +15,11 @@ Title
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{RunAllClean}()},
 \code{\link{add_chain_ident_remove_prefix}()},
 \code{\link{allele_names}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_binders}()},
+\code{\link{run_all_clean}()},
 \code{\link{split_TCR_sequences}()}
 }
 \concept{Cleaning functions}
