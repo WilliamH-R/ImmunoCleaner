@@ -8,16 +8,20 @@
 #' @family Cleaning functions
 #'
 #'
-split_TCR_sequences <- function(data){
+split_TCR_sequences <- function(.data,
+                                TCR_col = cell_clono_cdr3_aa,
+                                separator = ";"){
   data_clean <-
-    data %>% 
-    separate(col = cell_clono_cdr3_aa,
-             into = c("cell_clono_cdr3_aa_1", "cell_clono_cdr3_aa_2",
-                      "cell_clono_cdr3_aa_3","cell_clono_cdr3_aa_4",
-                      "cell_clono_cdr3_aa_5","cell_clono_cdr3_aa_6",
-                      "cell_clono_cdr3_aa_7","cell_clono_cdr3_aa_8"),
-             sep = ";",
+    .data %>% 
+    separate(col = {{TCR_col}},
+             into = str_c("cell_clono_cdr3_aa_1",
+                          seq(1:8),
+                          sep = "_"),
+             sep = separator,
              fill = "right") %>% 
     select(where(~!all(is.na(.))))
+  
   return(data_clean)
 }
+
+

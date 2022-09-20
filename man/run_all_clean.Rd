@@ -4,7 +4,7 @@
 \alias{run_all_clean}
 \title{Run all other clean-functions}
 \usage{
-run_all_clean(data)
+run_all_clean(.data)
 }
 \arguments{
 \item{data}{is a data structure which need cleaning}

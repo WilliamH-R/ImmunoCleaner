@@ -8,14 +8,17 @@
 #' @family Cleaning functions
 #'
 #'
-pivot_longer_TCR_sequences <- function(data){
+pivot_longer_TCR_sequences <- function(.data,
+                                       pivot_names = NULL){
+  
   data_clean <-
-    data %>% 
+    .data %>% 
     pivot_longer(matches("cell_clono_cdr3_aa"),
-                 names_to = NULL,
+                 names_to = pivot_names,
                  values_to = "TCR_sequences") %>% 
-    drop_na(TCR_sequences) %>% 
-    relocate(TCR_sequences,
+    drop_na("TCR_sequences") %>% 
+    relocate("TCR_sequences",
              .after = donor)
+  
   return(data_clean)
 }

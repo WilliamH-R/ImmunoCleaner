@@ -4,7 +4,14 @@
 \alias{add_chain_ident_remove_prefix}
 \title{Title}
 \usage{
-add_chain_ident_remove_prefix(data)
+add_chain_ident_remove_prefix(
+  .data,
+  replace_pattern = "TR[A|B]:",
+  replace_with = ""
+)
+}
+\arguments{
+\item{.data}{is a data structure which need cleaning}
 }
 \value{
 Return the input data with a column added indicating the chain,
@@ -15,7 +22,6 @@ Title
 }
 \seealso{
 Other Cleaning functions: 
-\code{\link{allele_names}()},
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_columns}()},

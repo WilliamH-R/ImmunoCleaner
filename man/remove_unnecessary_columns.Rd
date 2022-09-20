@@ -5,10 +5,13 @@
 \title{Title}
 \usage{
 remove_unnecessary_columns(
-  data,
-  column1 = "_binder",
-  column2 = "cell_clono_cdr3_nt"
+  .data,
+  col1 = "_binder",
+  col2 = "cell_clono_cdr3_nt"
 )
+}
+\arguments{
+\item{.data}{is a data structure which need cleaning}
 }
 \value{
 Returns the input data, but without all the binding assessments and
@@ -23,11 +26,7 @@ Other Cleaning functions:
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{run_all_clean}()},
-<<<<<<< HEAD:man/remove_unnecessary_binders.Rd
-\code{\link{split_TCR_sequences}()}
-=======
 \code{\link{split_TCR_sequences}()},
 \code{\link{tidy_allele_names}()}
->>>>>>> 8e8c7423f3b50a390b49a73d2d56a44ddf2fa606:man/remove_unnecessary_columns.Rd
 }
 \concept{Cleaning functions}

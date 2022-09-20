@@ -8,17 +8,19 @@
 #' @family Cleaning functions
 #'
 #'
-add_chain_ident_remove_prefix <- function(data){
+add_chain_ident_remove_prefix <- function(.data,
+                                          replace_pattern = "TR[A|B]:",
+                                          replace_with = ""){
   data_clean <-
-    data %>% 
+    .data %>% 
     mutate(chain = case_when(str_detect(string = TCR_sequences,
                                         pattern = "TRA:") ~ "alpha",
                              str_detect(string = TCR_sequences,
                                         pattern = "TRB:") ~ "beta"),
            across(.cols = TCR_sequences,
                   .fns = str_replace,
-                  pattern = "TR[A|B]:",
-                  replacement = "")) %>%
+                  pattern = replace_pattern,
+                  replacement = replace_with)) %>%
     relocate(chain,
              .after = TCR_sequences)
   return(data_clean)

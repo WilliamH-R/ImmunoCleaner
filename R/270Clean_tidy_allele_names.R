@@ -10,12 +10,14 @@
 #' @family Cleaning functions
 #'
 #'
-tidy_allele_names <- function(data){ 
+tidy_allele_names <- function(.data,
+                              names_into = c("allele", "peptide", "peptide_source"),
+                              separator = "_"){ 
   data_clean <- 
-    data %>% 
+    .data %>% 
     separate(col = "allele_info",
-             into = c("allele", "peptide", "peptide_source"),
-             sep = "_",
+             into = names_into,
+             sep = separator,
              extra = "merge")
   return(data_clean)
 }

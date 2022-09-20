@@ -4,7 +4,10 @@
 \alias{pivot_longer_allele}
 \title{Title}
 \usage{
-pivot_longer_allele(data)
+pivot_longer_allele(.data, allele_pattern = "[A-Z]{5,}")
+}
+\arguments{
+\item{.data}{is a data structure which need cleaning}
 }
 \value{
 Return a pivot longer version of the data with UMI counts as rows
@@ -17,15 +20,9 @@ Title
 Other Cleaning functions: 
 \code{\link{add_chain_ident_remove_prefix}()},
 \code{\link{pivot_longer_TCR_sequences}()},
-<<<<<<< HEAD
-\code{\link{remove_unnecessary_binders}()},
-\code{\link{run_all_clean}()},
-\code{\link{split_TCR_sequences}()}
-=======
 \code{\link{remove_unnecessary_columns}()},
 \code{\link{run_all_clean}()},
 \code{\link{split_TCR_sequences}()},
 \code{\link{tidy_allele_names}()}
->>>>>>> 8e8c7423f3b50a390b49a73d2d56a44ddf2fa606
 }
 \concept{Cleaning functions}

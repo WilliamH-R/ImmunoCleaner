@@ -8,10 +8,11 @@
 #' @family Cleaning functions
 #'
 #'
-pivot_longer_allele <- function(data){
+pivot_longer_allele <- function(.data,
+                                allele_pattern = "[A-Z]{5,}"){
   data_clean <-
-    data %>% 
-    pivot_longer(matches("[A-Z]{5,}",
+    .data %>% 
+    pivot_longer(matches(allele_pattern,
                          ignore.case = FALSE),
                  names_to = "allele_info",
                  values_to = "UMI_count") %>% 

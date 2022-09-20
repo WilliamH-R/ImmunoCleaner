@@ -4,7 +4,14 @@
 \alias{tidy_allele_names}
 \title{Title}
 \usage{
-tidy_allele_names(data)
+tidy_allele_names(
+  .data,
+  names_into = c("allele", "peptide", "peptide_source"),
+  separator = "_"
+)
+}
+\arguments{
+\item{.data}{is a data structure which need cleaning}
 }
 \value{
 Return a data frame with the "allele_info" split into three columns:
@@ -22,11 +29,7 @@ Other Cleaning functions:
 \code{\link{add_chain_ident_remove_prefix}()},
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
-<<<<<<< HEAD:man/allele_names.Rd
-\code{\link{remove_unnecessary_binders}()},
-=======
 \code{\link{remove_unnecessary_columns}()},
->>>>>>> 8e8c7423f3b50a390b49a73d2d56a44ddf2fa606:man/tidy_allele_names.Rd
 \code{\link{run_all_clean}()},
 \code{\link{split_TCR_sequences}()}
 }
