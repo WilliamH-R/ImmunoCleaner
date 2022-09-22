@@ -1,10 +1,10 @@
 #' Title
 #'
-#' @param .data_aug 
-#' @param chain_filter 
-#' @param distinct_by 
-#' 
-#' @importFrom ggseqlogo "ggseqlogo" 
+#' @param .data_aug
+#' @param chain_filter
+#' @param distinct_by
+#'
+#' @importFrom ggseqlogo "ggseqlogo"
 #'
 #' @return A logoplot of the specific chain of TCR-sequences specified by the
 #'     argument `chain_filter`. To avoid duplicated cells, the input is made

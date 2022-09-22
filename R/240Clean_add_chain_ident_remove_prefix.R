@@ -1,10 +1,10 @@
 #' Title
 #'
-#' @inheritParams run_all_clean 
+#' @inheritParams run_all_clean
 #'
-#' @return Return the input data with a column added indicating the chain, 
+#' @return Return the input data with a column added indicating the chain,
 #'     and with the prefix "TRA" and "TRB" removed.
-#' 
+#'
 #' @family Cleaning functions
 #'
 #'
@@ -12,7 +12,7 @@ add_chain_ident_remove_prefix <- function(.data,
                                           replace_pattern = "TR[A|B]:",
                                           replace_with = "") {
   data_clean <-
-    .data %>% 
+    .data %>%
     mutate(chain = case_when(str_detect(string = TCR_sequence,
                                         pattern = "TRA:") ~ "alpha",
                              str_detect(string = TCR_sequence,
@@ -25,4 +25,3 @@ add_chain_ident_remove_prefix <- function(.data,
              .after = TCR_sequence)
   return(data_clean)
 }
-

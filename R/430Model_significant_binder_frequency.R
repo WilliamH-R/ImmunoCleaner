@@ -7,7 +7,7 @@ significant_binder_frequency <- function(.data_aug,
   frequency_histogram <-
     data_aug %>%
     filter(is_binder == TRUE,
-           TCR_sequence == TCR_sequence_input) %>% 
+           TCR_sequence == TCR_sequence_input) %>%
     
     ggplot(mapping = aes(x = allele_info,
                          y = ..prop..,
