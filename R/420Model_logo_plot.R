@@ -1,3 +1,15 @@
+#' Title
+#'
+#' @param .data_aug 
+#' @param chain_filter 
+#' @param distinct_by 
+#' 
+#' @importFrom ggseqlogo "ggseqlogo" 
+#'
+#' @return A logoplot of the specific chain of TCR-sequences specified by the
+#'     argument `chain_filter`. To avoid duplicated cells, the input is made
+#'     distinct with the argument `distinct_by`, with the default `barcode`.
+#'
 logo_plot <- function(.data_aug,
                       chain_filter = "alpha",
                       distinct_by = barcode){
