@@ -14,11 +14,12 @@ tidy_allele_names(
 \item{.data}{is a data structure which need cleaning}
 }
 \value{
-Return a data frame with the "allele_info" split into three columns:
+Return a data frame with the "allele_info" split into three variables:
 \itemize{
 \item "allele"
 \item "peptide"
 \item "peptide_source"
+While keeping the original variable to use for modelling.
 }
 }
 \description{

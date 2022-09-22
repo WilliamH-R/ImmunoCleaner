@@ -23,10 +23,13 @@ The output has the following differences:
 incomplete/wrong TRA:TRB sequence pairs and removing all the binding assessments.
 The following functions are run:
 \itemize{
-\item 210Clean_EnsureOneAlphaBetaPair.R
-\item 220Clean_SplitTCRSequences.R
-\item 230Clean_RemovePrefix.R
-\item 240Clean_RemoveBinders.R
+\item \code{remove_unnecessary_columns}
+\item \code{split_TCR_sequences}
+\item \code{pivot_longer_TCR_sequences}
+\item \code{add_chain_ident_remove_prefix}
+\item \code{pivot_longer_allele}
+\item \code{add_max_non_specific_binder}
+\item \code{tidy_allele_names}
 }
 }
 \examples{

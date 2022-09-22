@@ -1,8 +1,10 @@
 #' Title
 #'
-#' @param .data_aug
-#' @param distinct_by
-#' @param summarise_by
+#' @param .data_aug An augmented data frame
+#' @param distinct_by A variable in the dataframe with which the data set should
+#'     be distinct by to avoid a bias towards cells with many observations.
+#' @param summarise_by Which variable(s) a user whishes to get a summary of. To
+#'     give a list of variables write `rlang::exprs(var1, var2)`
 #'
 #' @importFrom rlang "exprs"
 #'

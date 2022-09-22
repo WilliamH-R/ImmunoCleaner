@@ -11,11 +11,13 @@ summarise_binders(
 )
 }
 \arguments{
-\item{.data_aug}{}
+\item{.data_aug}{An augmented data frame}
 
-\item{distinct_by}{}
+\item{distinct_by}{A variable in the dataframe with which the data set should
+be distinct by to avoid a bias towards cells with many observations.}
 
-\item{summarise_by}{}
+\item{summarise_by}{Which variable(s) a user whishes to get a summary of. To
+give a list of varialbes write \code{rlang::exprs(...)}}
 }
 \value{
 The function returns a summarised count of whichever variable
