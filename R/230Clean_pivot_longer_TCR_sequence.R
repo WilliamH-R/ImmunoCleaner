@@ -15,9 +15,9 @@ pivot_longer_TCR_sequences <- function(.data,
     .data %>% 
     pivot_longer(matches("cell_clono_cdr3_aa"),
                  names_to = pivot_names,
-                 values_to = "TCR_sequences") %>% 
-    drop_na("TCR_sequences") %>% 
-    relocate("TCR_sequences",
+                 values_to = "TCR_sequence") %>% 
+    drop_na("TCR_sequence") %>% 
+    relocate("TCR_sequence",
              .after = donor)
   
   return(data_clean)

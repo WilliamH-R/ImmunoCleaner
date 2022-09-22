@@ -1,2 +1,2 @@
 data_aug %>% 
-  filter(TCR_sequences == "CAARVRGFGNVLHC")
+  filter(TCR_sequence == "CAARVRGFGNVLHC")
