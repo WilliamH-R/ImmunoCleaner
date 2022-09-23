@@ -11,12 +11,13 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 
     usethis,
-    testthat (>= 3.0.0),
-    magrittr,
+    testthat,
     knitr,
     rmarkdown,
     stringr,
-    purrr
+    purrr,
+    dplyr,
+    ggplot2
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

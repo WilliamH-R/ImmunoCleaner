@@ -1,30 +1,33 @@
 #' Title
+#' 
+#' @inheritParams summarise_binders
+#' 
+#' @param chain_filter A string value to identify which chain `alpha` or 
+#'     `beta` used for the logo plot. Default is set to `alpha`.
 #'
-#' @param .data_aug
-#' @param chain_filter
-#' @param distinct_by
-#'
-#' @importFrom ggseqlogo "ggseqlogo"
+#' @param sequence_length An integer for the length of `TCR_sequence` desired 
+#'     for the logo plot.
 #'
 #' @return A logoplot of the specific chain of TCR-sequences specified by the
 #'     argument `chain_filter`. To avoid duplicated cells, the input is made
 #'     distinct with the argument `distinct_by`, with the default `barcode`.
+#'     
+#' @export
 #'
-logo_plot <- function(.data_aug,
+logo_plot <- function(.data,
                       chain_filter = "alpha",
-                      distinct_by = barcode) {
+                      distinct_by = barcode,
+                      sequence_length = 9) {
 
   data_model <-
-    .data_aug %>%
-    filter(is_binder == TRUE,
-           chain == chain_filter,
-           str_length(TCR_sequence) == 9) %>%
-    distinct({{distinct_by}},
-              .keep_all = TRUE) %>%
-    pull(TCR_sequence) %>%
+    .data %>%
+    dplyr::filter(is_binder == TRUE,
+                  chain == chain_filter,
+                  stringr::str_length(TCR_sequence) == sequence_length) %>%
+    dplyr::distinct({{distinct_by}},
+                    .keep_all = TRUE) %>%
+    dplyr::pull(TCR_sequence) %>%
     ggseqlogo::ggseqlogo()
 
   return(data_model)
 }
-
-#The str_length should be removed when sequence alignment works

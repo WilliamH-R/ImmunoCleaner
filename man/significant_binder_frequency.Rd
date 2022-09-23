@@ -4,7 +4,17 @@
 \alias{significant_binder_frequency}
 \title{Title}
 \usage{
-significant_binder_frequency(.data_aug, TCR_sequence_input = "CAARVRGFGNVLHC")
+significant_binder_frequency(.data, TCR_sequence_input = "CAARVRGFGNVLHC")
+}
+\arguments{
+\item{TCR_sequence_input}{A string which matches a TCR-sequence in the input
+data frame. Is then used for filtering, to only look at the frequencies
+of different alleles for this particular TCR-sequence.
+Default is arbitrarily set to \code{"CAARVRGFGNVLHC"}.}
+}
+\value{
+A bar plot with the frequencies of all alleles for a particular
+TCR-sequence.
 }
 \description{
 Title

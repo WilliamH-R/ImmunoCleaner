@@ -6,6 +6,7 @@
 #'     and with the prefix "TRA" and "TRB" removed.
 #'
 #' @family Cleaning functions
+#' @noRd
 #'
 #'
 add_chain_ident_remove_prefix <- function(.data,
@@ -13,15 +14,15 @@ add_chain_ident_remove_prefix <- function(.data,
                                           replace_with = "") {
   data_clean <-
     .data %>%
-    mutate(chain = case_when(str_detect(string = TCR_sequence,
-                                        pattern = "TRA:") ~ "alpha",
-                             str_detect(string = TCR_sequence,
-                                        pattern = "TRB:") ~ "beta"),
-           across(.cols = TCR_sequence,
-                  .fns = str_replace,
-                  pattern = replace_pattern,
-                  replacement = replace_with)) %>%
-    relocate(chain,
-             .after = TCR_sequence)
+    dplyr::mutate(chain = dplyr::case_when(stringr::str_detect(string = TCR_sequence,
+                                                               pattern = "TRA:") ~ "alpha",
+                                           stringr::str_detect(string = TCR_sequence,
+                                                               pattern = "TRB:") ~ "beta"),
+           dplyr::across(.cols = TCR_sequence,
+                         .fns = stringr::str_replace,
+                         pattern = replace_pattern,
+                         replacement = replace_with)) %>%
+    dplyr::relocate(chain,
+                     .after = TCR_sequence)
   return(data_clean)
 }

@@ -4,10 +4,22 @@
 \alias{logo_plot}
 \title{Title}
 \usage{
-logo_plot(.data_aug, chain_filter = "alpha", distinct_by = barcode)
+logo_plot(
+  .data,
+  chain_filter = "alpha",
+  distinct_by = barcode,
+  sequence_length = 9
+)
 }
 \arguments{
-\item{distinct_by}{}
+\item{chain_filter}{A string value to identify which chain \code{alpha} or
+\code{beta} used for the logo plot. Default is set to \code{alpha}.}
+
+\item{distinct_by}{A variable in the dataframe with which the data set should
+be distinct by to avoid a bias towards experiments with many observations.}
+
+\item{sequence_length}{An integer for the length of \code{TCR_sequence} desired
+for the logo plot.}
 }
 \value{
 A logoplot of the specific chain of TCR-sequences specified by the

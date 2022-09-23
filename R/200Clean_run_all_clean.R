@@ -20,6 +20,7 @@
 #'  * The binding assessments are removed
 #'
 #' @family Cleaning functions
+#' @export
 #'
 #'
 #' @examples

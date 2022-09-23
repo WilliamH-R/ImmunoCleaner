@@ -9,6 +9,7 @@
 #' While keeping the original variable to use for modelling.
 #' 
 #' @family Cleaning functions
+#' @noRd
 #'
 #'
 tidy_allele_names <- function(.data,
@@ -16,10 +17,10 @@ tidy_allele_names <- function(.data,
                               separator = "_"){ 
   data_clean <- 
     .data %>% 
-    separate(col = "allele_info",
-             into = names_into,
-             sep = separator,
-             extra = "merge",
-             remove = FALSE)
+    tidyr::separate(col = "allele_info",
+                    into = names_into,
+                    sep = separator,
+                    extra = "merge",
+                    remove = FALSE)
   return(data_clean)
 }

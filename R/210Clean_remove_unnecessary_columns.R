@@ -6,6 +6,7 @@
 #'     nucleotide sequences
 #' 
 #' @family Cleaning functions
+#' @noRd
 #'
 #'
 remove_unnecessary_columns <- function(.data,
@@ -13,7 +14,7 @@ remove_unnecessary_columns <- function(.data,
                                        col2 = "cell_clono_cdr3_nt"){ 
   data_clean <-
     .data %>% 
-    select(-matches(col1),
-           -matches(col2))
+    dplyr::select(-dplyr::matches(col1),
+                  -dplyr::matches(col2))
   return(data_clean)
 }

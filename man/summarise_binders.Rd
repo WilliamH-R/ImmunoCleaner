@@ -5,19 +5,19 @@
 \title{Title}
 \usage{
 summarise_binders(
-  .data_aug,
+  .data,
   distinct_by = barcode,
   summarise_by = rlang::exprs(allele, peptide, peptide_source)
 )
 }
 \arguments{
-\item{.data_aug}{An augmented data frame}
-
 \item{distinct_by}{A variable in the dataframe with which the data set should
-be distinct by to avoid a bias towards cells with many observations.}
+be distinct by to avoid a bias towards experiments with many observations.}
 
 \item{summarise_by}{Which variable(s) a user whishes to get a summary of. To
 give a list of variables write \code{rlang::exprs(var1, var2)}}
+
+\item{.data_aug}{An augmented data frame ready for modelling.}
 }
 \value{
 The function returns a summarised count of whichever variable
