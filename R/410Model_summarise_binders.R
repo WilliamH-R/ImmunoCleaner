@@ -16,16 +16,14 @@
 #' @export
 #'
 summarise_binders <- function(.data,
-                              distinct_by = barcode,
-                              summarise_by = rlang::exprs(allele,
-                                               peptide,
-                                               peptide_source)) {
+                              ...,
+                              distinct_by = barcode) {
   data_model <-
     .data %>%
     dplyr::filter(is_binder == TRUE) %>%
     dplyr::distinct({{distinct_by}},
                     .keep_all = TRUE) %>%
-    dplyr::group_by(!!!summarise_by) %>%
+    dplyr::group_by(...) %>%
     dplyr::count()
   return(data_model)
 }
