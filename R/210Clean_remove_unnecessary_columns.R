@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_clean 
+#' @inheritParams run_all_prep
 #'
 #' @return Returns the input data, but without all the binding assessments and
 #'     nucleotide sequences

@@ -7,7 +7,7 @@
 pivot_longer_TCR_sequences(.data, pivot_names = NULL)
 }
 \arguments{
-\item{.data}{is a data structure which need cleaning}
+\item{.data}{is a data structure which need preparation}
 }
 \value{
 A pivot longer version of the data with TCR sequences as rows instead
@@ -21,7 +21,7 @@ Other Cleaning functions:
 \code{\link{add_chain_ident_remove_prefix}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_columns}()},
-\code{\link{run_all_clean}()},
+\code{\link{run_all_prep}()},
 \code{\link{split_TCR_sequences}()},
 \code{\link{tidy_allele_names}()}
 }

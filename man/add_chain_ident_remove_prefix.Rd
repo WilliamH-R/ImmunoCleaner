@@ -11,7 +11,7 @@ add_chain_ident_remove_prefix(
 )
 }
 \arguments{
-\item{.data}{is a data structure which need cleaning}
+\item{.data}{is a data structure which need preparation}
 }
 \value{
 Return the input data with a column added indicating the chain,
@@ -25,7 +25,7 @@ Other Cleaning functions:
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_columns}()},
-\code{\link{run_all_clean}()},
+\code{\link{run_all_prep}()},
 \code{\link{split_TCR_sequences}()},
 \code{\link{tidy_allele_names}()}
 }

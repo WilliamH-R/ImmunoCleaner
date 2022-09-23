@@ -17,7 +17,7 @@ summarise_binders(
 be distinct by to avoid a bias towards cells with many observations.}
 
 \item{summarise_by}{Which variable(s) a user whishes to get a summary of. To
-give a list of varialbes write \code{rlang::exprs(...)}}
+give a list of variables write \code{rlang::exprs(var1, var2)}}
 }
 \value{
 The function returns a summarised count of whichever variable

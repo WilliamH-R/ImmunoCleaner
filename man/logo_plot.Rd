@@ -7,10 +7,6 @@
 logo_plot(.data_aug, chain_filter = "alpha", distinct_by = barcode)
 }
 \arguments{
-\item{.data_aug}{}
-
-\item{chain_filter}{}
-
 \item{distinct_by}{}
 }
 \value{

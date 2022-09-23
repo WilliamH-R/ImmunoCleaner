@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_clean 
+#' @inheritParams run_all_prep
 #'
 #' @return Return a data frame with the "allele_info" split into three variables:
 #' * "allele"

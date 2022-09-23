@@ -11,7 +11,7 @@ tidy_allele_names(
 )
 }
 \arguments{
-\item{.data}{is a data structure which need cleaning}
+\item{.data}{is a data structure which need preparation}
 }
 \value{
 Return a data frame with the "allele_info" split into three variables:
@@ -31,7 +31,7 @@ Other Cleaning functions:
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_columns}()},
-\code{\link{run_all_clean}()},
+\code{\link{run_all_prep}()},
 \code{\link{split_TCR_sequences}()}
 }
 \concept{Cleaning functions}

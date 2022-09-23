@@ -1,4 +1,16 @@
-#Add TRUE/FALSE depending on whether they fulfill demands or nor
+library("tidyverse")
+#' Title
+#'
+#' @import tidyverse
+#'
+#' @param .data_clean 
+#' @param identifier 
+#' @param threshold 
+#' @param non_specific_threshold 
+#'
+#' @return
+#'
+#' @examples
 evaluate_binder <- function(.data_clean,
                             identifier = barcode,
                             threshold = 10,

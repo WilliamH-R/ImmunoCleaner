@@ -7,7 +7,7 @@
 split_TCR_sequences(.data, TCR_col = cell_clono_cdr3_aa, separator = ";")
 }
 \arguments{
-\item{.data}{is a data structure which need cleaning}
+\item{.data}{is a data structure which need preparation}
 }
 \value{
 Returns the input data, but "cell_clono_cdr3_aa" is split for each
@@ -22,7 +22,7 @@ Other Cleaning functions:
 \code{\link{pivot_longer_TCR_sequences}()},
 \code{\link{pivot_longer_allele}()},
 \code{\link{remove_unnecessary_columns}()},
-\code{\link{run_all_clean}()},
+\code{\link{run_all_prep}()},
 \code{\link{tidy_allele_names}()}
 }
 \concept{Cleaning functions}
