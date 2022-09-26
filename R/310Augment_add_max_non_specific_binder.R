@@ -24,7 +24,7 @@ add_max_non_specific_binder <- function(.data,
   data_clean <-
     .data %>% 
     dplyr::group_by({{identifier}}) %>% 
-    dplyr::mutate(max_non_specific_binder = dplyr::case_when(is.element(allele_info,
+    dplyr::mutate(max_non_specific_binder = dplyr::case_when(is.element(pMHC,
                                                                         non_specific_binders_vector) == TRUE ~ UMI_count,
                                                              TRUE ~ 0),
                   max_non_specific_binder = max(max_non_specific_binder)) %>% 

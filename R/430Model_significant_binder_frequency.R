@@ -17,7 +17,7 @@ significant_binder_frequency <- function(.data,
     dplyr::filter(is_binder == TRUE,
                   TCR_sequence == TCR_sequence_input) %>%
     
-    ggplot2::ggplot(mapping = ggplot2::aes(x = allele_info,
+    ggplot2::ggplot(mapping = ggplot2::aes(x = pMHC,
                                                     y = ..prop..,
                                                     group = 1)) +
       ggplot2::geom_bar() +
