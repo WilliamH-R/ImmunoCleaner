@@ -4,7 +4,7 @@
 \alias{significant_binder_frequency}
 \title{Title}
 \usage{
-significant_binder_frequency(.data, TCR_sequence_input = "CAARVRGFGNVLHC")
+significant_binder_frequency(.data)
 }
 \arguments{
 \item{.data}{An augmented data frame ready for modelling.}
