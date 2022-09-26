@@ -2,7 +2,7 @@
 #'
 #' @inheritParams run_all_prep
 #'
-#' @return Return a data frame with the "allele_info" split into three variables:
+#' @return Return a data frame with the "pMHC" split into three variables:
 #' * "allele"
 #' * "peptide"
 #' * "peptide_source"
@@ -17,7 +17,7 @@ tidy_allele_names <- function(.data,
                               separator = "_"){ 
   data_clean <- 
     .data %>% 
-    tidyr::separate(col = "allele_info",
+    tidyr::separate(col = "pMHC",
                     into = names_into,
                     sep = separator,
                     extra = "merge",

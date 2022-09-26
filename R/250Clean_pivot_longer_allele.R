@@ -15,7 +15,7 @@ pivot_longer_allele <- function(.data,
     .data %>% 
     tidyr::pivot_longer(dplyr::matches(allele_pattern,
                                        ignore.case = FALSE),
-                        names_to = "allele_info",
+                        names_to = "pMHC",
                         values_to = "UMI_count") %>% 
     dplyr::filter(UMI_count != 0)
   return(data_clean)
