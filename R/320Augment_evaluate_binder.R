@@ -31,7 +31,8 @@ evaluate_binder <- function(.data,
                                                  UMI_count > non_specific_threshold * max_non_specific_binder &
                                                  UMI_count == max(UMI_count,
                                                                   na.rm = TRUE) ~ TRUE,
-                                               TRUE ~ FALSE))
+                                               TRUE ~ FALSE),
+                  is_binder = dplyr::case_when(sum(is_binder == TRUE) > 4 ~ FALSE,
+                                               TRUE ~ is_binder))
   return(data_augment)
 }
-

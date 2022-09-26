@@ -34,8 +34,8 @@ run_all_prep <- function(.data) {
     pivot_longer_TCR_sequences() %>%
     add_chain_ident_remove_prefix() %>%
     pivot_longer_allele() %>%
-    add_max_non_specific_binder() %>%
     tidy_allele_names() %>%
+    add_max_non_specific_binder() %>%
     evaluate_binder()
 
   return(data_clean)
