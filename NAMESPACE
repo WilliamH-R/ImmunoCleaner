@@ -2,6 +2,7 @@
 
 export("%>%")
 export(logo_plot)
+export(multiple_specific_binders)
 export(run_all_prep)
 export(summarise_binders)
 importFrom(magrittr,"%>%")

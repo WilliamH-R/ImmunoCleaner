@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_prep
+#' @inheritParams remove_unnecessary_columns
 #'
 #' @return Return a data frame with the "pMHC" split into three variables:
 #' * "allele"

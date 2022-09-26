@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param .data_aug An augmented data frame ready for modelling.
+#' @param data An augmented data frame ready for modelling.
 #' 
 #' @param distinct_by A variable in the dataframe with which the data set should
 #'     be distinct by to avoid a bias towards experiments with many observations.

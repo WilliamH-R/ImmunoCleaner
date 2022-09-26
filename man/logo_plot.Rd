@@ -12,6 +12,8 @@ logo_plot(
 )
 }
 \arguments{
+\item{.data}{An augmented data frame ready for modelling.}
+
 \item{chain_filter}{A string value to identify which chain \code{alpha} or
 \code{beta} used for the logo plot. Default is set to \code{alpha}.}
 

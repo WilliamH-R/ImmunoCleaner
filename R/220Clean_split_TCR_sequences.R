@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_prep
+#' @inheritParams remove_unnecessary_columns
 #'
 #' @return Returns the input data, but "cell_clono_cdr3_aa" is split for each
 #'     TCR-sequence.

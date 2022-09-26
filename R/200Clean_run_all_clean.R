@@ -11,7 +11,7 @@
 #'  * `add_max_non_specific_binder`
 #'  * `tidy_allele_names`
 #'
-#' @param data is a data structure which need preparation
+#' @param data is a data structure which need preparation before modelling.
 #'
 #' @return Return a prepared data structure, of the same type as the input.
 #'  The output has the following differences:
@@ -36,7 +36,8 @@ run_all_prep <- function(.data) {
     pivot_longer_allele() %>%
     tidy_allele_names() %>%
     add_max_non_specific_binder() %>%
-    evaluate_binder()
+    evaluate_binder() %>% 
+    add_non_promiscuous_TCR_pairs()
 
   return(data_clean)
 }

@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_prep
+#' @param data A data structure which need to be cleaned.
 #'
 #' @return Returns the input data, but without all the binding assessments and
 #'     nucleotide sequences

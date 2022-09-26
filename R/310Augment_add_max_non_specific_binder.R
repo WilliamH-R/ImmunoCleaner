@@ -1,6 +1,7 @@
 #' Title
 #'
-#' @inheritParams  run_all_prep 
+#' @param .data A data frame which has been cleaned, and is now ready for
+#'     augmentation.
 #' 
 #' @param identifier The column in the data set which identifies each 
 #'     experiment. Default is set to `barcode`.
@@ -21,7 +22,7 @@ add_max_non_specific_binder <- function(.data,
                                    "A0201_KLQCVDLHV_PSA146-154",
                                    "B0702_TPRVTGGGAM_pp65_CMV")
 
-  data_clean <-
+  data_aug <-
     .data %>% 
     dplyr::group_by({{identifier}}) %>% 
     dplyr::mutate(max_non_specific_binder = dplyr::case_when(is.element(pMHC,
@@ -30,5 +31,5 @@ add_max_non_specific_binder <- function(.data,
                   max_non_specific_binder = max(max_non_specific_binder)) %>% 
     dplyr::ungroup()
 
-  return(data_clean)
+  return(data_aug)
 }

@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_prep
+#' @inheritParams remove_unnecessary_columns
 #'
 #' @return Return a pivot longer version of the data with UMI counts as rows
 #'     instead of columns.

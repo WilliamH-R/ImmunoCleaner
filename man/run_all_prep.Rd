@@ -7,7 +7,7 @@
 run_all_prep(.data)
 }
 \arguments{
-\item{data}{is a data structure which need preparation}
+\item{data}{is a data structure which need preparation before modelling.}
 }
 \value{
 Return a prepared data structure, of the same type as the input.

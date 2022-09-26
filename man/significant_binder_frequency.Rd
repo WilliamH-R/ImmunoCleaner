@@ -7,6 +7,8 @@
 significant_binder_frequency(.data, TCR_sequence_input = "CAARVRGFGNVLHC")
 }
 \arguments{
+\item{.data}{An augmented data frame ready for modelling.}
+
 \item{TCR_sequence_input}{A string which matches a TCR-sequence in the input
 data frame. Is then used for filtering, to only look at the frequencies
 of different alleles for this particular TCR-sequence.

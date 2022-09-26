@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams run_all_prep
+#' @inheritParams remove_unnecessary_columns
 #'
 #' @return Return the input data with a column added indicating the chain,
 #'     and with the prefix "TRA" and "TRB" removed.

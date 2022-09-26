@@ -10,7 +10,7 @@ summarise_binders(.data, ..., distinct_by = barcode)
 \item{distinct_by}{A variable in the dataframe with which the data set should
 be distinct by to avoid a bias towards experiments with many observations.}
 
-\item{.data_aug}{An augmented data frame ready for modelling.}
+\item{data}{An augmented data frame ready for modelling.}
 
 \item{summarise_by}{Which variable(s) a user whishes to get a summary of. To
 give a list of variables write \code{rlang::exprs(var1, var2)}}

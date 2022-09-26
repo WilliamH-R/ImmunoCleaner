@@ -24,7 +24,7 @@ evaluate_binder <- function(.data,
                             threshold = 10,
                             non_specific_threshold = 5){ 
   
-  data_augment <-
+  data_aug <-
     .data %>% 
     dplyr::group_by({{identifier}}) %>% 
     dplyr::mutate(is_binder = dplyr::case_when(UMI_count > threshold & 
@@ -34,5 +34,5 @@ evaluate_binder <- function(.data,
                                                TRUE ~ FALSE),
                   is_binder = dplyr::case_when(sum(is_binder == TRUE) > 4 ~ FALSE,
                                                TRUE ~ is_binder))
-  return(data_augment)
+  return(data_aug)
 }
