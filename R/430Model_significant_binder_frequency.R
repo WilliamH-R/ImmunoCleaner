@@ -14,15 +14,14 @@ significant_binder_frequency <- function(.data) {
   frequency_histogram <-
     .data %>%
     dplyr::filter(is_binder == TRUE) %>%
-    drop_na(non_promiscuous_pair) %>%
+    tidyr::drop_na(non_promiscuous_pair) %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
     dplyr::group_by(non_promiscuous_pair, pMHC) %>% 
     dplyr::count() %>%
     dplyr::group_by(non_promiscuous_pair) %>% 
     dplyr::mutate(n_frequency = n/sum(n)) %>% 
-    dplyr::filter(n_frequency < 1) %>% 
-    dplyr::distinct(non_promiscuous_pair)
+    dplyr::filter(n_frequency < 1)
     
 return(frequency_histogram)
 }
