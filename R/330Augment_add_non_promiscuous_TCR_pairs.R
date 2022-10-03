@@ -12,6 +12,7 @@
 #'     chain is which is removed to reduce the number of characters.
 #'     It is always noted as alpha;beta.
 #'
+#' @family Augmenting functions
 #' @noRd
 
 add_non_promiscuous_TCR_pairs <- function(.data,

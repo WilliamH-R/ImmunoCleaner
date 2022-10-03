@@ -11,10 +11,12 @@
 #'     * If one alpha- and beta sequence, then `2`
 #'     * Otherwise will by noted as `3`
 #'
+#' @family Augmenting functions
 #' @noRd
 #'
-add_TCR_combination <- function(.data,
-                                identifier = barcode) {
+add_TCR_combination_identifier <- function(.data,
+                                           identifier = barcode,
+                                           identifier_string = "barcode") {
   data_aug <-
     .data %>%
     dplyr::group_by({{identifier}}) %>%
@@ -35,7 +37,7 @@ add_TCR_combination <- function(.data,
                                                      TRUE ~ "3")) %>%
     dplyr::ungroup() %>%
     dplyr::select({{identifier}}, TCR_sequence, TCR_combination) %>%
-    dplyr::right_join(.data, by = c("barcode", "TCR_sequence"))
+    dplyr::right_join(.data, by = c(identifier_string, "TCR_sequence"))
 
   return(data_aug)
 }

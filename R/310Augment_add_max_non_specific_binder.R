@@ -2,13 +2,15 @@
 #'
 #' @param .data A data frame which has been cleaned, and is now ready for
 #'     augmentation.
-#' 
-#' @param identifier The column in the data set which identifies each 
+#'
+#' @param identifier The column in the data set which identifies each
 #'     experiment. Default is set to `barcode`.
 #'
 #' @return The same data frame, but with an added column. The columns includes
 #'     an integer for the maximum UMI-count of all non-specific binders for
-#'     each experiment (an experiment is a unique barcode).
+#'     each experiment.
+#'
+#' @family Augmenting functions
 #' @noRd
 #'
 add_max_non_specific_binder <- function(.data,
@@ -23,12 +25,12 @@ add_max_non_specific_binder <- function(.data,
                                    "B0702_TPRVTGGGAM_pp65_CMV")
 
   data_aug <-
-    .data %>% 
-    dplyr::group_by({{identifier}}) %>% 
+    .data %>%
+    dplyr::group_by({{identifier}}) %>%
     dplyr::mutate(max_non_specific_binder = dplyr::case_when(is.element(pMHC,
                                                                         non_specific_binders_vector) == TRUE ~ UMI_count,
                                                              TRUE ~ 0),
-                  max_non_specific_binder = max(max_non_specific_binder)) %>% 
+                  max_non_specific_binder = max(max_non_specific_binder)) %>%
     dplyr::ungroup()
 
   return(data_aug)

@@ -8,8 +8,8 @@
 #' @return Returns a bar plot with a frequency distribution of the different
 #'     combinations of alpha- beta pairs.
 #'
+#' @family Modelling functions
 #' @export
-#'
 alpha_beta_pair_distribution <- function(.data,
                                          pMHC_filter = FALSE) {
   frequency_barplot <-

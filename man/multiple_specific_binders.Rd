@@ -10,7 +10,7 @@ multiple_specific_binders(.data)
 \item{.data}{An augmented data frame ready for modelling.}
 }
 \value{
-Returns a table with all \code{barcode}s which has atleast two \code{pMHC}
+Returns a table with all \code{barcode}s which has at least two \code{pMHC}
 marked as significant.
 }
 \description{

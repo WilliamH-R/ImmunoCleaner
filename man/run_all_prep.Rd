@@ -19,7 +19,7 @@ The output has the following differences:
 }
 }
 \description{
-\code{RunAllClean()} prepares the data structure it is given by removing
+\code{run_all_prep()} prepares the data structure it is given by removing
 incomplete/wrong TRA:TRB sequence pairs and removing all the binding assessments.
 The following functions are run:
 \itemize{
@@ -33,6 +33,6 @@ The following functions are run:
 }
 }
 \examples{
-RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
+run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 }
 \concept{Cleaning functions}

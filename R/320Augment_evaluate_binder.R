@@ -5,18 +5,19 @@
 #' @param .data A cleaned data frame ready for augmentation.
 #'
 #' @param threshold An integer for the minimum number of UMI counts to be
-#'     observed before a binding can be assessed as significant. The default
+#'     observed before a binding can be assessed as relevant. The default
 #'     is set to `10`.
 #'
 #' @param non_specific_threshold An integer which is multiplied with the
 #'     maximum value for a non-specific binder. The product is used as
-#'     another minimum requirement for the UMI-count the be significant.
+#'     another minimum requirement for the UMI-count the be relevant.
 #'     Default is set to `5`.
 #'
 #' @return The same data frame, but with a new column which is a `boolean`.
 #'     The `boolean` is `TRUE` if the binding between the peptide and
-#'     TCR-sequence is significant. Otherwise returns `FALSE`.
+#'     TCR-sequence is relevant. Otherwise returns `FALSE`.
 #'
+#' @family Augmenting functions
 #' @noRd
 #'
 evaluate_binder <- function(.data,
