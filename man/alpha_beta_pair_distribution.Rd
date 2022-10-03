@@ -19,3 +19,11 @@ combinations of alpha- beta pairs.
 \description{
 Title
 }
+\seealso{
+Other Modelling functions: 
+\code{\link{logo_plot}()},
+\code{\link{multiple_specific_binders}()},
+\code{\link{relevant_binder_frequency_plot}()},
+\code{\link{summarise_with_filter}()}
+}
+\concept{Modelling functions}

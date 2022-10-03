@@ -1,8 +1,8 @@
 #' Title
 #'
-#' @inheritParams summarise_binders
+#' @inheritParams summarise_with_filter
 #'
-#' @return Returns a table with all `barcode`s which has at least two `pMHC`
+#' @return Returns a table with all `identifier`s which has at least two `pMHC`
 #'     marked as relevant.
 #'
 #' @family Modelling functions
@@ -16,7 +16,8 @@ multiple_specific_binders <- function(.data,
     dplyr::group_by({{identifier}}) %>%
     dplyr::distinct(pMHC) %>%
     dplyr::count() %>%
-    dplyr::filter(n > 1)
+    dplyr::filter(n > 1) %>%
+    dplyr::arrange(desc(n))
 
   return(specific_binders_count)
 }

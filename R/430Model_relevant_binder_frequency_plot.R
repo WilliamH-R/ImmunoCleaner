@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams summarise_binders
+#' @inheritParams summarise_with_filter
 #'
 #' @return An interactive plotly plot with different relevant alpha:beta pairs,
 #'     and pMHC. The size of dots depends on the frequency of that specific

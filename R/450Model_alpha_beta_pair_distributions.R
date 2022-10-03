@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams summarise_binders
+#' @inheritParams summarise_with_filter
 #'
 #' @param pMHC_filter A pMHC to use for filtering, to only include that specific
 #'     pMHC from the data set. Default is `FALSE`, i.e. no filtering.

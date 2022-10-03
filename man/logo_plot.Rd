@@ -7,7 +7,7 @@
 logo_plot(
   .data,
   chain_filter = "alpha",
-  distinct_by = barcode,
+  identifier = barcode,
   sequence_length = 9
 )
 }
@@ -17,8 +17,9 @@ logo_plot(
 \item{chain_filter}{A string value to identify which chain \code{alpha} or
 \code{beta} used for the logo plot. Default is set to \code{alpha}.}
 
-\item{distinct_by}{A variable in the dataframe with which the data set should
-be distinct by to avoid a bias towards experiments with many observations.}
+\item{identifier}{A variable in the data frame with which the data set should
+be distinct by to avoid a bias towards experiments with many observations.
+Needs to be specified, even if set to default.}
 
 \item{sequence_length}{An integer for the length of \code{TCR_sequence} desired
 for the logo plot.}
@@ -26,8 +27,16 @@ for the logo plot.}
 \value{
 A logoplot of the specific chain of TCR-sequences specified by the
 argument \code{chain_filter}. To avoid duplicated cells, the input is made
-distinct with the argument \code{distinct_by}, with the default \code{barcode}.
+distinct with the argument \code{identifier}, with the default \code{barcode}.
 }
 \description{
 Title
 }
+\seealso{
+Other Modelling functions: 
+\code{\link{alpha_beta_pair_distribution}()},
+\code{\link{multiple_specific_binders}()},
+\code{\link{relevant_binder_frequency_plot}()},
+\code{\link{summarise_with_filter}()}
+}
+\concept{Modelling functions}

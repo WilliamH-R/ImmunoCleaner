@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @inheritParams summarise_binders
+#' @inheritParams summarise_with_filter
 #'
 #' @param chain_filter A string value to identify which chain `alpha` or
 #'     `beta` used for the logo plot. Default is set to `alpha`.
