@@ -1,6 +1,6 @@
 #' Run all preperation functions
 #'
-#' `RunAllClean()` prepares the data structure it is given by removing
+#' `run_all_prep()` prepares the data structure it is given by removing
 #' incomplete/wrong TRA:TRB sequence pairs and removing all the binding assessments.
 #' The following functions are run:
 #'  * `remove_unnecessary_columns`
@@ -24,7 +24,7 @@
 #'
 #'
 #' @examples
-#' RunAllClean(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
+#' run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
 run_all_prep <- function(.data) {
 
   data_clean <-
@@ -36,8 +36,9 @@ run_all_prep <- function(.data) {
     pivot_longer_allele() %>%
     tidy_allele_names() %>%
     add_max_non_specific_binder() %>%
-    evaluate_binder() %>% 
-    add_non_promiscuous_TCR_pairs()
+    evaluate_binder() %>%
+    add_non_promiscuous_TCR_pairs() %>%
+    add_TCR_combination_identifier
 
   return(data_clean)
 }

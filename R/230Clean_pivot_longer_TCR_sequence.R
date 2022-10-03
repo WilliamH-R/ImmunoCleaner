@@ -2,7 +2,7 @@
 #'
 #' @inheritParams remove_unnecessary_columns
 #'
-#' @return A pivot longer version of the data with TCR sequences as rows instead
+#' @return A pivot longer version of the data with TCR-sequences as rows instead
 #'     of columns.
 #'
 #' @family Cleaning functions

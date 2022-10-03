@@ -31,7 +31,7 @@ add_non_promiscuous_TCR_pairs <- function(.data,
                                                                             pattern = "TRB") == 1 ~ cell_clono_cdr3_aa,
                                                        TRUE ~ NA_character_),
                   dplyr::across(.cols = non_promiscuous_pair,
-                                .fns = stringr::str_replace,
+                                .fns = stringr::str_replace_all,
                                 pattern = replace_pattern,
                                 replacement = replace_with)) %>%
     dplyr::select(-cell_clono_cdr3_aa)
