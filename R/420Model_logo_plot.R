@@ -10,14 +10,14 @@
 #'
 #' @return A logoplot of the specific chain of TCR-sequences specified by the
 #'     argument `chain_filter`. To avoid duplicated cells, the input is made
-#'     distinct with the argument `distinct_by`, with the default `barcode`.
+#'     distinct with the argument `identifier`, with the default `barcode`.
 #'
 #' @family Modelling functions
 #' @export
 #'
 logo_plot <- function(.data,
                       chain_filter = "alpha",
-                      distinct_by = barcode,
+                      identifier = barcode,
                       sequence_length = 9) {
 
   data_model <-
@@ -25,7 +25,7 @@ logo_plot <- function(.data,
     dplyr::filter(is_binder == TRUE,
                   chain == chain_filter,
                   stringr::str_length(TCR_sequence) == sequence_length) %>%
-    dplyr::distinct({{distinct_by}},
+    dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
     dplyr::pull(TCR_sequence) %>%
     ggseqlogo::ggseqlogo()

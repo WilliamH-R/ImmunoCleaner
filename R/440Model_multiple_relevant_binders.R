@@ -3,7 +3,7 @@
 #' @inheritParams summarise_binders
 #'
 #' @return Returns a table with all `barcode`s which has at least two `pMHC`
-#'     marked as significant.
+#'     marked as relevant.
 #'
 #' @family Modelling functions
 #' @export

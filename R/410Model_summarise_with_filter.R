@@ -2,7 +2,7 @@
 #'
 #' @param data An augmented data frame ready for modelling.
 #'
-#' @param distinct_by A variable in the data frame with which the data set should
+#' @param identifier A variable in the data frame with which the data set should
 #'     be distinct by to avoid a bias towards experiments with many observations.
 #'     Needs to be specified, even if set to default.
 #'
@@ -19,11 +19,11 @@
 #'
 summarise_with_filter <- function(.data,
                               ...,
-                              distinct_by = barcode) {
+                              identifier = barcode) {
   data_model <-
     .data %>%
     dplyr::filter(is_binder == TRUE) %>%
-    dplyr::distinct({{distinct_by}},
+    dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
     dplyr::group_by(...) %>%
     dplyr::count()
