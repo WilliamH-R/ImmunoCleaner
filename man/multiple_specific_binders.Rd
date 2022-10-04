@@ -14,7 +14,7 @@ be distinct by to avoid a bias towards experiments with many observations.
 Needs to be specified, even if set to default.}
 }
 \value{
-Returns a table with all \code{barcode}s which has at least two \code{pMHC}
+Returns a table with all \code{identifier}s which has at least two \code{pMHC}
 marked as relevant.
 }
 \description{

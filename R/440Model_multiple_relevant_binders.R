@@ -7,7 +7,7 @@
 #'
 #' @family Modelling functions
 #' @export
-multiple_specific_binders <- function(.data,
+multiple_relevant_binders <- function(.data,
                                       identifier = barcode) {
 
   specific_binders_count <-
