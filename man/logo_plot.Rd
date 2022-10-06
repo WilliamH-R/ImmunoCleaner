@@ -34,8 +34,9 @@ Title
 }
 \seealso{
 Other Modelling functions: 
+\code{\link{alpha_beta_consistency}()},
 \code{\link{alpha_beta_pair_distribution}()},
-\code{\link{multiple_specific_binders}()},
+\code{\link{multiple_relevant_binders}()},
 \code{\link{relevant_binder_frequency_plot}()},
 \code{\link{summarise_with_filter}()}
 }

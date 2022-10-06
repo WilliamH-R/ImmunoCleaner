@@ -25,16 +25,16 @@ add_TCR_combination_identifier <- function(.data,
     dplyr::mutate(TCR_combination = dplyr::case_when(sum(stringr::str_count(string = chain,
                                                                             pattern = "alpha")) == 1 &
                                                        sum(stringr::str_count(string = chain,
-                                                                              pattern = "beta")) == 0 ~ "0",
+                                                                              pattern = "beta")) == 0 ~ "one_alpha_only",
                                                      sum(stringr::str_count(string = chain,
                                                                             pattern = "alpha")) == 0 &
                                                        sum(stringr::str_count(string = chain,
-                                                                              pattern = "beta")) == 1 ~ "1",
+                                                                              pattern = "beta")) == 1 ~ "one_beta_only",
                                                      sum(stringr::str_count(string = chain,
                                                                             pattern = "alpha")) == 1 &
                                                        sum(stringr::str_count(string = chain,
-                                                                              pattern = "beta")) == 1 ~ "2",
-                                                     TRUE ~ "3")) %>%
+                                                                              pattern = "beta")) == 1 ~ "one_alpha_one_beta",
+                                                     TRUE ~ "other")) %>%
     dplyr::ungroup() %>%
     dplyr::select({{identifier}}, TCR_sequence, TCR_combination) %>%
     dplyr::right_join(.data, by = c(identifier_string, "TCR_sequence"))
