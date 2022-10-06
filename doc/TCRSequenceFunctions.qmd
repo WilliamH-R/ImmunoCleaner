@@ -13,7 +13,7 @@ This is supposed to be an abstract.
 
 # Introduction
 
-With all the advancements in recent years in regards to computational power, laboratory techniques and -equipment, the amount of produced data is ever increasing. The focus in this article will be on biological data, even though it applies to a range of fields. For a reference on how quick the situation develops, the cost of sequencing the entire human genome decreased from (INSERT VALUE) to (INSERT VALUE) in a matter of (INSERT VALUE). The development obviously didn't stop there. As a more recent example, (INSERT EXAMPLE).
+With all the advancements in recent years in regards to computational power, laboratory techniques and -equipment, the amount of produced data is ever increasing. The focus in this article will be on biological data, even though it applies to a range of fields. For a reference on how quick the situation develops, the cost of sequencing the entire human genome decreased from (INSERT VALUE) to (INSERT VALUE) in a matter of (INSERT VALUE). The development obviously didn't stop there. As a more recent example, (INSERT EXAMPLE, e.g. RNA-sequencing/transcriptomics (see slides for system biology lecture 6)).
 
 When a bioinformatician works with data, it is important it is done in a reproducible manner. Exactly as in the laboratory, it is paramount that other scientists is also able to achieve the same results and to come to the same conclusions. That imposes another problem, as the code used for working with data is not necessarily made available. If that's the case, how can you ever be sure, the no mistakes were made, or that any other problem occurred. Thereby, it is not only important to be working reproducible, but also transparent.
 
