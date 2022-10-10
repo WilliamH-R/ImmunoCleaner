@@ -5,7 +5,7 @@
 \alias{data_donor_one}
 \title{Prepared data from donor one}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 512264 rows and 27 columns.
+A data frame with 500k rows and 27 columns
 }
 \source{
 \url{https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes#SG1}

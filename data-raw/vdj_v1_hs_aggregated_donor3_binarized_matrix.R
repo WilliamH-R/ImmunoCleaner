@@ -1,6 +1,10 @@
 vdj_v1_hs_aggregated_donor3_binarized_matrix <-
-  read_csv(url("https://cf.10xgenomics.com/samples/cell-vdj/3.0.2/vdj_v1_hs_aggregated_donor3/vdj_v1_hs_aggregated_donor3_binarized_matrix.csv"),
-           show_col_types = FALSE)
+  readr::read_csv(url("https://cf.10xgenomics.com/samples/cell-vdj/3.0.2/vdj_v1_hs_aggregated_donor3/vdj_v1_hs_aggregated_donor3_binarized_matrix.csv"),
+                  show_col_types = FALSE)
+
+vdj_v1_hs_aggregated_donor3_binarized_matrix <-
+  vdj_v1_hs_aggregated_donor3_binarized_matrix %>%
+  TCRSequenceFunctions::run_all_prep()
 
 usethis::use_data(vdj_v1_hs_aggregated_donor3_binarized_matrix,
                   overwrite = TRUE)
