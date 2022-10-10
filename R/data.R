@@ -57,3 +57,11 @@
 #' }
 #' @source \url{https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-4-1-standard-3-0-2}
 "vdj_v1_hs_aggregated_donor4_binarized_matrix"
+
+#' Prepared data from donor one
+#'
+#' The data frame contains a prepared version of the data from donor one
+#'
+#'
+#' @source \url{https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes#SG1}
+"data_donor_one"
