@@ -18,14 +18,17 @@
 #' @export
 #'
 summarise_with_filter <- function(.data,
-                              ...,
+                              summarise_by = c("allele",
+                                               "peptide",
+                                               "peptide_source"),
                               identifier = barcode) {
+
   data_model <-
     .data %>%
     dplyr::filter(is_binder == TRUE) %>%
     dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
-    dplyr::group_by(...) %>%
-    dplyr::count()
+    dplyr::group_by_at(dplyr::all_of(summarise_by)) %>%
+    dplyr::count(name = "count")
   return(data_model)
 }
