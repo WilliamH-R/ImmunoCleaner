@@ -32,7 +32,9 @@ relevant_binder_frequency_plot <- function(.data,
       y = ~pMHC,
       type = "scatter",
       mode = "markers",
-      size = ~n_frequency
+      marker = list(
+        size = ~n_frequency*15
+      )
     ) %>%
     plotly::layout(
       title = "Frequencies of binding between pMHC and alpha:beta pairs",
