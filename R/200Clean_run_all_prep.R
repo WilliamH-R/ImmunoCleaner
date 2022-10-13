@@ -37,7 +37,6 @@ run_all_prep <- function(.data) {
     tidy_allele_names() %>%
     add_max_non_specific_binder() %>%
     evaluate_binder() %>%
-    add_non_promiscuous_TCR_pairs() %>%
     add_TCR_combination_identifier
 
   return(data_clean)

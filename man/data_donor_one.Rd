@@ -8,7 +8,7 @@
 A data frame with 500k rows and 27 columns
 }
 \source{
-\url{https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes#SG1}
+Prepared data from \code{vdj_v1_hs_aggregated_donor1_binarized_matrix}
 }
 \usage{
 data_donor_one

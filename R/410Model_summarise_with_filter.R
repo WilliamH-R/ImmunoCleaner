@@ -18,10 +18,10 @@
 #' @export
 #'
 summarise_with_filter <- function(.data,
-                              summarise_by = c("allele",
-                                               "peptide",
-                                               "peptide_source"),
-                              identifier = barcode) {
+                                  summarise_by = c("allele",
+                                                   "peptide",
+                                                   "peptide_source"),
+                                  identifier = barcode) {
 
   data_model <-
     .data %>%

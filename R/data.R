@@ -64,5 +64,32 @@
 #'
 #' @format A data frame with 500k rows and 27 columns
 #'
-#' @source \url{https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes#SG1}
+#' @source Prepared data from `vdj_v1_hs_aggregated_donor1_binarized_matrix`
 "data_donor_one"
+
+#' Prepared data from donor two
+#'
+#' The data frame contains a prepared version of the data from donor two
+#'
+#' @format A data frame with 800k rows and 27 columns
+#'
+#' @source Prepared data from `vdj_v1_hs_aggregated_donor2_binarized_matrix`
+"data_donor_two"
+
+#' Prepared data from donor three
+#'
+#' The data frame contains a prepared version of the data from donor three
+#'
+#' @format A data frame with 580k rows and 27 columns
+#'
+#' @source Prepared data from `vdj_v1_hs_aggregated_donor3_binarized_matrix`
+"data_donor_three"
+
+#' Prepared data from donor four
+#'
+#' The data frame contains a prepared version of the data from donor four
+#'
+#' @format A data frame with 190k rows and 27 columns
+#'
+#' @source Prepared data from `vdj_v1_hs_aggregated_donor4_binarized_matrix`
+"data_donor_four"
