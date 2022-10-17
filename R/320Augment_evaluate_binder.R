@@ -1,8 +1,10 @@
 #' Title
 #'
-#' @inheritParams add_max_non_specific_binder
 #'
 #' @param .data A cleaned data frame ready for augmentation.
+#'
+#' @param identifier The column in the data set which identifies each
+#'     experiment. Default is set to `barcode`.
 #'
 #' @param threshold An integer for the minimum number of UMI counts to be
 #'     observed before a binding can be assessed as relevant. The default
@@ -18,7 +20,7 @@
 #'     TCR-sequence is relevant. Otherwise returns `FALSE`.
 #'
 #' @family Augmenting functions
-#' @noRd
+#' @export
 #'
 evaluate_binder <- function(.data,
                             identifier = barcode,
