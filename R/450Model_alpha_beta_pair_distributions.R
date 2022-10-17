@@ -23,7 +23,9 @@ alpha_beta_pair_distribution <- function(.data,
     .data %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = TCR_combination,
                                            y = ..prop..,
-                                           group = 1)) +
+                                           group = 1,
+                                           fill = factor(..x..)
+                                           )) +
         ggplot2::geom_bar() +
         ggplot2::scale_x_discrete(labels = c("one_alpha_only" = "alpha:",
                                              "one_beta_only" = ":beta",
@@ -31,7 +33,8 @@ alpha_beta_pair_distribution <- function(.data,
                                              "other" = "Other")) +
         ggplot2::labs(x = "TCR-combinations",
                       y = "Frequencies",
-                      title = "Frequency distribution of different combinations of TCR")
+                      title = "Frequency distribution of different combinations of TCR") +
+        ggplot2::theme(legend.position="none")
 
   return(frequency_barplot)
 }

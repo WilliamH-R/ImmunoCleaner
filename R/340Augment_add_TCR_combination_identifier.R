@@ -35,6 +35,9 @@ add_TCR_combination_identifier <- function(.data,
                                                        sum(stringr::str_count(string = chain,
                                                                               pattern = "beta")) == 1 ~ "one_alpha_one_beta",
                                                      TRUE ~ "other")) %>%
+    dplyr::mutate(TCR_combination = factor(TCR_combination,
+                                           levels = c("one_alpha_one_beta", "one_alpha_only",
+                                                      "one_beta_only", "other"))) %>%
     dplyr::ungroup() %>%
     dplyr::select({{identifier}}, TCR_sequence, TCR_combination) %>%
     dplyr::right_join(.data, by = c(identifier_string, "TCR_sequence"))
