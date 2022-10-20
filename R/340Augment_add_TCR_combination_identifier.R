@@ -1,19 +1,29 @@
-#' Title
+#' Categorise TCR-sequence combinations
+#'
+#' `add_TCR_combination_identifier()` counts occurrences of the string `"alpha"`
+#'    and `"beta"` in the column `chain` for each `identifier`. Based on the count,
+#'    the `identifier` is put into one of the below-written categories:
+#'    * `"one_alpha_only"`
+#'    * `"one_beta_only"`
+#'    * `"one_alpha_one_beta"`
+#'    * `"other"`
 #'
 #' @inheritParams add_max_non_specific_binder
-#' @inheritParams add_chain_ident_remove_prefix
 #'
-#' @return The same data frame, but with an added column `TCR_combination`.
+#' @param identifier_string Same as `identifier`, but supplied as a string.
+#'
+#' @return Same data frame as `.data`, but with an added column `TCR_combination`.
 #'     It contains a categorical value for a specific combination of alpha
-#'     and beta sequence:
-#'     * If only an alpha sequence, then `0`
-#'     * If only a beta sequence, then `1`
-#'     * If one alpha- and beta sequence, then `2`
-#'     * Otherwise will by noted as `3`
+#'     and beta sequence counts:
+#'     * If only an alpha sequence, then `"one_alpha_only"`
+#'     * If only a beta sequence, then `"one_beta_only"`
+#'     * If one alpha- and beta sequence, then `"one_alpha_one_beta"`
+#'     * Otherwise will by noted as `"other"`
 #'
-#' @family Augmenting functions
+#' @family Preparation functions
 #' @noRd
 #'
+
 add_TCR_combination_identifier <- function(.data,
                                            identifier = barcode,
                                            identifier_string = "barcode") {

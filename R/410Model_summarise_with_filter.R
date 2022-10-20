@@ -1,22 +1,44 @@
-#' Title
+#' Count of relevant binders stratified on user input
 #'
-#' @param data An augmented data frame ready for modelling.
+#' `summarise_with_filter()` takes a prepared data frame as input, and count
+#'    the number of pMHC which are evaluated as relevant by `?evaluate_binder`.
+#'    The counting is grouped by columns provided by the user through the argument
+#'    `...`.
+#'
+#' @param .data An prepared data frame ready for modelling.
+#'
+#' @param summarise_by The column(s) a user wishes to get a summary of. Provide
+#'     as a string or vector of strings. Default is the columns prepared from
+#'     pMHC.
 #'
 #' @param identifier A variable in the data frame with which the data set should
 #'     be distinct by to avoid a bias towards experiments with many observations.
 #'     Needs to be specified, even if set to default.
 #'
-#' @param ... Which variable(s) a user wishes to get a summary of. To
-#'     give a list of variables write them individually.
-#'
-#'
-#' @return The function returns a summarised count of whichever variable
-#'     is provided in the argument `...` stratified on whichever
-#'     variable is provided in the argument `distinct`.
+#' @return A table with a count of relevant binders stratified on `summarise_by`.
 #'
 #' @family Modelling functions
 #' @export
 #'
+#' @examples
+#' # A prepared data frame needs to be provided. Can either be done by using
+#' # the already cleaned data frames or the raw data files piped through `?run_all_prep`
+#' data_donor_one %>%
+#'     summarise_with_filter()
+#'
+#' vdj_v1_hs_aggregated_donor1_binarized_matrix %>%
+#'     run_all_prep() %>%
+#'     summarse_with_filter()
+#'
+#' # The stratification can be done for one or several columns:
+#' data_donor_one %>%
+#'     summarise_with_filter(summarise_by = "allele")
+#'
+#' data_donor_one %>%
+#'     summarise_with_filter(summarise_by = c("allele",
+#'                                            "peptide_source"))
+#'
+
 summarise_with_filter <- function(.data,
                                   summarise_by = c("allele",
                                                    "peptide",

@@ -1,14 +1,20 @@
-#' Title
+#' Add chain identifier and remove prefix of TCR-sequences
+#'
+#' By using RegEx, `add_chain_ident_remove_prefix()` adds a column, `chain`, to
+#'     categorise the chain into being either an alpha or beta chain. After,
+#'     the prefix `replace_pattern` is removed since it is no longer needed.
 #'
 #' @inheritParams remove_unnecessary_columns
 #'
-#' @return Return the input data with a column added indicating the chain,
+#' @inheritParams split_TCR_sequences_find_non_promiscuous
+#'
+#' @return Return `.data` with a column added indicating the chain type,
 #'     and with the prefix "TRA" and "TRB" removed.
 #'
-#' @family Cleaning functions
+#' @family Preparation functions
 #' @noRd
 #'
-#'
+
 add_chain_ident_remove_prefix <- function(.data,
                                           replace_pattern = "TR[A|B]:",
                                           replace_with = "") {

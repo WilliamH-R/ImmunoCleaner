@@ -1,16 +1,40 @@
-#' Title
+#' Scatterplot of pMHC vs. TCR-sequences
+#'
+#' `relevant_binder_frequency_plot()` plots all pMHC vs. those non-promiscuous
+#'     TCR-sequences which has been evaluated to be relevant by `?evaluate_binder`.
+#'     The size of a dot reflects how frequent a specific pMHC is to a TCR-sequence
+#'     out of all the pMHC which has been evaluated as relevant binders.
 #'
 #' @inheritParams summarise_with_filter
 #'
-#' @return An interactive plotly plot with different relevant alpha:beta pairs,
-#'     and pMHC. The size of dots depends on the frequency of that specific
-#'     interaction occuring compared to other pMHC which bind the same
-#'     alpha:beta pair.
+#' @param max_frequency Is a double used as a threshold for filtering. Only
+#'    frequencies below, or equal to, this value is used.
+#'
+#' @return An interactive plotly plot with different relevant alpha:beta pairs
+#'     (TCR-sequences), and pMHC. The size of dots depends on the frequency of
+#'     that specific interaction occuring compared to other pMHC which bind the
+#'     same alpha:beta pair.
 #'
 #' @family Modelling functions
 #' @export
+#'
+#' @examples
+#' # A prepared data frame needs to be provided. Can either be done by using
+#' # the already cleaned data frames or the raw data files piped through `?run_all_prep`
+#' data_donor_one %>%
+#'     relevant_binder_frequency_plot()
+#'
+#' vdj_v1_hs_aggregated_donor1_binarized_matrix %>%
+#'     run_all_prep() %>%
+#'     relevant_binder_frequency_plot()
+#'
+#' # The frequency can be limited by:
+#' data_donor_one %>%
+#'     relevant_binder_frequency_plot(max_frequency = 0.8)
+#'
 relevant_binder_frequency_plot <- function(.data,
-                                           identifier = barcode) {
+                                           identifier = barcode,
+                                           max_frequency = 1.0) {
 
   frequency_data <-
     .data %>%
@@ -22,7 +46,7 @@ relevant_binder_frequency_plot <- function(.data,
     dplyr::count() %>%
     dplyr::group_by(non_promiscuous_pair) %>%
     dplyr::mutate(n_frequency = n/sum(n)) %>%
-    dplyr::filter(n_frequency < 1)
+    dplyr::filter(n_frequency <= max_frequency)
 
 
   frequency_plot <-
@@ -37,8 +61,11 @@ relevant_binder_frequency_plot <- function(.data,
       )
     ) %>%
     plotly::layout(
-      title = "Frequencies of binding between pMHC and alpha:beta pairs",
-      xaxis = list(showticklabels = FALSE),
+      title = list(text = "Frequencies of binding between pMHC and alpha:beta pairs",
+                   x = 0,
+                   y = 1),
+      xaxis = list(title = "Non promiscuous TCR-sequences",
+                   showticklabels = FALSE),
       yaxis = list(showticklabels = FALSE)
     )
 return(frequency_plot)

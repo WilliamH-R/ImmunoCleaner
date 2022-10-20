@@ -2,37 +2,62 @@
 % Please edit documentation in R/200Clean_run_all_prep.R
 \name{run_all_prep}
 \alias{run_all_prep}
-\title{Run all preperation functions}
+\title{Run all preparation functions}
 \usage{
 run_all_prep(.data)
 }
 \arguments{
-\item{data}{is a data structure which need preparation before modelling.}
+\item{data}{A data frame which need preparation before modelling. Four such
+data frames are already present in this package:
+* \code{vdj_v1_hs_aggregated_donor1_binarized_matrix}
+* \code{vdj_v1_hs_aggregated_donor2_binarized_matrix}
+* \code{vdj_v1_hs_aggregated_donor3_binarized_matrix}
+* \code{vdj_v1_hs_aggregated_donor4_binarized_matrix}}
 }
 \value{
-Return a prepared data structure, of the same type as the input.
+An object which is now prepared data frame, of the same type as \code{.data}.
 The output has the following differences:
 \itemize{
-\item Observations are removed if they do not have a TRA:TRB pair
-\item Two new columns are added, one for TRA and one for TRB
-\item The binding assessments are removed
+\item Unnecessary columns are removed
+\item TCR-sequences and pMHC are now tidy, and pivot longer
+\item Several columns are added to aid modelling
 }
 }
 \description{
-\code{run_all_prep()} prepares the data structure it is given by removing
-incomplete/wrong TRA:TRB sequence pairs and removing all the binding assessments.
+\code{run_all_prep()} prepares the data frame it is given which is done through
+a series of functions. Firstly, the columns which aren't needed are removed.
+Then, the TCR-sequences are made tidy by splitting them and pivot longer.
+To keep track of their type - alpha or beta - a column is added specifying
+exactly that. The pMHC are made tidy and pivot longer as for the TCR-sequences.
+Further, the maximum UMI-count of all non-specific binders is added to
+enable an evaluation of the relevancy of a TCR-sequence immediately after.
+Lastly, a categorical identifier is added telling about the promiscuity
+of a TCR-sequence.
+}
+\details{
 The following functions are run:
 \itemize{
-\item \code{remove_unnecessary_columns}
-\item \code{split_TCR_sequences}
-\item \code{pivot_longer_TCR_sequences}
-\item \code{add_chain_ident_remove_prefix}
-\item \code{pivot_longer_allele}
-\item \code{add_max_non_specific_binder}
-\item \code{tidy_allele_names}
+\item \code{remove_unnecessary_columns()}
+\item \code{split_TCR_sequences_find_non_promiscuous()}
+\item \code{pivot_longer_TCR_sequences()}
+\item \code{add_chain_ident_remove_prefix()}
+\item \code{pivot_longer_pMHC()}
+\item \code{tidy_allele_names()}
+\item \code{add_max_non_specific_binder()}
+\item \code{evaluate_binder()}
+\item \code{add_TCR_combination_identifier()}
 }
 }
 \examples{
-run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
+# Simply supply the function with the name of a data frame:
+run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix)
+
+# Or by using the pipe from `magrittr`:
+vdj_v1_hs_aggregated_donor1_binarized_matrix \%>\%
+    run_all_prep()
 }
-\concept{Cleaning functions}
+\seealso{
+Other Preparation functions: 
+\code{\link{evaluate_binder}()}
+}
+\concept{Preparation functions}
