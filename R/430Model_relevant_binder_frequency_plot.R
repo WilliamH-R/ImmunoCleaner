@@ -10,7 +10,8 @@
 #' @family Modelling functions
 #' @export
 relevant_binder_frequency_plot <- function(.data,
-                                           identifier = barcode) {
+                                           identifier = barcode,
+                                           max_frequency = 1) {
 
   frequency_data <-
     .data %>%
@@ -22,7 +23,7 @@ relevant_binder_frequency_plot <- function(.data,
     dplyr::count() %>%
     dplyr::group_by(non_promiscuous_pair) %>%
     dplyr::mutate(n_frequency = n/sum(n)) %>%
-    dplyr::filter(n_frequency < 1)
+    dplyr::filter(n_frequency < max_frequency)
 
 
   frequency_plot <-
