@@ -7,7 +7,7 @@
 alpha_beta_pair_distribution(.data, pMHC_filter = NULL)
 }
 \arguments{
-\item{.data}{An augmented data frame ready for modelling.}
+\item{.data}{An prepared data frame ready for modelling.}
 
 \item{pMHC_filter}{A pMHC to use for filtering, to only include that specific
 pMHC from the data set. Default is \code{FALSE}, i.e. no filtering.}

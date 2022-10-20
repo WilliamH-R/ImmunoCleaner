@@ -1,40 +1,61 @@
-#' Run all preperation functions
+#' Run all preparation functions
 #'
-#' `run_all_prep()` prepares the data structure it is given by removing
-#' incomplete/wrong TRA:TRB sequence pairs and removing all the binding assessments.
+#' `run_all_prep()` prepares the data frame it is given which is done through
+#'     a series of functions. Firstly, the columns which aren't needed are removed.
+#'     Then, the TCR-sequences are made tidy by splitting them and pivot longer.
+#'     To keep track of their type - alpha or beta - a column is added specifying
+#'     exactly that. The pMHC are made tidy and pivot longer as for the TCR-sequences.
+#'     Further, the maximum UMI-count of all non-specific binders is added to
+#'     enable an evaluation of the relevancy of a TCR-sequence immediately after.
+#'     Lastly, a categorical identifier is added telling about the promiscuity
+#'     of a TCR-sequence.
+#'
 #' The following functions are run:
-#'  * `remove_unnecessary_columns`
-#'  * `split_TCR_sequences`
-#'  * `pivot_longer_TCR_sequences`
-#'  * `add_chain_ident_remove_prefix`
-#'  * `pivot_longer_allele`
-#'  * `add_max_non_specific_binder`
-#'  * `tidy_allele_names`
+#'  * `remove_unnecessary_columns()`
+#'  * `split_TCR_sequences_find_non_promiscuous()`
+#'  * `pivot_longer_TCR_sequences()`
+#'  * `add_chain_ident_remove_prefix()`
+#'  * `pivot_longer_pMHC()`
+#'  * `tidy_allele_names()`
+#'  * `add_max_non_specific_binder()`
+#'  * `evaluate_binder()`
+#'  * `add_TCR_combination_identifier()`
 #'
-#' @param data is a data structure which need preparation before modelling.
+#' @param .data A data frame which need preparation before modelling. Four such
+#'     data frames are already present in this package:
+#'     * `vdj_v1_hs_aggregated_donor1_binarized_matrix`
+#'     * `vdj_v1_hs_aggregated_donor2_binarized_matrix`
+#'     * `vdj_v1_hs_aggregated_donor3_binarized_matrix`
+#'     * `vdj_v1_hs_aggregated_donor4_binarized_matrix`
 #'
-#' @return Return a prepared data structure, of the same type as the input.
+#' @return An object which is now prepared data frame, of the same type as `.data`.
 #'  The output has the following differences:
-#'  * Observations are removed if they do not have a TRA:TRB pair
-#'  * Two new columns are added, one for TRA and one for TRB
-#'  * The binding assessments are removed
+#'  * Unnecessary columns are removed
+#'  * TCR-sequences and pMHC are now tidy, and pivot longer
+#'  * Several columns are added to aid modelling
 #'
-#' @family Cleaning functions
+#' @family Preparation functions
 #' @export
 #'
 #'
 #' @examples
-#' run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix.rda)
+#' # Simply supply the function with the name of a data frame:
+#' run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix)
+#'
+#' # Or by using the pipe from `magrittr`:
+#' vdj_v1_hs_aggregated_donor1_binarized_matrix %>%
+#'     run_all_prep()
+
 run_all_prep <- function(.data) {
 
   data_clean <-
     .data %>%
     remove_unnecessary_columns() %>%
-    split_TCR_sequences() %>%
+    split_TCR_sequences_find_non_promiscuous() %>%
     pivot_longer_TCR_sequences() %>%
     add_chain_ident_remove_prefix() %>%
-    pivot_longer_allele() %>%
-    tidy_allele_names() %>%
+    pivot_longer_pMHC() %>%
+    tidy_pMHC_names() %>%
     add_max_non_specific_binder() %>%
     evaluate_binder() %>%
     add_TCR_combination_identifier

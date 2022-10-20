@@ -7,7 +7,7 @@
 alpha_beta_consistency(.data, identifier = barcode)
 }
 \arguments{
-\item{.data}{An augmented data frame ready for modelling.}
+\item{.data}{An prepared data frame ready for modelling.}
 
 \item{identifier}{A variable in the data frame with which the data set should
 be distinct by to avoid a bias towards experiments with many observations.

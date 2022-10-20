@@ -2,7 +2,7 @@
 % Please edit documentation in R/410Model_summarise_with_filter.R
 \name{summarise_with_filter}
 \alias{summarise_with_filter}
-\title{Title}
+\title{Count of relevant binders stratified on user input}
 \usage{
 summarise_with_filter(
   .data,
@@ -11,22 +11,43 @@ summarise_with_filter(
 )
 }
 \arguments{
+\item{.data}{An prepared data frame ready for modelling.}
+
+\item{summarise_by}{The column(s) a user wishes to get a summary of. Provide
+as a string or vector of strings. Default is the columns prepared from
+pMHC.}
+
 \item{identifier}{A variable in the data frame with which the data set should
 be distinct by to avoid a bias towards experiments with many observations.
 Needs to be specified, even if set to default.}
-
-\item{data}{An augmented data frame ready for modelling.}
-
-\item{...}{Which variable(s) a user wishes to get a summary of. To
-give a list of variables write them individually.}
 }
 \value{
-The function returns a summarised count of whichever variable
-is provided in the argument \code{...} stratified on whichever
-variable is provided in the argument \code{distinct}.
+A table with a count of relevant binders stratified on \code{summarise_by}.
 }
 \description{
-Title
+\code{summarise_with_filter()} takes a prepared data frame as input, and count
+the number of pMHC which are evaluated as relevant by \code{?evaluate_binder}.
+The counting is grouped by columns provided by the user through the argument
+\code{...}.
+}
+\examples{
+# A prepared data frame needs to be provided. Can either be done by using
+# the already cleaned data frames or the raw data files piped through `?run_all_prep`
+data_donor_one \%>\%
+    summarise_with_filter()
+
+vdj_v1_hs_aggregated_donor1_binarized_matrix \%>\%
+    run_all_prep() \%>\%
+    summarse_with_filter()
+
+# The stratification can be done for one or several columns:
+data_donor_one \%>\%
+    summarise_with_filter(summarise_by = "allele")
+
+data_donor_one \%>\%
+    summarise_with_filter(summarise_by = c("allele",
+                                           "peptide_source"))
+
 }
 \seealso{
 Other Modelling functions: 

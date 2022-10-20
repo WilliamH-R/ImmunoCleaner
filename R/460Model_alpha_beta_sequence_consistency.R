@@ -33,5 +33,6 @@ alpha_beta_consistency <- function(.data,
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::labs(x = "Chain",
                     y = "Relative distinctiveness",
-                    title = "Relative distinctiveness for the alpha and beta chain")
+                    title = "Relative distinctiveness for the alpha and beta chain") +
+      ggplot2::theme(legend.position="none")
 }
