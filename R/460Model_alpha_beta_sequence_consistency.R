@@ -1,13 +1,28 @@
-#' Title
+#' Bar plot showing consistency of the alpha- and beta chains
+#'
+#' `alpha_beta_consistency()` takes as input a prepared data frame. Firstly,
+#'     the total number of alpha- and beta chains are calculated respectively.
+#'     This is done by grouping on `identifier` (i.e. experiments) and making
+#'     `TCR_sequence` distrinct and then counting. Secondly, the number of different
+#'     alpha- and beta chains respectively is counted. This is done by making them
+#'     distinct without grouping. The distinctiveness is then calculated as
+#'     number of unique divided by total number of chains, statified on chain type.
 #'
 #' @inheritParams summarise_with_filter
 #'
 #' @return Returns a bar plot with the relative distinctiveness of all alpha
-#'     and beta chains. Meaning a lower value, means less distinctive sequences
+#'     and beta chains. A lower value means less distinctive sequences
 #'     compared to the total number of that chain.
 #'
 #' @family Modelling functions
 #' @export
+#'
+#' @examples
+#' # The function takes no arguments to alter the plot:
+#' data_donor_two %>%
+#'     alpha_beta_consistency()
+#'
+
 alpha_beta_consistency <- function(.data,
                                    identifier = barcode) {
 

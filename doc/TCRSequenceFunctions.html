@@ -60,13 +60,19 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract"> <span class="header-section-number">1</span> Abstract</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"> <span class="header-section-number">2</span> Introduction</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"> <span class="header-section-number">3</span> Methods</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"> <span class="header-section-number">4</span> Results</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"> <span class="header-section-number">5</span> Discussion</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"> <span class="header-section-number">6</span> Conclusion</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"> <span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#tidying-the-data" id="toc-tidying-the-data" class="nav-link" data-scroll-target="#tidying-the-data"> <span class="header-section-number">2</span> Tidying the data</a>
+  <ul class="collapse">
+  <li><a href="#cleaning" id="toc-cleaning" class="nav-link" data-scroll-target="#cleaning"> <span class="header-section-number">2.1</span> Cleaning</a></li>
+  <li><a href="#augmenting" id="toc-augmenting" class="nav-link" data-scroll-target="#augmenting"> <span class="header-section-number">2.2</span> Augmenting</a></li>
+  </ul></li>
+  <li><a href="#modelling" id="toc-modelling" class="nav-link" data-scroll-target="#modelling"> <span class="header-section-number">3</span> Modelling</a></li>
+  <li><a href="#shiny-integration" id="toc-shiny-integration" class="nav-link" data-scroll-target="#shiny-integration"> <span class="header-section-number">4</span> Shiny Integration</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"> <span class="header-section-number">5</span> Appendix</a>
+  <ul class="collapse">
+  <li><a href="#sec-AppendixA" id="toc-sec-AppendixA" class="nav-link" data-scroll-target="#sec-AppendixA"> <span class="header-section-number">5.1</span> Appendix A</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -94,83 +100,57 @@ div.csl-indent {
 
 </header>
 
-<section id="abstract" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Abstract</h1>
-<p>This is supposed to be an abstract.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This package, <a href="https://github.com/WilliamH-R/TCRSequenceFunctions">TCRSequenceFunctions</a>, is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment made by 10x Genomics <span class="citation" data-cites="10XGenomics2022">[<a href="#ref-10XGenomics2022" role="doc-biblioref">1</a>]</span>. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their own respective donor.</p>
+<p>The data sets contains binding counts between the donors’ library of T-Cell Receptors (TCRs) and a set of peptide-major histocompatibility complexes (pMHCs). The before-mentioned binding counts are so called unique molecular identifier (UMI) counts. For an explanation of all columns see <a href="#sec-AppendixA">Section&nbsp;5.1</a>.</p>
+<p>In the following sections, each of the functions contained in <a href="https://github.com/WilliamH-R/TCRSequenceFunctions">TCRSequenceFunctions</a> will be explained, demonstrated and reasoned for. Generally, they can be divided into three types: Cleaning, Augmenting and Modelling where the main goal of the two first is to make the data tidy.</p>
+<p>Lastly will be a short section on a Shiny Package, <a href="https://github.com/WilliamH-R/TCRSequenceShiny">TCRSequenceShiny</a>, which utilizes these functions to make a user-friendly interactive interface for data exploration.</p>
 </section>
-<section id="introduction" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
-<p>With all the advancements in recent years in regards to computational power, laboratory techniques and -equipment, the amount of produced data is ever increasing. The focus in this article will be on biological data, even though it applies to a range of fields. For a reference as to how fast the development is, the cost of sequencing the entire human genome decreased from $70M to $2000 in a matter of 15 years <span class="citation" data-cites="Lunshof2022">(<a href="#ref-Lunshof2022" role="doc-biblioref">Lunshof et al. 2022</a>)</span> (Lunshof, INSERT reference). As a more recent discovery, the field of Single Cell Transcriptomics is emerging with a high increase in number of associated publications (Angerer, INSERT reference).</p>
-<p>When a bioinformatician works with data, it is important it is done in a reproducible fashion. Exactly as in the laboratory, it is paramount that other scientists is able to achieve the same results and to come to the same conclusions. That tends to be an issue, as the code used for working with data is not necessarily made available. If that’s the case, how can you ever be sure, the no mistakes were made, or that any other problem occurred? Thereby, it is not only important to be working reproducibly, but also transparently.</p>
-<p>A part of working with data is to find meaningful correlations, make new discoveries or support known hyptheseses. These findings should be presentable as to better share said findings. Especially when presenting to non-data stakeholders this becomes important, as they won’t necessarily have the same foundation of knowledge as your peers.</p>
-<p>We can further extent the issue of presenting to stakeholders. It is likely that they want to see certain parts of the data which wasn’t included in the presentation. Then, if the data is made interactive, the stakeholders is enabled to find this themselves. Even without the need of writing a single line of code. In the end, this saves time and effort for both parties.</p>
-<p>All of the above-mentioned issues I wish to address and take into account when working with this project. This is e.g.&nbsp;done by working transparently. Every pieces of code from the data preparation to the modelling is gathered in a package which is made available on GitHub. The functions written also include thorough documentations to make understanding the code easier. Through this, the data analyses are fully reproducible and can be reused to try and handle the increasing amount of data. Finally, the results of the modelling is made available through a Shiny App to make the data handling interactive.</p>
-<ul>
-<li>What is the situation now / why is this important?
-<ul>
-<li><p>Difficult to reproduce data analyses</p></li>
-<li><p>Amount of available data grows</p></li>
-<li><p>The presentation of data to non-data stakeholders</p>
-<ul>
-<li><p>E.g. in industry</p></li>
-<li><p>Make it interactive to reduce work load for bioinformatician and stakeholders</p></li>
-</ul></li>
-</ul></li>
-<li>What can this project do to help the issue?</li>
-<li>What kind of data am I working with?
-<ul>
-<li><p>Needed theory to understand</p>
-<ul>
-<li><p>How are T-cells formed</p></li>
-<li><p>What determines the TCR-sequence and what is the TCR</p></li>
-<li><p>Alpha- beta sequence description</p></li>
-<li><p>MHC, pMHC</p></li>
-<li><p>Single Cell Immune Profiling</p></li>
-</ul></li>
-</ul></li>
-</ul>
+<section id="tidying-the-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Tidying the data</h1>
+<p>The aim of tidying the data is to enable the data handling, and to ensure a reproducible result. Firstly, the data is cleaned e.g.&nbsp;by making sure, all cells only contain one piece of information. After, some augmented was needed to enable the modelling. This was done by e.g.&nbsp;adding new columns. A wrapper function was used to run all the preparation functions: <code>run_all_prep()</code>. This wrapper simply takes one of the raw data files included in the package as input, and pipe it through all the preparation functions, and output a tidy data set.</p>
+<section id="cleaning" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="cleaning"><span class="header-section-number">2.1</span> Cleaning</h2>
+<p>The list of cleaning functions are as follows:</p>
+<ol type="1">
+<li><code>remove_unnecessary_columns()</code></li>
+<li><code>split_TCR_sequences_find_non_promiscuous()</code></li>
+<li><code>pivot_longer_TCR_sequences()</code></li>
+<li><code>add_chain_ident_remove_prefix()</code></li>
+<li><code>pivot_longer_pMHC()</code></li>
+<li><code>tidy_pMHC_names()</code></li>
+</ol>
 </section>
-<section id="methods" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
-<ul>
-<li><p>Description of the structure of the package?</p></li>
-<li><p>Description of data set?</p></li>
-<li><p>How I cleaned</p>
-<ul>
-<li>Describe dimensions of the data set(s)</li>
-</ul></li>
-<li><p>How I augmented</p>
-<ul>
-<li>Describe dimensions of the data set(s)</li>
-</ul></li>
-<li><p>The integration into Shiny?</p></li>
-</ul>
+<section id="augmenting" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="augmenting"><span class="header-section-number">2.2</span> Augmenting</h2>
+<ol type="1">
+<li><code>add_max_non_specific_binder()</code></li>
+<li><code>evaluate_binder()</code></li>
+<li><code>add_TCR_combination_identifier()</code></li>
+</ol>
 </section>
-<section id="results" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
-<ul>
-<li>Mention pointers from method
-<ul>
-<li>What can the package offer</li>
-</ul></li>
-<li>Presentation of models</li>
-<li>How does the Shiny app work / what can it do</li>
-</ul>
 </section>
-<section id="discussion" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Discussion</h1>
+<section id="modelling" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Modelling</h1>
 </section>
-<section id="conclusion" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<section id="shiny-integration" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Shiny Integration</h1>
 </section>
 <section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+</section>
+<section id="appendix" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Appendix</h1>
+<section id="sec-AppendixA" class="level2 unnumbered" data-number="5.1">
 
 
 </section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Lunshof2022" class="csl-entry" role="doc-biblioentry">
-Lunshof, Jeantine E., Jason Bobe, John Aach, Misha Angrist, Joseph V. Thakuria, Daniel B. Vorhaus, Margret R. Hoehe, and George M. Church. 2022. <span>“<span class="nocase">Personal genomes in progress: from the Human Genome Project to the Personal Genome Project</span>.”</span> <em>Https://Doi.org/10.31887/DCNS.2010.12.1/Jlunshof</em> 12 (1): 44–57. <a href="https://doi.org/10.31887/DCNS.2010.12.1/JLUNSHOF">https://doi.org/10.31887/DCNS.2010.12.1/JLUNSHOF</a>.
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">5.1 Appendix A</h2><div id="refs" class="references csl-bib-body" role="doc-bibliography">
+<div id="ref-10XGenomics2022" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">10X Genomics. 2022. <span class="nocase">A New Way of Exploring Immunity - Linking Highly Multiplexed Antigen Recognition to Immune Repertoire and Phenotype</span>. <em>10x Genomics</em> (2022), 1–13. Retrieved from <a href="https://www.10xgenomics.com/resources/document-library/a14cde">https://www.10xgenomics.com/resources/document-library/a14cde</a></div>
 </div>
 </div></section></div></main>
 <!-- /main column -->

@@ -1,17 +1,37 @@
-#' Title
+#' Interactive plot showing relevant binders between pMHC and TCR-sequences
+#'
+#' `relevant_binder_frequency_plot()` takes a prepared data frame, `.data`, and
+#'     count the number of relevant binders stratified on both non-promiscuous
+#'     pairs and pMHC. The frequency of a specific pMHC is calculated based on
+#'     the total number of pMHCs which bind to a non-promiscuous pair. The output
+#'     is a plotly plot, meaning it is interactive. The x- and y-values can be
+#'     found by hovering a dot in the plot.
 #'
 #' @inheritParams summarise_with_filter
 #'
-#' @return An interactive plotly plot with different relevant alpha:beta pairs,
+#' @param max_frequency A float representing the maximum allowed value of frequencies.
+#'
+#' @return An interactive plotly plot with different relevant non-promiscuous pairs
 #'     and pMHC. The size of dots depends on the frequency of that specific
 #'     interaction occuring compared to other pMHC which bind the same
-#'     alpha:beta pair.
+#'     non-promiscuous pair.
 #'
 #' @family Modelling functions
 #' @export
+#'
+#' @examples
+#' # A prepared data frame is simply piped through the function:
+#' data_donor_four %>%
+#'     relevant_binder_frequency_plot()
+#'
+#' # The maximum value of allowed frequencies can be changed:
+#' data_donor_four %>%
+#'     relevant_binder_frequency_plot(max_frequency = 0.8)
+#'
+
 relevant_binder_frequency_plot <- function(.data,
                                            identifier = barcode,
-                                           max_frequency = 1) {
+                                           max_frequency = 1.0) {
 
   frequency_data <-
     .data %>%
@@ -23,7 +43,7 @@ relevant_binder_frequency_plot <- function(.data,
     dplyr::count() %>%
     dplyr::group_by(non_promiscuous_pair) %>%
     dplyr::mutate(n_frequency = n/sum(n)) %>%
-    dplyr::filter(n_frequency < max_frequency)
+    dplyr::filter(n_frequency <= max_frequency)
 
 
   frequency_plot <-

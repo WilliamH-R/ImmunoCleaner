@@ -13,7 +13,6 @@
 #'
 #' @param identifier A variable in the data frame with which the data set should
 #'     be distinct by to avoid a bias towards experiments with many observations.
-#'     Needs to be specified, even if set to default.
 #'
 #' @return A table with a count of relevant binders stratified on `summarise_by`.
 #'

@@ -18,7 +18,7 @@ pivot_longer_pMHC <- function(.data,
                               pMHC_pattern = "[A-Z]{5,}"){
   data_clean <-
     .data %>%
-    tidyr::pivot_longer(dplyr::matches(allele_pattern,
+    tidyr::pivot_longer(dplyr::matches(pMHC_pattern,
                                        ignore.case = FALSE),
                         names_to = "pMHC",
                         values_to = "UMI_count") %>%

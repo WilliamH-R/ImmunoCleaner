@@ -7,7 +7,7 @@
 run_all_prep(.data)
 }
 \arguments{
-\item{data}{A data frame which need preparation before modelling. Four such
+\item{.data}{A data frame which need preparation before modelling. Four such
 data frames are already present in this package:
 * \code{vdj_v1_hs_aggregated_donor1_binarized_matrix}
 * \code{vdj_v1_hs_aggregated_donor2_binarized_matrix}

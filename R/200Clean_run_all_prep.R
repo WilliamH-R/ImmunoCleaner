@@ -37,7 +37,6 @@
 #' @family Preparation functions
 #' @export
 #'
-#'
 #' @examples
 #' # Simply supply the function with the name of a data frame:
 #' run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix)
@@ -45,6 +44,7 @@
 #' # Or by using the pipe from `magrittr`:
 #' vdj_v1_hs_aggregated_donor1_binarized_matrix %>%
 #'     run_all_prep()
+#'
 
 run_all_prep <- function(.data) {
 

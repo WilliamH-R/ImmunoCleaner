@@ -1,15 +1,35 @@
-#' Title
+#' Bar plot showing distribution of TCR-sequence promiscuity
+#'
+#' `alpha_beta_pair_distribution()` takes as input a prepared data frame. It plots
+#'     the distribution of categories found in the column `TCR_combination`.
+#'     A total of four categories exist:
+#'     * Only one alpha chain and no beta chain
+#'     * No alpha chain and one beta chain
+#'     * One alpha- and one beta chain
+#'     * Other combinations
 #'
 #' @inheritParams summarise_with_filter
 #'
 #' @param pMHC_filter A pMHC to use for filtering, to only include that specific
-#'     pMHC from the data set. Default is `FALSE`, i.e. no filtering.
+#'     pMHC from the data set. Default is `NULL`, i.e. no filtering. Must be
+#'     supplied as string.
 #'
 #' @return Returns a bar plot with a frequency distribution of the different
 #'     combinations of alpha- beta pairs.
 #'
 #' @family Modelling functions
 #' @export
+#'
+#' @examples
+#' # The function is run by simply piping `.data` into it:
+#' data_donor_one %>%
+#'     alpha_beta_pair_distribution()
+#'
+#' # A specific pMHC can be specified to show distribution of only that pMHC:
+#' data_donor_one %>%
+#'     alpha_beta_pair_distribution(pMHC_filter = "A0101_VTEHDTLLY_IE-1_CMV")
+#'
+
 alpha_beta_pair_distribution <- function(.data,
                                          pMHC_filter = NULL) {
 
