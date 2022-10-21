@@ -18,8 +18,7 @@ logo_plot(
 \code{beta} used for the logo plot. Default is set to \code{alpha}.}
 
 \item{identifier}{A variable in the data frame with which the data set should
-be distinct by to avoid a bias towards experiments with many observations.
-Needs to be specified, even if set to default.}
+be distinct by to avoid a bias towards experiments with many observations.}
 
 \item{sequence_length}{An integer for the length of \code{TCR_sequence} desired
 for the logo plot.}

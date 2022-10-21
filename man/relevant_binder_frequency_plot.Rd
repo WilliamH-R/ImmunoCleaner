@@ -2,7 +2,7 @@
 % Please edit documentation in R/430Model_relevant_binder_frequency_plot.R
 \name{relevant_binder_frequency_plot}
 \alias{relevant_binder_frequency_plot}
-\title{Title}
+\title{Interactive plot showing relevant binders between pMHC and TCR-sequences}
 \usage{
 relevant_binder_frequency_plot(.data, identifier = barcode, max_frequency = 1)
 }
@@ -10,17 +10,33 @@ relevant_binder_frequency_plot(.data, identifier = barcode, max_frequency = 1)
 \item{.data}{An prepared data frame ready for modelling.}
 
 \item{identifier}{A variable in the data frame with which the data set should
-be distinct by to avoid a bias towards experiments with many observations.
-Needs to be specified, even if set to default.}
+be distinct by to avoid a bias towards experiments with many observations.}
+
+\item{max_frequency}{A float representing the maximum allowed value of frequencies.}
 }
 \value{
-An interactive plotly plot with different relevant alpha:beta pairs,
+An interactive plotly plot with different relevant non-promiscuous pairs
 and pMHC. The size of dots depends on the frequency of that specific
 interaction occuring compared to other pMHC which bind the same
-alpha:beta pair.
+non-promiscuous pair.
 }
 \description{
-Title
+\code{relevant_binder_frequency_plot()} takes a prepared data frame, \code{.data}, and
+count the number of relevant binders stratified on both non-promiscuous
+pairs and pMHC. The frequency of a specific pMHC is calculated based on
+the total number of pMHCs which bind to a non-promiscuous pair. The output
+is a plotly plot, meaning it is interactive. The x- and y-values can be
+found by hovering a dot in the plot.
+}
+\examples{
+# A prepared data frame is simply piped through the function:
+data_donor_four \%>\%
+    relevant_binder_frequency_plot()
+
+# The maximum value of allowed frequencies can be changed:
+data_donor_four \%>\%
+    relevant_binder_frequency_plot(max_frequency = 0.8)
+
 }
 \seealso{
 Other Modelling functions: 

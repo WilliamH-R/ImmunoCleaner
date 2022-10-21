@@ -2,7 +2,7 @@
 % Please edit documentation in R/460Model_alpha_beta_sequence_consistency.R
 \name{alpha_beta_consistency}
 \alias{alpha_beta_consistency}
-\title{Title}
+\title{Bar plot showing consistency of the alpha- and beta chains}
 \usage{
 alpha_beta_consistency(.data, identifier = barcode)
 }
@@ -10,16 +10,27 @@ alpha_beta_consistency(.data, identifier = barcode)
 \item{.data}{An prepared data frame ready for modelling.}
 
 \item{identifier}{A variable in the data frame with which the data set should
-be distinct by to avoid a bias towards experiments with many observations.
-Needs to be specified, even if set to default.}
+be distinct by to avoid a bias towards experiments with many observations.}
 }
 \value{
 Returns a bar plot with the relative distinctiveness of all alpha
-and beta chains. Meaning a lower value, means less distinctive sequences
+and beta chains. A lower value means less distinctive sequences
 compared to the total number of that chain.
 }
 \description{
-Title
+\code{alpha_beta_consistency()} takes as input a prepared data frame. Firstly,
+the total number of alpha- and beta chains are calculated respectively.
+This is done by grouping on \code{identifier} (i.e. experiments) and making
+\code{TCR_sequence} distrinct and then counting. Secondly, the number of different
+alpha- and beta chains respectively is counted. This is done by making them
+distinct without grouping. The distinctiveness is then calculated as
+number of unique divided by total number of chains, statified on chain type.
+}
+\examples{
+# The function takes no arguments to alter the plot:
+data_donor_two \%>\%
+    alpha_beta_consistency()
+
 }
 \seealso{
 Other Modelling functions: 

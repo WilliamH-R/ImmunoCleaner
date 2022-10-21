@@ -23,10 +23,10 @@
 #'
 #' @param .data A data frame which need preparation before modelling. Four such
 #'     data frames are already present in this package:
-#'     * `vdj_v1_hs_aggregated_donor1_binarized_matrix`
-#'     * `vdj_v1_hs_aggregated_donor2_binarized_matrix`
-#'     * `vdj_v1_hs_aggregated_donor3_binarized_matrix`
-#'     * `vdj_v1_hs_aggregated_donor4_binarized_matrix`
+#'     * `data_donor_one_raw`
+#'     * `data_donor_two_raw`
+#'     * `data_donor_three_raw`
+#'     * `data_donor_four_raw`
 #'
 #' @return An object which is now prepared data frame, of the same type as `.data`.
 #'  The output has the following differences:

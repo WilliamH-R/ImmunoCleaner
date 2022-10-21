@@ -10,8 +10,7 @@ multiple_relevant_binders(.data, identifier = barcode)
 \item{.data}{An prepared data frame ready for modelling.}
 
 \item{identifier}{A variable in the data frame with which the data set should
-be distinct by to avoid a bias towards experiments with many observations.
-Needs to be specified, even if set to default.}
+be distinct by to avoid a bias towards experiments with many observations.}
 }
 \value{
 Returns a table with all \code{identifier}s which has at least two \code{pMHC}

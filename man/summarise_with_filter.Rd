@@ -18,8 +18,7 @@ as a string or vector of strings. Default is the columns prepared from
 pMHC.}
 
 \item{identifier}{A variable in the data frame with which the data set should
-be distinct by to avoid a bias towards experiments with many observations.
-Needs to be specified, even if set to default.}
+be distinct by to avoid a bias towards experiments with many observations.}
 }
 \value{
 A table with a count of relevant binders stratified on \code{summarise_by}.

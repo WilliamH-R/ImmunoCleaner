@@ -10,6 +10,8 @@ csl: citation_style.csl
 bibliography: bachelor_references.bib
 ---
 
+# Imports
+
 ```{r setup}
 library(TCRSequenceFunctions)
 ```
@@ -26,13 +28,18 @@ Lastly will be a short section on a Shiny Package, [TCRSequenceShiny](https://gi
 
 # Tidying the data
 
-The aim of tidying the data is to enable the data handling, and to ensure a reproducible result. Firstly, the data is cleaned e.g. by making sure, all cells only contain one piece of information. After, some augmented was needed to enable the modelling. This was done by e.g. adding new columns. A wrapper function was used to run all the preparation functions: `run_all_prep()`. This wrapper simply takes one of the raw data files included in the package as input, and pipe it through all the preparation functions, and output a tidy data set as so:
+The aim of tidying the data is to enable the data handling, and to ensure a reproducible result. Firstly, the data is cleaned e.g. by making sure, all cells only contain one piece of information. After, some augmented was needed to enable the modelling. This was done by e.g. adding new columns. A wrapper function was used to run all the preparation functions: `run_all_prep()`. This wrapper simply takes one of the raw data files included in the package as input, and pipe it through all the preparation functions, and output tidy data as in @tbl-clean_data:
 
 ```{r}
-vdj_v1_hs_aggregated_donor4_binarized_matrix %>% 
-  run_all_prep()
-```
+#| echo: false
+#| label: tbl-clean_data
 
+vdj_v1_hs_aggregated_donor4_binarized_matrix %>% 
+  run_all_prep() %>% 
+  knitr::kable(format = "markdown")
+
+
+```
 
 ## Cleaning
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/450Model_alpha_beta_pair_distributions.R
 \name{alpha_beta_pair_distribution}
 \alias{alpha_beta_pair_distribution}
-\title{Title}
+\title{Bar plot showing distribution of TCR-sequence promiscuity}
 \usage{
 alpha_beta_pair_distribution(.data, pMHC_filter = NULL)
 }
@@ -10,14 +10,31 @@ alpha_beta_pair_distribution(.data, pMHC_filter = NULL)
 \item{.data}{An prepared data frame ready for modelling.}
 
 \item{pMHC_filter}{A pMHC to use for filtering, to only include that specific
-pMHC from the data set. Default is \code{FALSE}, i.e. no filtering.}
+pMHC from the data set. Default is \code{NULL}, i.e. no filtering. Must be
+supplied as string.}
 }
 \value{
 Returns a bar plot with a frequency distribution of the different
 combinations of alpha- beta pairs.
 }
 \description{
-Title
+\code{alpha_beta_pair_distribution()} takes as input a prepared data frame. It plots
+the distribution of categories found in the column \code{TCR_combination}.
+A total of four categories exist:
+* Only one alpha chain and no beta chain
+* No alpha chain and one beta chain
+* One alpha- and one beta chain
+* Other combinations
+}
+\examples{
+# The function is run by simply piping `.data` into it:
+data_donor_one \%>\%
+    alpha_beta_pair_distribution()
+
+# A specific pMHC can be specified to show distribution of only that pMHC:
+data_donor_one \%>\%
+    alpha_beta_pair_distribution(pMHC_filter = "A0101_VTEHDTLLY_IE-1_CMV")
+
 }
 \seealso{
 Other Modelling functions: 

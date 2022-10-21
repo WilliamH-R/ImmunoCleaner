@@ -11,7 +11,7 @@
 #'   \item{cell_clono_cdr3_nt}{nucleotide sequence of CDR3 alpha and beta chains}
 #' }
 #' @source \url{https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-1-1-standard-3-0-2}
-"vdj_v1_hs_aggregated_donor1_binarized_matrix"
+"data_donor_one_raw"
 
 #' CD8+ T-cells of Healthy donor 2
 #'
@@ -26,7 +26,7 @@
 #'   \item{cell_clono_cdr3_nt}{nucleotide sequence of CDR3 alpha and beta chains}
 #' }
 #' @source \url{https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-2-1-standard-3-0-2}
-"vdj_v1_hs_aggregated_donor2_binarized_matrix"
+"data_donor_two_raw"
 
 #' CD8+ T-cells of Healthy donor 3
 #'
@@ -41,7 +41,7 @@
 #'   \item{cell_clono_cdr3_nt}{nucleotide sequence of CDR3 alpha and beta chains}
 #' }
 #' @source \url{https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-3-1-standard-3-0-2}
-"vdj_v1_hs_aggregated_donor3_binarized_matrix"
+"data_donor_three_raw"
 
 #' CD8+ T-cells of Healthy donor 4
 #'
@@ -56,7 +56,7 @@
 #'   \item{cell_clono_cdr3_nt}{nucleotide sequence of CDR3 alpha and beta chains}
 #' }
 #' @source \url{https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-4-1-standard-3-0-2}
-"vdj_v1_hs_aggregated_donor4_binarized_matrix"
+"data_donor_four_raw"
 
 #' Prepared data from donor one
 #'
@@ -64,8 +64,8 @@
 #'
 #' @format A data frame with 500k rows and 27 columns
 #'
-#' @source Prepared data from `vdj_v1_hs_aggregated_donor1_binarized_matrix`
-"data_donor_one"
+#' @source Prepared data from `data_donor_one_raw`
+"data_donor_one_tidy"
 
 #' Prepared data from donor two
 #'
@@ -73,8 +73,8 @@
 #'
 #' @format A data frame with 800k rows and 27 columns
 #'
-#' @source Prepared data from `vdj_v1_hs_aggregated_donor2_binarized_matrix`
-"data_donor_two"
+#' @source Prepared data from `data_donor_two_raw`
+"data_donor_two_tidy"
 
 #' Prepared data from donor three
 #'
@@ -82,8 +82,8 @@
 #'
 #' @format A data frame with 580k rows and 27 columns
 #'
-#' @source Prepared data from `vdj_v1_hs_aggregated_donor3_binarized_matrix`
-"data_donor_three"
+#' @source Prepared data from `data_donor_three_raw`
+"data_donor_three_tidy"
 
 #' Prepared data from donor four
 #'
@@ -91,5 +91,16 @@
 #'
 #' @format A data frame with 190k rows and 27 columns
 #'
-#' @source Prepared data from `vdj_v1_hs_aggregated_donor4_binarized_matrix`
-"data_donor_four"
+#' @source Prepared data from `data_donor_four_raw`
+"data_donor_four_tidy"
+
+#' Mock data from donor one, top 1000 rows
+#'
+#' The data frame contains data from donor one, but only the top 1000 rows.
+#' The purpose is to use this mock data in techinal report and vignette to speed
+#' up computations.
+#'
+#' @format A data frame with 1k rows and 27 columns
+#'
+#' @source Prepared data from `data_donor_one_tidy`
+"data_donor_one_mock"

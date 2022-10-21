@@ -9,10 +9,10 @@ run_all_prep(.data)
 \arguments{
 \item{.data}{A data frame which need preparation before modelling. Four such
 data frames are already present in this package:
-* \code{vdj_v1_hs_aggregated_donor1_binarized_matrix}
-* \code{vdj_v1_hs_aggregated_donor2_binarized_matrix}
-* \code{vdj_v1_hs_aggregated_donor3_binarized_matrix}
-* \code{vdj_v1_hs_aggregated_donor4_binarized_matrix}}
+* \code{data_donor_one_raw}
+* \code{data_donor_two_raw}
+* \code{data_donor_three_raw}
+* \code{data_donor_four_raw}}
 }
 \value{
 An object which is now prepared data frame, of the same type as \code{.data}.
@@ -55,6 +55,7 @@ run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix)
 # Or by using the pipe from `magrittr`:
 vdj_v1_hs_aggregated_donor1_binarized_matrix \%>\%
     run_all_prep()
+
 }
 \seealso{
 Other Preparation functions: 
