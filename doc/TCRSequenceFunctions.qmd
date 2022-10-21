@@ -34,7 +34,7 @@ The aim of tidying the data is to enable the data handling, and to ensure a repr
 #| echo: false
 #| label: tbl-clean_data
 
-vdj_v1_hs_aggregated_donor4_binarized_matrix %>% 
+data_donor_one_raw %>% 
   run_all_prep() %>% 
   knitr::kable(format = "markdown")
 
