@@ -8,15 +8,29 @@ crossref:
   chapters: true
 csl: citation_style.csl
 bibliography: bachelor_references.bib
+editor: visual
 ---
 
-# Imports
+# Imports {#sec-Import}
 
 ```{r setup}
 library(TCRSequenceFunctions)
+library(knitr)
 ```
 
-# Introduction
+```{r calc variables}
+data_list <- list(data_donor_one_raw, data_donor_two_raw,
+                  data_donor_three_raw, data_donor_four_raw)
+
+rows_raw <- c()
+
+for (i in 1:length(data_list)) {
+  rows_raw <- append(rows_raw, nrow(data_list[[i]])) 
+  print(rows_raw)
+}
+```
+
+# Introduction {#sec-Intro}
 
 This package, [TCRSequenceFunctions](https://github.com/WilliamH-R/TCRSequenceFunctions), is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment made by 10x Genomics @10XGenomics2022. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their own respective donor.
 
@@ -26,24 +40,24 @@ In the following sections, each of the functions contained in [TCRSequenceFuncti
 
 Lastly will be a short section on a Shiny Package, [TCRSequenceShiny](https://github.com/WilliamH-R/TCRSequenceShiny), which utilizes these functions to make a user-friendly interactive interface for data exploration.
 
-# Tidying the data
+# Tidying the data {#sec-TidyData}
 
-The aim of tidying the data is to enable the data handling, and to ensure a reproducible result. Firstly, the data is cleaned e.g. by making sure, all cells only contain one piece of information. After, some augmented was needed to enable the modelling. This was done by e.g. adding new columns. A wrapper function was used to run all the preparation functions: `run_all_prep()`. This wrapper simply takes one of the raw data files included in the package as input, and pipe it through all the preparation functions, and output tidy data as in @tbl-clean_data:
+The aim of tidying the data is to enable the data handling, and to ensure a reproducible result. Firstly, the data is cleaned e.g. by making sure, all cells only contain one piece of information. Afterwards, some augmented was needed to enable the modelling. This was done by e.g. adding new columns. A wrapper function was used to run all the preparation functions: `run_all_prep()`. This wrapper simply takes one of the raw data files included in the package as input, and pipe it through all the preparation functions, and output tidy data as in @tbl-tidydata.
 
 ```{r}
-#| echo: false
-#| label: tbl-clean_data
+#| label: tbl-tidydata
+#| tbl-cap: "Tidy data created from raw file"
 
-data_donor_one_raw %>% 
+tidy_data <- data_donor_one_raw_mock %>% 
   run_all_prep() %>% 
-  knitr::kable(format = "markdown")
+  as.data.frame()
 
-
+kable(head(tidy_data[1:4]))
 ```
 
-## Cleaning
+## Cleaning {#sec-CleaningData}
 
-The list of cleaning functions are as follows:
+As mentioned above, cleaning the data is mostly focusing on handling already present data and/or re-structure the data frame. The list of cleaning functions are as follows:
 
 1.  `remove_unnecessary_columns()`
 2.  `split_TCR_sequences_find_non_promiscuous()`
@@ -52,18 +66,29 @@ The list of cleaning functions are as follows:
 5.  `pivot_longer_pMHC()`
 6.  `tidy_pMHC_names()`
 
-## Augmenting
+The first function takes the raw data frame as input, and simply removes the unnecessary columns as these arent needed. By default, the columns removed are those containing `"_binder"` and the column `"cell_clono_cdr3_nt"`. The dimensions of the data sets are then changed as shown in @tbl-function_one_dim.
+
+| Name of data set       | Rows before                  | Rows after | Columns before | Columns after |
+|---------------|----------------|--------------|--------------|--------------|
+| `data_donor_one_raw`   | `r nrow(data_donor_one_raw)` |            |                |               |
+| `data_donor_two_raw`   |                              |            |                |               |
+| `data_donor_three_raw` |                              |            |                |               |
+| `data_donor_four_raw`  |                              |            |                |               |
+
+: Dimensions of data sets before and after being cleaned by `remove_unnecessary_columns()` {#tbl-function_one_dim}
+
+## Augmenting {#sec-AugmentingData}
 
 1.  `add_max_non_specific_binder()`
 2.  `evaluate_binder()`
 3.  `add_TCR_combination_identifier()`
 
-# Modelling
+# Modelling {#sec-ModelData}
 
-# Shiny Integration
+# Shiny Integration {#sec-Shiny}
 
 # References {.unnumbered}
 
-# Appendix
+# Appendix {#sec-Appendix}
 
 ## Appendix A {#sec-AppendixA}
