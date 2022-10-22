@@ -20,7 +20,7 @@ A data frame with 77854 rows and 118 variables:
 data_donor_two_raw
 }
 \description{
-A dataset containing roughly 80 000 TCR alpha- and beta sequences for
+A data set containing roughly 80 000 TCR alpha- and beta sequences for
 Donor 2 along with different coding regions.
 }
 \keyword{datasets}

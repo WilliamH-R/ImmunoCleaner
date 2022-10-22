@@ -73,14 +73,63 @@ data_donor_one_raw %>%
 #> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 
 data_donor_one_tidy
-    
+#> # A tibble: 512,264 x 27
+#>   barcode TCR_s~1 TCR_c~2 donor chain   CD3  CD19 CD45RA   CD4  CD8a  CD14 CD45RO CD279~3  IgG1 IgG2a
+#>   <chr>   <chr>   <chr>   <chr> <chr> <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl>  <dbl>   <dbl> <dbl> <dbl>
+#> 1 AAACCT~ CAASVS~ other   dono~ alpha  2125     0    912     1  2223     4     13       1     3     2
+#> 2 AAACCT~ CAASVS~ other   dono~ alpha  2125     0    912     1  2223     4     13       1     3     2
+#> 3 AAACCT~ CAAWDM~ other   dono~ alpha  2125     0    912     1  2223     4     13       1     3     2
+#> 4 AAACCT~ CAAWDM~ other   dono~ alpha  2125     0    912     1  2223     4     13       1     3     2
+#> 5 AAACCT~ CAISDP~ other   dono~ beta   2125     0    912     1  2223     4     13       1     3     2
+#> 6 AAACCT~ CAISDP~ other   dono~ beta   2125     0    912     1  2223     4     13       1     3     2
+#> 7 AAACCT~ CASDTP~ one_be~ dono~ beta   1023     0   2028     2  3485     1      1       3     1     2
+#> 8 AAACCT~ CASDTP~ one_be~ dono~ beta   1023     0   2028     2  3485     1      1       3     1     2
+#> 9 AAACCT~ CASDTP~ one_be~ dono~ beta   1023     0   2028     2  3485     1      1       3     1     2
+#>10 AAACCT~ CASYTD~ one_al~ dono~ alpha  1598     3   3454     4  3383     1      0       5     0     5
+#> # ... with 512,254 more rows, 12 more variables: IgG2b <dbl>, CD127 <dbl>, CD197_CCR7 <dbl>,
+#> #   `HLA-DR` <dbl>, non_promiscuous_pair <chr>, pMHC <chr>, allele <chr>, peptide <chr>,
+#> #   peptide_source <chr>, UMI_count <dbl>, max_non_specific_binder <dbl>, is_binder <lgl>, and
+#> #   abbreviated variable names 1: TCR_sequence, 2: TCR_combination, 3: `CD279_PD-1`
+#> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names  
+
 data_donor_one_tidy %>% 
-    summarse_with_filter()
-    
+    summarise_with_filter()
+#> # A tibble: 34 x 4
+#> # Groups:   allele, peptide, peptide_source [34]
+#>   allele peptide    peptide_source      count
+#>   <chr>  <chr>      <chr>               <int>
+#> 1 A0201  CLLWSFQTSA Tyrosinase_Cancer       1
+#> 2 A0201  ELAGIGILTV MART-1_Cancer         242
+#> 3 A0201  FLASKIGRLV Ca2-indepen-Plip-A2     8
+#> 4 A0201  FLYALALLL  LMP2A_EBV              21
+#> 5 A0201  GILGFVFTL  Flu-MP_Influenza     2617
+#> 6 A0201  GLCTLVAML  BMLF1_EBV              39
+#> 7 A0201  IMDQVPFSV  gp100_Cancer            5
+#> 8 A0201  KTWGQYWQV  gp100_Cancer            7
+#> 9 A0201  KVLEYVIKV  MAGE-A1_Cancer          3
+#>10 A0201  LLDFVRFMGV EBNA-3B_EBV           142
+#> # ... with 24 more rows
+#> # i Use `print(n = ...)` to see more rows
+
 data_donor_one_tidy %>% 
     evaluate_binder(UMI_count_min = 20,
                             non_specific_UMI_count_min = 10) %>% 
     summarise_with_filter()
-
+#> # A tibble: 30 x 4
+#> # Groups:   allele, peptide, peptide_source [30]
+#>   allele peptide    peptide_source      count
+#>   <chr>  <chr>      <chr>               <int>
+#> 1 A0201  CLLWSFQTSA Tyrosinase_Cancer       1
+#> 2 A0201  ELAGIGILTV MART-1_Cancer         135
+#> 3 A0201  FLASKIGRLV Ca2-indepen-Plip-A2     3
+#> 4 A0201  FLYALALLL  LMP2A_EBV              18
+#> 5 A0201  GILGFVFTL  Flu-MP_Influenza     2509
+#> 6 A0201  GLCTLVAML  BMLF1_EBV              34
+#> 7 A0201  IMDQVPFSV  gp100_Cancer            5
+#> 8 A0201  KTWGQYWQV  gp100_Cancer            2
+#> 9 A0201  KVLEYVIKV  MAGE-A1_Cancer          3
+#> 10 A0201  LLDFVRFMGV EBNA-3B_EBV           136
+#> # ... with 20 more rows
+#> # i Use `print(n = ...)` to see more rows
 
 ```
