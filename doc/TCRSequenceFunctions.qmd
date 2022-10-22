@@ -69,7 +69,7 @@ As mentioned above, cleaning the data is mostly focusing on handling already pre
 The first function takes the raw data frame as input, and simply removes the unnecessary columns as these arent needed. By default, the columns removed are those containing `"_binder"` and the column `"cell_clono_cdr3_nt"`. The dimensions of the data sets are then changed as shown in @tbl-function_one_dim.
 
 | Name of data set       | Rows before                  | Rows after | Columns before | Columns after |
-|---------------|----------------|--------------|--------------|--------------|
+|------------------------|------------------------------|------------|----------------|---------------|
 | `data_donor_one_raw`   | `r nrow(data_donor_one_raw)` |            |                |               |
 | `data_donor_two_raw`   |                              |            |                |               |
 | `data_donor_three_raw` |                              |            |                |               |

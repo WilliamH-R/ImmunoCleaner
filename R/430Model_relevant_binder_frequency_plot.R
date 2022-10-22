@@ -55,11 +55,14 @@ relevant_binder_frequency_plot <- function(.data,
       mode = "markers",
       marker = list(
         size = ~n_frequency*15
-      )
+      ),
+      height = 750
     ) %>%
     plotly::layout(
-      title = "Frequencies of binding between pMHC and alpha:beta pairs",
-      xaxis = list(showticklabels = FALSE),
+      title = list(text = "Frequencies of binding between pMHC and alpha:beta pairs",
+                   x = 0),
+      xaxis = list(title = "Non-promiscuous TCR-Sequences",
+                   showticklabels = FALSE),
       yaxis = list(showticklabels = FALSE)
     )
 return(frequency_plot)
