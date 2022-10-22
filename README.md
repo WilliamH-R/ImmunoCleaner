@@ -1,2 +1,86 @@
 # TCRSequencesFunctions
-Contains the functions used for handling a large database of TCR sequences
+
+## Overview
+
+This package contains a series of functions to tidy and model data sets pertaining to Single Cell Immune Profiling. These data sets are also included in the package, and was made publicly available by 10x Genomics. (source: [10x Genomics](https://www.10xgenomics.com/resources/datasets?query=&page=1&configure%5Bfacets%5D%5B0%5D=chemistryVersionAndThroughput&configure%5Bfacets%5D%5B1%5D=pipeline.version&configure%5BhitsPerPage%5D=500&configure%5BmaxValuesPerFacet%5D=1000&menu%5Bproducts.name%5D=Single%20Cell%20Immune%20Profiling)).
+
+The included raw data sets are:
+
+* `data_donor_one_raw`: Data from donor one. Each row represent a cell from the donor. Each column contains either a TCR-sequence or an UMI-count for interactions between the antibodies of the cell and a pMHC. Lastly, columns are included to evaluate whether an interaction is relevant or not. The value is a boolean. (Source: https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-1-1-standard-3-0-2)
+
+* `data_donor_two_raw`: Data from donor two. Follows the same structure as above. (Source: https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-2-1-standard-3-0-2)
+
+* `data_donor_three_raw`: Data from donor three. Follows the same structure as above. (Source: https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-3-1-standard-3-0-2)
+
+* `data_donor_four_raw`: Data from donor four. Follows the same structure as above. (Source: https://www.10xgenomics.com/resources/datasets/cd-8-plus-t-cells-of-healthy-donor-4-1-standard-3-0-2)
+
+For each of the raw data sets, a tidy version exist to avoid the need of always running the wrapper function `run_all_prep()`. The names are:
+
+| Name of raw data        | Name of tidy data        |
+| :---------------------- | :----------------------  |
+| `data_donor_one_raw`    | `data_donor_one_tidy`    |
+| `data_donor_two_raw`    | `data_donor_two_tidy`    |
+| `data_donor_three_raw`  | `data_donor_three_tidy`  |
+| `data_donor_four_raw`   | `data_donor_four_tidy`   |
+
+All of the tidy-functions needed to prepare the data as gathered in the wrapper `run_all_prep()`. The output of this function is a data frame, which can be used directly in the modelling functions. The modelling functions are as follows:
+
+* `summarise_with_filter()`: A simple count of relevant binders stratified on user input. The output is a table.
+
+* `relevant_binder_frequency_plot()`: The output is a plotly plot showing all relevant binding events between TCR-sequences and pMHC.
+
+* `alpha_beta_pair_distribution()`: The function outputs a bar plot showing the distribution of alpha- beta chain composition. E.g., if a TCR-sequence only consists of an alpha chain, or perhaps only consists of a beta chain.
+
+* `alpha_beta_sequence_consistency()`: A bar plot showing the relative distinctiveness of all the alpha and beta chains.
+
+## Shiny Integration
+
+This entire package is made to work with a Shiny App found [here](https://github.com/WilliamH-R/TCRSequenceShiny). The Shiny App gives an interactive interface for exploring and modelling the data sets mentioned in the above.
+
+## Installation
+
+```R
+# Install the package from GitHub
+devtools::install_github("WilliamH-R/TCRSequenceFunctions")
+```
+
+## Usage
+
+```R
+library(TCRSequenceFunctions)
+
+data_donor_one_raw %>% 
+    run_all_prep()
+#> # A tibble: 512,264 x 27
+#>   barcode      TCR_s~1 TCR_c~2 donor chain   CD3  CD19 CD45RA   CD4  CD8a  CD14
+#>   <chr>        <chr>   <fct>   <chr> <chr> <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl>
+#> 1 AAACCTGAGAC~ CAASVS~ other   dono~ alpha  2125     0    912     1  2223     4
+#> 2 AAACCTGAGAC~ CAASVS~ other   dono~ alpha  2125     0    912     1  2223     4
+#> 3 AAACCTGAGAC~ CAAWDM~ other   dono~ alpha  2125     0    912     1  2223     4
+#> 4 AAACCTGAGAC~ CAAWDM~ other   dono~ alpha  2125     0    912     1  2223     4
+#> 5 AAACCTGAGAC~ CAISDP~ other   dono~ beta   2125     0    912     1  2223     4
+#> 6 AAACCTGAGAC~ CAISDP~ other   dono~ beta   2125     0    912     1  2223     4
+#> 7 AAACCTGAGAC~ CASDTP~ one_be~ dono~ beta   1023     0   2028     2  3485     1
+#> 8 AAACCTGAGAC~ CASDTP~ one_be~ dono~ beta   1023     0   2028     2  3485     1
+#> 9 AAACCTGAGAC~ CASDTP~ one_be~ dono~ beta   1023     0   2028     2  3485     1
+#>10 AAACCTGAGAG~ CASYTD~ one_al~ dono~ alpha  1598     3   3454     4  3383     1
+#> # ... with 512,254 more rows, 16 more variables: CD45RO <dbl>,
+#> #   `CD279_PD-1` <dbl>, IgG1 <dbl>, IgG2a <dbl>, IgG2b <dbl>, CD127 <dbl>,
+#> #   CD197_CCR7 <dbl>, `HLA-DR` <dbl>, non_promiscuous_pair <chr>, pMHC <chr>,
+#> #   allele <chr>, peptide <chr>, peptide_source <chr>, UMI_count <dbl>,
+#> #   max_non_specific_binder <dbl>, is_binder <lgl>, and abbreviated variable
+#> #   names 1: TCR_sequence, 2: TCR_combination
+#> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+
+data_donor_one_tidy
+    
+data_donor_one_tidy %>% 
+    summarse_with_filter()
+    
+data_donor_one_tidy %>% 
+    evaluate_binder(UMI_count_min = 20,
+                            non_specific_UMI_count_min = 10) %>% 
+    summarise_with_filter()
+
+
+```

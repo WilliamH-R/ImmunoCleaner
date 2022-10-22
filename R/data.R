@@ -1,6 +1,6 @@
 #' CD8+ T-cells of Healthy donor 1
 #'
-#' A dataset containing roughly 50 000 TCR alpha- and beta sequences for
+#' A data set containing roughly 50 000 TCR alpha- and beta sequences for
 #' Donor 1 along with different coding regions.
 #'
 #' @format A data frame with 46526 rows and 118 variables:
@@ -15,7 +15,7 @@
 
 #' CD8+ T-cells of Healthy donor 2
 #'
-#' A dataset containing roughly 80 000 TCR alpha- and beta sequences for
+#' A data set containing roughly 80 000 TCR alpha- and beta sequences for
 #' Donor 2 along with different coding regions.
 #'
 #' @format A data frame with 77854 rows and 118 variables:
