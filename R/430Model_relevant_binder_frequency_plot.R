@@ -21,11 +21,11 @@
 #'
 #' @examples
 #' # A prepared data frame is simply piped through the function:
-#' data_donor_four %>%
+#' data_donor_four_tidy %>%
 #'     relevant_binder_frequency_plot()
 #'
 #' # The maximum value of allowed frequencies can be changed:
-#' data_donor_four %>%
+#' data_donor_four_tidy %>%
 #'     relevant_binder_frequency_plot(max_frequency = 0.8)
 #'
 

@@ -50,10 +50,10 @@ The following functions are run:
 }
 \examples{
 # Simply supply the function with the name of a data frame:
-run_all_prep(vdj_v1_hs_aggregated_donor1_binarized_matrix)
+run_all_prep(data_donor_one_raw)
 
 # Or by using the pipe from `magrittr`:
-vdj_v1_hs_aggregated_donor1_binarized_matrix \%>\%
+data_donor_one_raw \%>\%
     run_all_prep()
 
 }

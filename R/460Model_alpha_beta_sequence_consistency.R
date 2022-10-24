@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' # The function takes no arguments to alter the plot:
-#' data_donor_two %>%
+#' data_donor_two_tidy %>%
 #'     alpha_beta_consistency()
 #'
 

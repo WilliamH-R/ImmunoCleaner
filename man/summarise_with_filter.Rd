@@ -32,18 +32,18 @@ The counting is grouped by columns provided by the user through the argument
 \examples{
 # A prepared data frame needs to be provided. Can either be done by using
 # the already cleaned data frames or the raw data files piped through `?run_all_prep`
-data_donor_one \%>\%
+data_donor_one_tidy \%>\%
     summarise_with_filter()
 
-vdj_v1_hs_aggregated_donor1_binarized_matrix \%>\%
+data_donor_one_raw \%>\%
     run_all_prep() \%>\%
     summarse_with_filter()
 
 # The stratification can be done for one or several columns:
-data_donor_one \%>\%
+data_donor_one_tidy \%>\%
     summarise_with_filter(summarise_by = "allele")
 
-data_donor_one \%>\%
+data_donor_one_tidy \%>\%
     summarise_with_filter(summarise_by = c("allele",
                                            "peptide_source"))
 

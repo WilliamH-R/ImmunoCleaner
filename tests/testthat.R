@@ -10,4 +10,3 @@ library(testthat)
 library(TCRSequenceFunctions)
 
 test_check("TCRSequenceFunctions")
-
