@@ -38,7 +38,7 @@ of a TCR-sequence.
 The following functions are run:
 \itemize{
 \item \code{remove_unnecessary_columns()}
-\item \code{split_TCR_sequences_find_non_promiscuous()}
+\item \code{find_non_promiscuous_split_TCR_sequences()}
 \item \code{pivot_longer_TCR_sequences()}
 \item \code{add_chain_ident_remove_prefix()}
 \item \code{pivot_longer_pMHC()}

@@ -12,7 +12,7 @@
 #'
 #' The following functions are run:
 #'  * `remove_unnecessary_columns()`
-#'  * `split_TCR_sequences_find_non_promiscuous()`
+#'  * `find_non_promiscuous_split_TCR_sequences()`
 #'  * `pivot_longer_TCR_sequences()`
 #'  * `add_chain_ident_remove_prefix()`
 #'  * `pivot_longer_pMHC()`
@@ -51,7 +51,7 @@ run_all_prep <- function(.data) {
   data_clean <-
     .data %>%
     remove_unnecessary_columns() %>%
-    split_TCR_sequences_find_non_promiscuous() %>%
+    find_non_promiscuous_split_TCR_sequences() %>%
     pivot_longer_TCR_sequences() %>%
     add_chain_ident_remove_prefix() %>%
     pivot_longer_pMHC() %>%

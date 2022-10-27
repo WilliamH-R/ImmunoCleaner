@@ -1,7 +1,7 @@
 #' Pivot longer TCR-sequences
 #'
 #' `pivot_longer_TCR_sequences()` pivot longer alle the TCR-sequence columns created
-#'     by `?split_TCR_sequences_find_non_promiscuous`. After, all `NA` values are
+#'     by `?find_non_promiscuous_split_TCR_sequences`. After, all `NA` values are
 #'     dropped to reduce dimensions.
 #'
 #' @inheritParams remove_unnecessary_columns

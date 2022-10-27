@@ -1,6 +1,6 @@
 #' Tidy TCR-sequences and find non-promiscuous TCR-pairs
 #'
-#' `split_TCR_sequences_find_non_promiscuous()` start by adding a column to indicate
+#' `find_non_promiscuous_split_TCR_sequences()` start by adding a column to indicate
 #'     non-promiscuous TCR-sequences (meaning, they have only one alpha and one
 #'     beta chain). After, `TCR_col` is split based on `separator` to make it tidy.
 #'     Lastly, the prefix `replace_pattern` is removed by replacing with `replace_with`.
@@ -26,7 +26,7 @@
 #' @noRd
 #'
 
-split_TCR_sequences_find_non_promiscuous <- function(.data,
+find_non_promiscuous_split_TCR_sequences <- function(.data,
                                                      TCR_col = cell_clono_cdr3_aa,
                                                      separator = ";",
                                                      replace_pattern = "TR[A|B]:",

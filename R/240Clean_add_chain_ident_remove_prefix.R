@@ -6,7 +6,7 @@
 #'
 #' @inheritParams remove_unnecessary_columns
 #'
-#' @inheritParams split_TCR_sequences_find_non_promiscuous
+#' @inheritParams find_non_promiscuous_split_TCR_sequences
 #'
 #' @return Return `.data` with a column added indicating the chain type,
 #'     and with the prefix "TRA" and "TRB" removed.

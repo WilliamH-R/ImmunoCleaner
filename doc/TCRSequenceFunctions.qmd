@@ -1,7 +1,7 @@
 ---
 title: "Exploring CD8+ T-cell Specificities using Single Cell Immune Profiling with an Outlook to Reproducible Bio Data Science"
 author: "William Hagedorn-Rasmussen"
-format: html
+format: pdf
 toc: true
 number-sections: true
 crossref:
@@ -16,18 +16,6 @@ editor: visual
 ```{r setup}
 library(TCRSequenceFunctions)
 library(knitr)
-```
-
-```{r calc_variables}
-data_list <- list(data_donor_one_raw, data_donor_two_raw,
-                  data_donor_three_raw, data_donor_four_raw)
-
-rows_raw <- c()
-
-for (i in 1:length(data_list)) {
-  rows_raw <- append(rows_raw, nrow(data_list[[i]])) 
-  print(rows_raw)
-}
 ```
 
 # Introduction {#sec-Intro}
@@ -48,11 +36,11 @@ The aim of tidying the data is to enable the data handling, and to ensure a repr
 #| label: tbl-tidydata
 #| tbl-cap: "Tidy data created from raw file"
 
-tidy_data <- data_donor_one_raw_mock %>% 
+data <- data_donor_one_raw_mock %>% 
   run_all_prep() %>% 
   as.data.frame()
 
-kable(head(tidy_data[1:4]))
+kable(head(data[1:4]))
 ```
 
 ## Cleaning {#sec-CleaningData}
@@ -60,28 +48,82 @@ kable(head(tidy_data[1:4]))
 As mentioned above, cleaning the data is mostly focusing on handling already present data and/or re-structure the data frame. The list of cleaning functions are as follows:
 
 1.  `remove_unnecessary_columns()`
-2.  `split_TCR_sequences_find_non_promiscuous()`
+2.  `find_non_promiscuous_split_TCR_sequences()`
 3.  `pivot_longer_TCR_sequences()`
 4.  `add_chain_ident_remove_prefix()`
 5.  `pivot_longer_pMHC()`
 6.  `tidy_pMHC_names()`
 
-The first function takes the raw data frame as input, and simply removes the unnecessary columns as these aren't needed. By default, the columns removed are those containing `"_binder"` and the column `"cell_clono_cdr3_nt"`. The dimensions of the data sets are then changed as shown in @tbl-function_one_dim.
+The first function takes the raw data frame as input, and simply removes the unnecessary columns as these aren't needed. By default, the columns removed are those containing `"_binder"` and the column `"cell_clono_cdr3_nt"`.
 
-| Name of data set       | Rows before                  | Rows after | Columns before | Columns after |
-|------------------------|------------------------------|------------|----------------|---------------|
-| `data_donor_one_raw`   | `r nrow(data_donor_one_raw)` |            |                |               |
-| `data_donor_two_raw`   |                              |            |                |               |
-| `data_donor_three_raw` |                              |            |                |               |
-| `data_donor_four_raw`  |                              |            |                |               |
+`find_non_promiscuous_split_TCR_sequences()`, `pivot_longer_TCR_sequence()` and `add_chain_ident_remove_prefix()` works in close relation to each other. The purpose is to tidy the TCR-sequences, as to not have cells with multiple pieces of information. @tbl-TCR_sequence_example_before shows two examples as to how these are written. A column is added to indicate a non-promiscuous pair (a pair with one alpha- and beta chain respectively) and contains the TCR-sequence of said pair. This is done since the sequences of non-promiscuous pairs are needed for modelling in `relevant_binder_frequency_plot()`. The TCR-sequences are then split into new columns, one for each chain. These new columns are then pivot longer into the column `TCR_sequence` by `pivot_longer_TCR_sequence()`. Lastly, a new column as added to indicate chain type, `chain`, and the chain indicator `"TR[A|B]"` is removed. The result can be seen in @tbl-TCR_sequence_example_after.
 
-: Dimensions of data sets before and after being cleaned by `remove_unnecessary_columns()` {#tbl-function_one_dim}
+```{r}
+#| label: tbl-TCR_sequence_example_before
+#| tbl-cap: "A snippet of `data_donor_one_raw` to show two examples as to how TCR-sequences are written"
+#| tbl-colwidths: [20,80]
+
+data <- data_donor_one_raw %>% 
+  dplyr::select(cell_clono_cdr3_aa) %>%
+  dplyr::sample_n(3) %>% 
+  as.data.frame()
+
+kable(data)
+```
+
+```{r}
+#| label: tbl-TCR_sequence_example_after
+#| tbl-cap: "A snippet of the output from `find_non_promiscuous_split_TCR_sequences()` to show a tidy version of the TCR-sequences"
+#| tbl-colwidths: [20,80]
+
+data <- data_donor_one_raw %>%
+  find_non_promiscuous_split_TCR_sequences() %>% 
+  dplyr::select(TCR_sequence, chain, non_promiscuous_pair) %>%
+  dplyr::sample_n(3) %>% 
+  as.data.frame()
+
+kable(data)
+```
 
 ## Augmenting {#sec-AugmentingData}
 
 1.  `add_max_non_specific_binder()`
 2.  `evaluate_binder()`
 3.  `add_TCR_combination_identifier()`
+
+## Change of dimensions
+
+::: {#tbl-dimensions layout-ncol="2"}
+|      **Donor 1**      |          **`raw`**           |          **`tidy`**           |
+|:------------------:|:------------------------:|:-------------------------:|
+| **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_donor_one_tidy)` |
+|  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_donor_one_tidy)` |
+
+: {#tbl-dimensions_donor_one}
+
+|      **Donor 2**      |          **`raw`**           |          **`tidy`**           |
+|:------------------:|:------------------------:|:-------------------------:|
+| **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_donor_two_tidy)` |
+|  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_donor_two_tidy)` |
+
+: {#tbl-dimensions_donor_two}
+
+|      **Donor 3**      |           **`raw`**            |           **`tidy`**            |
+|:-----------------:|:------------------------:|:-------------------------:|
+| **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_donor_three_tidy)` |
+|  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_donor_three_tidy)` |
+
+: {#tbl-dimensions_donor_three}
+
+|      **Donor 4**      |           **`raw`**           |           **`tidy`**           |
+|:------------------:|:------------------------:|:-------------------------:|
+| **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_donor_four_tidy)` |
+|  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_donor_four_tidy)` |
+
+: {#tbl-dimensions_donor_four}
+
+Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 and **(d)** Donor 4 before and after being prepared by the wrapper `run_all_prep()`
+:::
 
 # Modelling {#sec-ModelData}
 
