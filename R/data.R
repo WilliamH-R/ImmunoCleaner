@@ -93,25 +93,3 @@
 #'
 #' @source Prepared data from `data_donor_four_raw`
 "data_donor_four_tidy"
-
-#' Mock raw data from donor one, top 1000 rows
-#'
-#' The data frame contains raw data from donor one, but only the top 1000 rows.
-#' The purpose is to use this raw mock data in technical report and vignette to
-#' speed up computations.
-#'
-#' @format A data frame with 1k rows and 118 columns
-#'
-#' @source Data from `data_donor_one_raw`
-"data_donor_one_raw_mock"
-
-#' Mock tidy data from donor one, top 1000 rows
-#'
-#' The data frame contains tidy data from donor one, but only the top 1000 rows.
-#' The purpose is to use this tidy mock data in technical report and vignette to
-#' speed up computations.
-#'
-#' @format A data frame with 1k rows and 27 columns
-#'
-#' @source Data from `data_donor_one_tidy`
-"data_donor_one_tidy_mock"
