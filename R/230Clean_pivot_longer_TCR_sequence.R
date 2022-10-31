@@ -13,6 +13,7 @@
 #'     of columns.
 #'
 #' @family Preparation functions
+#' @export
 #' @noRd
 #'
 
