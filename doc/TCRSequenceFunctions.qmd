@@ -230,16 +230,36 @@ All of the tidying done in the above enables the modelling which are described i
 
 ## `summarise_with_filter()` {#sec-summarise_with_filter}
 
-As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter.
+As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind more often than others which could show provide interesting.
 
 ```{r}
+#| eval: false
+
+data_donor_one_tidy %>%
+  summarise_with_filter(summarise_by = c("allele", "peptide"))
+```
+
+```{r}
+#| echo: false
 #| label: tbl-summarise_with_filter
 #| tbl-cap: "Output of the function `summarise_with_filter()`. For each allele and for each peptide a count as noted indicating the number of binding events to cells."
 
 data_donor_one_tidy %>%
   summarise_with_filter(summarise_by = c("allele", "peptide")) %>% 
-  gt()
+  dplyr::slice_head(n = 10) %>% 
+  gt() %>%
+  cols_label(
+    allele = md("**allele**"),
+    peptide = md("**peptide**"),
+    count = md("**count**")
+  ) %>% 
+  cols_align(
+    align = "left",
+    columns = count
+  )
 ```
+
+## `relevant_binder_frequency_plot()` {#\"sec-relevant_binder_frequency_plot}
 
 # Shiny Integration {#sec-Shiny}
 
