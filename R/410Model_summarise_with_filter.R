@@ -49,7 +49,8 @@ summarise_with_filter <- function(.data,
     dplyr::filter(is_binder == TRUE) %>%
     dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
-    dplyr::group_by_at(dplyr::all_of(summarise_by)) %>%
-    dplyr::count(name = "count")
+    dplyr::group_by_at(summarise_by) %>%
+    dplyr::count(name = "count") %>%
+    dplyr::ungroup()
   return(data_model)
 }
