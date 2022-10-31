@@ -37,7 +37,7 @@ data_donor_one_tidy \%>\%
 
 data_donor_one_raw \%>\%
     run_all_prep() \%>\%
-    summarse_with_filter()
+    summarise_with_filter()
 
 # The stratification can be done for one or several columns:
 data_donor_one_tidy \%>\%

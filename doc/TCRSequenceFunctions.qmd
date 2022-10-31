@@ -1,7 +1,7 @@
 ---
 title: "Exploring CD8+ T-cell Specificities using Single Cell Immune Profiling with an Outlook to Reproducible Bio Data Science"
 author: "William Hagedorn-Rasmussen"
-format: pdf
+format: html
 toc: true
 number-sections: true
 crossref:
@@ -15,7 +15,7 @@ editor: visual
 
 ```{r setup}
 library(TCRSequenceFunctions)
-library(knitr)
+library(gt)
 ```
 
 # Introduction {#sec-Intro}
@@ -36,11 +36,9 @@ The aim of tidying the data is to enable the data handling, and to ensure a repr
 #| label: tbl-tidydata
 #| tbl-cap: "Tidy data created from raw file"
 
-data <- data_donor_one_raw_mock %>% 
+data_donor_one_raw_mock %>% 
   run_all_prep() %>% 
-  as.data.frame()
-
-kable(head(data[1:4]))
+  gt()
 ```
 
 ## Cleaning {#sec-CleaningData}
@@ -61,28 +59,24 @@ The first function takes the raw data frame as input, and simply removes the unn
 ```{r}
 #| label: tbl-TCR_sequence_example_before
 #| tbl-cap: "A snippet of `data_donor_one_raw` to show two examples as to how TCR-sequences are written"
-#| tbl-colwidths: [20,80]
 
-data <- data_donor_one_raw %>% 
+data_donor_one_raw %>% 
+  dplyr::slice_head(n = 3) %>%
   dplyr::select(cell_clono_cdr3_aa) %>%
-  dplyr::sample_n(3) %>% 
-  as.data.frame()
-
-kable(data)
+  gt()
 ```
 
 ```{r}
 #| label: tbl-TCR_sequence_example_after
 #| tbl-cap: "A snippet of the output from `find_non_promiscuous_split_TCR_sequences()` to show a tidy version of the TCR-sequences"
-#| tbl-colwidths: [20,80]
 
-data <- data_donor_one_raw %>%
+data_donor_one_raw %>%
+  dplyr::slice_head(n = 3) %>%
   find_non_promiscuous_split_TCR_sequences() %>% 
+  pivot_longer_TCR_sequences() %>% 
+  add_chain_ident_remove_prefix() %>% 
   dplyr::select(TCR_sequence, chain, non_promiscuous_pair) %>%
-  dplyr::sample_n(3) %>% 
-  as.data.frame()
-
-kable(data)
+  gt()
 ```
 
 ## Augmenting {#sec-AugmentingData}
