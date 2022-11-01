@@ -4,10 +4,13 @@
 \alias{alpha_beta_pair_distribution}
 \title{Bar plot showing distribution of TCR-sequence promiscuity}
 \usage{
-alpha_beta_pair_distribution(.data, pMHC_filter = NULL)
+alpha_beta_pair_distribution(.data, identifier = barcode, pMHC_filter = NULL)
 }
 \arguments{
 \item{.data}{An prepared data frame ready for modelling.}
+
+\item{identifier}{A variable in the data frame with which the data set should
+be distinct by to avoid a bias towards experiments with many observations.}
 
 \item{pMHC_filter}{A pMHC to use for filtering, to only include that specific
 pMHC from the data set. Default is \code{NULL}, i.e. no filtering. Must be

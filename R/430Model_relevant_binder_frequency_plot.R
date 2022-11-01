@@ -63,7 +63,7 @@ relevant_binder_frequency_plot <- function(.data,
       panel.grid.minor.x = ggplot2::element_blank()
     )
 
-  frequency_plot_plotly <- plotly::ggplotly(data,
+  frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
                                             tooltip = "text")
 
 return(frequency_plot_plotly)
