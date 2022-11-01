@@ -1,11 +1,6 @@
 ---
 title: "Exploring CD8+ T-cell Specificities using Single Cell Immune Profiling with an Outlook to Reproducible Bio Data Science"
 author: "William Hagedorn-Rasmussen"
-format:
-  pdf:
-    include-in-header:
-      text: |
-       \usepackage[font=footnotesize,labelfont=bf,textfont=it]{caption}
 toc: true
 number-sections: true
 crossref:
@@ -13,6 +8,12 @@ crossref:
 csl: citation_style.csl
 bibliography: bachelor_references.bib
 editor: visual
+always_allow_html: true
+format: #html
+  pdf:
+    include-in-header:
+      text: |
+       \usepackage[font=footnotesize,labelfont=bf,textfont=it]{caption}
 ---
 
 {{< pagebreak >}}
@@ -226,11 +227,11 @@ All of the tidying done in the above enables the modelling which are described i
 1.  `summarise_with_filter()`
 2.  `relevant_binder_frequency_plot()`
 3.  `alpha_beta_pair_distributions()`
-4.  `alpha_beta_sequence_consistency()`
+4.  `alpha_beta_consistency()`
 
 ## `summarise_with_filter()` {#sec-summarise_with_filter}
 
-As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind more often than others which could show provide interesting.
+As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind more often than others which could prove interesting.
 
 ```{r}
 #| eval: false
@@ -256,10 +257,48 @@ data_donor_one_tidy %>%
   cols_align(
     align = "left",
     columns = count
+  ) %>% 
+  tab_options(
+    heading.border.bottom.width = 10
   )
 ```
 
-## `relevant_binder_frequency_plot()` {#\"sec-relevant_binder_frequency_plot}
+## `relevant_binder_frequency_plot()` {#sec-relevant_binder_frequency_plot}
+
+As the function above, this one also takes a tidy data frame as input. The model counts the number of pMHC which bind to non-promiscuous pairs stratified on barcode. Based om that count, a frequency is calculated showing how often a pMHC bind to a non-promiscuous pair out of all the other pMHC which bind to that exact pair. The output is then a plotly plot (i.e., its interactive) where each dot represent a binding event between pMHC and a non-promiscuous pair. The size of the dot increases with increasing frequency. The axis ticks have been disables due to cluttering, but as mentioned the values can be found by hovering a dot. It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of threshold in that function will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something less than `1`. For a demonstration on how to use the model see @fig-relevant_binder_frequency_plot (will only work properly when rendering in HTML format).
+
+```{r}
+#| label: fig-relevant_binder_frequency_plot
+#| fig-cap: "Output of the function `relevant_binder_frequency_plot`. Each dot represent a relevant binding between a non-promiscous TCR-sequence and pMHC."
+#| layout: [[90]]
+
+data_donor_four_tidy %>%
+  relevant_binder_frequency_plot()
+```
+
+## `alpha_beta_pair_distribution()` {#sec-alpha_beta_pair_distribution}
+
+As with the other model functions, it takes a tidy data frame as input with the option to only look at distributions for a single pMHC provided through the arguments. From `add_TCR_combination_identifier()` we have the categorization of each cell. By making each barcode unique, and counting number of occurrences for each category, a frequency distribution is obtainable. The output is a bar plot showing exactly that (see @fig-alpha_beta_pair_distribution). It can be used as a quality check of the data.
+
+```{r}
+#| label: fig-alpha_beta_pair_distribution
+#| fig-cap: "Output of the function `alpha_beta_pair_distribution`. Each bar represent the freuqency of that respective category."
+
+data_donor_four_tidy %>%
+  alpha_beta_pair_distribution()
+```
+
+## `alpha_beta_consistency()` {#sec-alpha_beta_sequence_consistency}
+
+The input to the function is a tidy data frame from which a frequency to plot is made. The function groups on the barcode, then make TCR-sequences unique, and ungroup again to do a data set wide counting of the number of TCR-sequences. A distinctiveness score is then calculated by comparing the number of completely unique sequences with the total number of TCR-sequences. I.e., a lower score means less distinctive. The calculations are done by stratifying on `chain`. This enables a quick quality check of the data set to whether it follows theory or not. The output is then a bar plot showing the distinctiveness score (See @fig-alpha_beta_consistency).
+
+```{r}
+#| label: fig-alpha_beta_consistency
+#| fig-cap: "Output of the function `alpha_beta_consistency`. Each bar represent the distinctiveness of that chain type."
+
+data_donor_four_tidy %>%
+  alpha_beta_consistency()
+```
 
 # Shiny Integration {#sec-Shiny}
 

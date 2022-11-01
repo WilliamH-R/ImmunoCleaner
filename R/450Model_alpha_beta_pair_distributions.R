@@ -31,16 +31,19 @@
 #'
 
 alpha_beta_pair_distribution <- function(.data,
+                                         identifier = barcode,
                                          pMHC_filter = NULL) {
 
   if (!is.null(pMHC_filter)) {
     .data <-
       .data %>%
       dplyr::filter(pMHC == pMHC_filter)
-    }
+  }
 
   frequency_barplot <-
     .data %>%
+    dplyr::distinct({{identifier}},
+                    .keep_all = TRUE) %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = TCR_combination,
                                            y = ..prop..,
                                            group = 1,

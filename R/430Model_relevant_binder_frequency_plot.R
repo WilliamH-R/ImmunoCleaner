@@ -33,8 +33,7 @@ relevant_binder_frequency_plot <- function(.data,
                                            identifier = barcode,
                                            max_frequency = 1.0) {
 
-  frequency_data <-
-    .data %>%
+  frequency_plot_ggplot <- .data %>%
     dplyr::filter(is_binder == TRUE) %>%
     tidyr::drop_na(non_promiscuous_pair) %>%
     dplyr::distinct({{identifier}},
@@ -42,28 +41,30 @@ relevant_binder_frequency_plot <- function(.data,
     dplyr::group_by(non_promiscuous_pair, pMHC) %>%
     dplyr::count() %>%
     dplyr::group_by(non_promiscuous_pair) %>%
-    dplyr::mutate(n_frequency = n/sum(n)) %>%
-    dplyr::filter(n_frequency <= max_frequency)
+    dplyr::mutate(frequency = n/sum(n)) %>%
+    dplyr::filter(frequency <= max_frequency) %>%
 
-
-  frequency_plot <-
-    frequency_data %>%
-    plotly::plot_ly(
-      x = ~non_promiscuous_pair,
-      y = ~pMHC,
-      type = "scatter",
-      mode = "markers",
-      marker = list(
-        size = ~n_frequency*15
-      ),
-      height = 750
-    ) %>%
-    plotly::layout(
-      title = list(text = "Frequencies of binding between pMHC and alpha:beta pairs",
-                   x = 0),
-      xaxis = list(title = "Non-promiscuous TCR-Sequences",
-                   showticklabels = FALSE),
-      yaxis = list(showticklabels = FALSE)
+    ggplot2::ggplot(ggplot2::aes(x = non_promiscuous_pair,
+                                 y = pMHC,
+                                 text = paste('TCR: ', non_promiscuous_pair,
+                                              '<br>pMHC:', pMHC,
+                                              '<br>Frequency:', round(frequency,
+                                                                      digits = 2)))) +
+    ggplot2::geom_point(ggplot2::aes(size = frequency),
+                        color = "steelblue") +
+    ggplot2::scale_size_continuous(range = c(1, 3)) +
+    ggplot2::scale_x_discrete("Non-promiscuous TCR-Sequences",
+                              expand=c(0.015, 0)) +
+    ggplot2::ggtitle("Frequencies of binding between pMHC and alpha:beta pairs") +
+    ggplot2::theme(
+      axis.ticks = ggplot2::element_blank(),
+      axis.text = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.minor.x = ggplot2::element_blank()
     )
-return(frequency_plot)
+
+  frequency_plot_plotly <- plotly::ggplotly(data,
+                                            tooltip = "text")
+
+return(frequency_plot_plotly)
 }
