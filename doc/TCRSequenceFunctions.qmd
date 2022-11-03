@@ -23,6 +23,7 @@ format: #html
 ```{r setup}
 library(TCRSequenceFunctions)
 library(gt)
+library(notly)
 ```
 
 # Introduction {#sec-Intro}
@@ -84,9 +85,9 @@ data_donor_one_raw %>%
 
 data_donor_one_raw %>%
   dplyr::slice_head(n = 3) %>%
-  find_non_promiscuous_split_TCR_sequences() %>% 
-  pivot_longer_TCR_sequences() %>% 
-  add_chain_ident_remove_prefix() %>% 
+  TCRSequenceFunctions:::find_non_promiscuous_split_TCR_sequences() %>% 
+  TCRSequenceFunctions:::pivot_longer_TCR_sequences() %>% 
+  TCRSequenceFunctions:::add_chain_ident_remove_prefix() %>% 
   dplyr::select(TCR_sequence, chain, non_promiscuous_pair) %>%
   gt() %>%
   cols_label(
@@ -190,28 +191,28 @@ Naturally, the dimensions of all included data sets change after being piped thr
 
 ::: {#tbl-dimensions layout-ncol="2"}
 |      **Donor 1**      |          **`raw`**           |          **`tidy`**           |
-|:---------------------:|:----------------------------:|:-----------------------------:|
+|:------------------:|:------------------------:|:-------------------------:|
 | **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_donor_one_tidy)` |
 |  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_donor_one_tidy)` |
 
 : {#tbl-dimensions_donor_one}
 
 |      **Donor 2**      |          **`raw`**           |          **`tidy`**           |
-|:---------------------:|:----------------------------:|:-----------------------------:|
+|:------------------:|:------------------------:|:-------------------------:|
 | **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_donor_two_tidy)` |
 |  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_donor_two_tidy)` |
 
 : {#tbl-dimensions_donor_two}
 
 |      **Donor 3**      |           **`raw`**            |           **`tidy`**            |
-|:---------------------:|:------------------------------:|:-------------------------------:|
+|:-----------------:|:------------------------:|:-------------------------:|
 | **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_donor_three_tidy)` |
 |  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_donor_three_tidy)` |
 
 : {#tbl-dimensions_donor_three}
 
 |      **Donor 4**      |           **`raw`**           |           **`tidy`**           |
-|:---------------------:|:-----------------------------:|:------------------------------:|
+|:------------------:|:------------------------:|:-------------------------:|
 | **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_donor_four_tidy)` |
 |  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_donor_four_tidy)` |
 

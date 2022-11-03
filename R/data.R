@@ -93,3 +93,13 @@
 #'
 #' @source Prepared data from `data_donor_four_raw`
 "data_donor_four_tidy"
+
+#' Auxiliary data set with alleles and disease status
+#'
+#' The data frame contains information of which allele group and HLA protein
+#'     each donor has along with information of disease status.
+#'
+#' @format A data frame with 4 rows and 7 columns
+#'
+#' @source \url{https://www.10xgenomics.com/resources/document-library/a14cde}
+"aux_alleles_status_each_donor"

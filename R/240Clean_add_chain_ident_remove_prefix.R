@@ -12,7 +12,6 @@
 #'     and with the prefix "TRA" and "TRB" removed.
 #'
 #' @family Preparation functions
-#' @export
 #' @noRd
 #'
 

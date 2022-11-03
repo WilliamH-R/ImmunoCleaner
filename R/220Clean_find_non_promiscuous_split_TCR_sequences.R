@@ -23,7 +23,6 @@
 #'     for each TCR-sequence.
 #'
 #' @family Preparation functions
-#' @export
 #' @noRd
 #'
 
