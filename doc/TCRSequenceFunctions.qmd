@@ -133,7 +133,7 @@ And so, the purpose of the first function is to find the highest UMI-count of al
 ```{r}
 #| echo: false
 #| label: tbl-binder_evaluation
-#| tbl-cap: "Examples of how different combinations of UMI-count and max_non_specific_binder are evaluated"
+#| tbl-cap: "Examples of how different combinations of UMI-count and max_non_specific_binder are evaluated to either `TRUE` or `FALSE`"
 
 data_donor_one_tidy %>% 
   dplyr::group_by(is_binder) %>% 

@@ -32,10 +32,16 @@ count_binding_pr_allele <- function(.data,
                name = "count") %>%
 
   ggplot2::ggplot(ggplot2::aes(x = reorder(allele, -count),
-                               y = count)) +
-    ggplot2::geom_point() +
+                               y = count,
+                               label = allele)) +
+    ggplot2::geom_text(check_overlap = TRUE) +
     ggplot2::facet_wrap(~ stringr::str_match(allele,
-                                             "[A|B|N]"))
+                                             "[A|B|N]"),
+                        scales = "free") +
+    ggplot2::theme(axis.ticks.x = ggplot2::element_blank(),
+                   axis.text.x = ggplot2::element_blank(),
+                   axis.title = ggplot2::element_blank()) +
+    ggplot2::coord_cartesian(clip = "off")
 
   return(scatter_plot)
 }
