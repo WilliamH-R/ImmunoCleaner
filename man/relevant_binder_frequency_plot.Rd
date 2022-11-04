@@ -42,6 +42,7 @@ data_donor_four_tidy \%>\%
 Other Modelling functions: 
 \code{\link{alpha_beta_consistency}()},
 \code{\link{alpha_beta_pair_distribution}()},
+\code{\link{count_binding_pr_allele}()},
 \code{\link{logo_plot}()},
 \code{\link{multiple_relevant_binders}()},
 \code{\link{summarise_with_filter}()}

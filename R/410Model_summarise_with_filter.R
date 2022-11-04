@@ -51,6 +51,7 @@ summarise_with_filter <- function(.data,
                     .keep_all = TRUE) %>%
     dplyr::group_by_at(summarise_by) %>%
     dplyr::count(name = "count") %>%
-    dplyr::ungroup()
+    dplyr::ungroup() %>%
+    dplyr::arrange(desc(count))
   return(data_model)
 }

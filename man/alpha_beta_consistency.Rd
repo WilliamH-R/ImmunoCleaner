@@ -35,6 +35,7 @@ data_donor_two_tidy \%>\%
 \seealso{
 Other Modelling functions: 
 \code{\link{alpha_beta_pair_distribution}()},
+\code{\link{count_binding_pr_allele}()},
 \code{\link{logo_plot}()},
 \code{\link{multiple_relevant_binders}()},
 \code{\link{relevant_binder_frequency_plot}()},

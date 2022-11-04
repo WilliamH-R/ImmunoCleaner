@@ -9,11 +9,11 @@ csl: citation_style.csl
 bibliography: bachelor_references.bib
 editor: visual
 always_allow_html: true
-format: #html
-  pdf:
-    include-in-header:
-      text: |
-       \usepackage[font=footnotesize,labelfont=bf,textfont=it]{caption}
+format: html
+  #pdf:
+   # include-in-header:
+    #  text: |
+     #  \usepackage[font=footnotesize,labelfont=bf,textfont=it]{caption}
 ---
 
 {{< pagebreak >}}
@@ -75,7 +75,8 @@ data_donor_one_raw %>%
   tab_style(
     style = cell_text(align = "center"),
     locations = cells_column_labels()
-  )
+  ) %>% 
+  tab_options(table.width = pct(80))
 ```
 
 ```{r}
@@ -98,7 +99,8 @@ data_donor_one_raw %>%
   cols_align(
     align = "center",
     columns = non_promiscuous_pair
-  )
+  ) %>% 
+  tab_options(table.width = pct(80))
 ```
 
 A similar process is applied to all column names which follow the general structure: `"allele_peptide_peptidesource"`. This is done through `pivot_longer_pMHC()` and `tidy_pMHC_names()`. First the names are pivot longer with their associated UMI-counts as values. Here, only non-zero values are kept as they are otherwise irrelevant. The names, now as rows, are made tidy by splitting into three new columns:
@@ -182,7 +184,8 @@ data_donor_one_tidy %>%
   cols_align(
     align = "center",
     columns = TCR_combination
-  )
+  ) %>% 
+  tab_options(table.width = pct(80))
 ```
 
 ## Change of dimensions
@@ -260,7 +263,8 @@ data_donor_one_tidy %>%
     columns = count
   ) %>% 
   tab_options(
-    heading.border.bottom.width = 10
+    heading.border.bottom.width = 10,
+    table.width = pct(80)
   )
 ```
 

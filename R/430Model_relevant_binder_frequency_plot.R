@@ -50,17 +50,17 @@ relevant_binder_frequency_plot <- function(.data,
                                               '<br>pMHC:', pMHC,
                                               '<br>Frequency:', round(frequency,
                                                                       digits = 2)))) +
-    ggplot2::geom_point(ggplot2::aes(size = frequency),
-                        color = "steelblue") +
-    ggplot2::scale_size_continuous(range = c(1, 3)) +
-    ggplot2::scale_x_discrete("Non-promiscuous TCR-Sequences",
+      ggplot2::geom_point(ggplot2::aes(size = frequency),
+                          color = "steelblue") +
+      ggplot2::scale_size_continuous(range = c(1, 3)) +
+      ggplot2::scale_x_discrete("Non-promiscuous TCR-Sequences",
                               expand=c(0.015, 0)) +
-    ggplot2::ggtitle("Frequencies of binding between pMHC and alpha:beta pairs") +
-    ggplot2::theme(
-      axis.ticks = ggplot2::element_blank(),
-      axis.text = ggplot2::element_blank(),
-      panel.grid.major.x = ggplot2::element_blank(),
-      panel.grid.minor.x = ggplot2::element_blank()
+      ggplot2::ggtitle("Frequencies of binding between pMHC and alpha:beta pairs") +
+      ggplot2::theme(
+        axis.ticks = ggplot2::element_blank(),
+        axis.text = ggplot2::element_blank(),
+        panel.grid.major.x = ggplot2::element_blank(),
+        panel.grid.minor.x = ggplot2::element_blank()
     )
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
