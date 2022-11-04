@@ -1,3 +1,23 @@
+#' Predict allele typing if missing
+#'
+#' `predict_allele_typing()` takes a prepared data frame, `.data`, and try to
+#'    predict the allele typing if it is missing. This is done by counting the
+#'    most prevalent allele of the relevant binders and returns the top hit
+#'    which isn't already noted as a present allele type.
+#'
+#' @inheritParams summarise_with_filter
+#'
+#' @return A string with the predicted missing allele typing.
+#'
+#' @family Modelling functions
+#' @export
+#'
+#' @examples
+#' # A prepared data frame is simply piped through the function:
+#' data_donor_four_tidy %>%
+#'     predict_allele_typing()
+#'
+#'
 predict_allele_typing <- function(.data,
                                   identifier = barcode) {
 

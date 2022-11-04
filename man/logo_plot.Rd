@@ -37,6 +37,7 @@ Other Modelling functions:
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{multiple_relevant_binders}()},
+\code{\link{predict_allele_typing}()},
 \code{\link{relevant_binder_frequency_plot}()},
 \code{\link{summarise_with_filter}()}
 }
