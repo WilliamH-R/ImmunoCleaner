@@ -26,7 +26,6 @@ which isn't already noted as a present allele type.
 data_donor_four_tidy \%>\%
     predict_allele_typing()
 
-
 }
 \seealso{
 Other Modelling functions: 

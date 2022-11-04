@@ -17,7 +17,7 @@
 #' data_donor_four_tidy %>%
 #'     predict_allele_typing()
 #'
-#'
+
 predict_allele_typing <- function(.data,
                                   identifier = barcode) {
 
@@ -40,21 +40,23 @@ predict_allele_typing <- function(.data,
                           "donor1")) {
     present_type <- "B3501"
     if (top_two_alleles[[1]][1] != present_type) {
-      return(top_two_alleles[[1]][1])
+      predicted_type <- top_two_alleles[[1]][1]
     } else {
-      return(top_two_alleles[[1]][2])
+      predicted_type <- top_two_alleles[[1]][2]
     }
   } else if (stringr::str_detect(.data$donor[1],
                                  "donor2")) {
     present_type <- "B0801"
     if (top_two_alleles[[1]][1] != present_type) {
-      return(top_two_alleles[[1]][1])
+      predicted_type <- top_two_alleles[[1]][1]
     } else {
-      return(top_two_alleles[[1]][2])
+      predicted_type <- top_two_alleles[[1]][2]
     }
   } else {
     return("You chose a data set where all HLA typings are known")
   }
+
+  return(print(paste("The predicted allele typing is:", predicted_type)))
 
 }
 
