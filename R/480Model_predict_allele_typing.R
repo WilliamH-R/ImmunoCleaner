@@ -53,7 +53,7 @@ predict_allele_typing <- function(.data,
       predicted_type <- top_two_alleles[[1]][2]
     }
   } else {
-    return("You chose a data set where all HLA typings are known")
+    return("You chose a data set where all HLA typings are already known")
   }
 
   return(print(paste("The predicted allele typing is:", predicted_type)))
