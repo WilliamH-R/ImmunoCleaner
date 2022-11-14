@@ -56,6 +56,7 @@ Other Modelling functions:
 \code{\link{count_binding_pr_allele}()},
 \code{\link{logo_plot}()},
 \code{\link{multiple_relevant_binders}()},
+\code{\link{old_relevant_binder_frequency_plot}()},
 \code{\link{predict_virus_status}()},
 \code{\link{relevant_binder_frequency_plot}()}
 }

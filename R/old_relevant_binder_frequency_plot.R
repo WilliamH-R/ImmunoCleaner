@@ -17,7 +17,6 @@
 #'     non-promiscuous pair.
 #'
 #' @family Modelling functions
-#' @export
 #'
 #' @examples
 #' # A prepared data frame is simply piped through the function:
@@ -29,7 +28,7 @@
 #'     relevant_binder_frequency_plot(max_frequency = 0.8)
 #'
 
-relevant_binder_frequency_plot <- function(.data,
+old_relevant_binder_frequency_plot <- function(.data,
                                            identifier = barcode,
                                            max_frequency = 1.0) {
 
