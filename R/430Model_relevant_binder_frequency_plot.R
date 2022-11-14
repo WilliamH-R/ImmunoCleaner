@@ -39,7 +39,8 @@
 
 relevant_binder_frequency_plot <- function(.data,
                                            identifier = barcode,
-                                           max_frequency = 1.0) {
+                                           max_frequency = 1.0,
+                                           plotly_option = TRUE) {
   frequency_plot_ggplot <-
     .data %>%
     dplyr::select({{identifier}}, non_promiscuous_pair, pMHC, is_binder) %>%
@@ -61,7 +62,7 @@ relevant_binder_frequency_plot <- function(.data,
                                               '<br>pMHC:', pMHC,
                                               '<br>Frequency:', round(barcode_freq,
                                                                       digits = 2)))) +
-    ggplot2::geom_point() +
+    ggplot2::geom_point(alpha = 0.5) +
     ggplot2::labs(x = "Non-promiscuous TCR-sequences",
                   title = "Frequencies of binding between pMHC and TCR-sequences",
                   size = "Barcodes",
@@ -71,15 +72,18 @@ relevant_binder_frequency_plot <- function(.data,
       axis.text = ggplot2::element_blank(),
       panel.grid.major.x = ggplot2::element_blank(),
       panel.grid.minor.x = ggplot2::element_blank(),
-      legend.position = "bottom",
-      legend.box="vertical"
+      legend.position = "bottom"
     ) +
-    ggplot2::scale_size_continuous(range = c(3, 7)) +
+    ggplot2::scale_size_continuous(range = c(1, 7)) +
     ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
-    ggplot2::scale_colour_gradient(low = "yellow", high = "red", na.value = NA)
+    ggplot2::scale_colour_gradient(low = "#FFFF0095", high = "#FF000095", na.value = NA)
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
                                             tooltip = "text")
+  if (plotly_option) {
+    return(frequency_plot_plotly)
+  } else {
+    return(frequency_plot_ggplot)
+  }
 
-  return(frequency_plot_plotly)
 }
