@@ -65,5 +65,5 @@ old_relevant_binder_frequency_plot <- function(.data,
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
                                             tooltip = "text")
 
-return(frequency_plot_plotly)
+  return(frequency_plot_plotly)
 }

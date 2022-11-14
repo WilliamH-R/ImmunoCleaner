@@ -40,7 +40,8 @@
 relevant_binder_frequency_plot <- function(.data,
                                            identifier = barcode,
                                            max_frequency = 1.0) {
-  data_donor_four_tidy %>%
+  frequency_plot_ggplot <-
+    .data %>%
     dplyr::select({{identifier}}, non_promiscuous_pair, pMHC, is_binder) %>%
     dplyr::filter(is_binder == TRUE) %>%
     tidyr::drop_na(non_promiscuous_pair) %>%
@@ -76,4 +77,9 @@ relevant_binder_frequency_plot <- function(.data,
     ggplot2::scale_size_continuous(range = c(3, 7)) +
     ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
     ggplot2::scale_colour_gradient(low = "yellow", high = "red", na.value = NA)
+
+  frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
+                                            tooltip = "text")
+
+  return(frequency_plot_plotly)
 }
