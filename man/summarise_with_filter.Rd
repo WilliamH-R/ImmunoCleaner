@@ -50,12 +50,12 @@ data_donor_one_tidy \%>\%
 }
 \seealso{
 Other Modelling functions: 
+\code{\link{HLA_match_distribution}()},
 \code{\link{alpha_beta_consistency}()},
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{logo_plot}()},
 \code{\link{multiple_relevant_binders}()},
-\code{\link{predict_allele_typing}()},
 \code{\link{predict_virus_status}()},
 \code{\link{relevant_binder_frequency_plot}()}
 }

@@ -1,14 +1,6 @@
 #' Interactive plot showing relevant binders between pMHC and TCR-sequences
 #'
 #' `relevant_binder_frequency_plot()` takes a prepared data frame, `.data`, and
-#'     plot pMHC vs non-promiscuous TCR-sequences. Marker size represent number
-#'     of barcodes which support that specific interaction. The color is based
-#'     on concordance which is fraction of barcodes that support a given pMHC
-#'     stratified on non-promiscuous TCR-sequences
-#'
-#'
-#'
-#'
 #'     count the number of relevant binders stratified on both non-promiscuous
 #'     pairs and pMHC. The frequency of a specific pMHC is calculated based on
 #'     the total number of pMHCs which bind to a non-promiscuous pair. The output
@@ -40,40 +32,39 @@
 relevant_binder_frequency_plot <- function(.data,
                                            identifier = barcode,
                                            max_frequency = 1.0) {
-  data_donor_four_tidy %>%
-    dplyr::select({{identifier}}, non_promiscuous_pair, pMHC, is_binder) %>%
+
+  frequency_plot_ggplot <- .data %>%
     dplyr::filter(is_binder == TRUE) %>%
     tidyr::drop_na(non_promiscuous_pair) %>%
     dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
-    dplyr::count(non_promiscuous_pair, pMHC,
-                     name = "barcode_count") %>%
+    dplyr::group_by(non_promiscuous_pair, pMHC) %>%
+    dplyr::count() %>%
     dplyr::group_by(non_promiscuous_pair) %>%
-    dplyr::mutate(barcode_freq = barcode_count/sum(barcode_count)) %>%
-    dplyr::filter(barcode_freq <= max_frequency) %>%
+    dplyr::mutate(frequency = n/sum(n)) %>%
+    dplyr::filter(frequency <= max_frequency) %>%
 
     ggplot2::ggplot(ggplot2::aes(x = non_promiscuous_pair,
                                  y = pMHC,
-                                 size = barcode_count,
-                                 color = barcode_freq,
                                  text = paste('TCR: ', non_promiscuous_pair,
                                               '<br>pMHC:', pMHC,
-                                              '<br>Frequency:', round(barcode_freq,
+                                              '<br>Frequency:', round(frequency,
                                                                       digits = 2)))) +
-    ggplot2::geom_point() +
-    ggplot2::labs(x = "Non-promiscuous TCR-sequences",
-                  title = "Frequencies of binding between pMHC and TCR-sequences",
-                  size = "Barcodes",
-                  color = "Concordance") +
-    ggplot2::theme(
-      axis.ticks = ggplot2::element_blank(),
-      axis.text = ggplot2::element_blank(),
-      panel.grid.major.x = ggplot2::element_blank(),
-      panel.grid.minor.x = ggplot2::element_blank(),
-      legend.position = "bottom",
-      legend.box="vertical"
-    ) +
-    ggplot2::scale_size_continuous(range = c(3, 7)) +
-    ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
-    ggplot2::scale_colour_gradient(low = "yellow", high = "red", na.value = NA)
+      ggplot2::geom_point(ggplot2::aes(size = frequency),
+                          color = "steelblue") +
+      ggplot2::scale_size_continuous(range = c(1, 3)) +
+      ggplot2::scale_x_discrete("Non-promiscuous TCR-Sequences",
+                              expand=c(0.015, 0)) +
+      ggplot2::ggtitle("Frequencies of binding between pMHC and alpha:beta pairs") +
+      ggplot2::theme(
+        axis.ticks = ggplot2::element_blank(),
+        axis.text = ggplot2::element_blank(),
+        panel.grid.major.x = ggplot2::element_blank(),
+        panel.grid.minor.x = ggplot2::element_blank()
+    )
+
+  frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
+                                            tooltip = "text")
+
+return(frequency_plot_plotly)
 }
