@@ -26,7 +26,8 @@
 alpha_beta_consistency <- function(.data,
                                    identifier = barcode) {
 
-  data_combined_tidy %>%
+  distinctiveness_barplot <-
+    data_combined_tidy %>%
     dplyr::select({{identifier}}, donor, TCR_sequence, chain) %>%
     dplyr::group_by(donor,
                     {{identifier}}) %>%
@@ -50,5 +51,7 @@ alpha_beta_consistency <- function(.data,
                     title = "Relative distinctiveness for the alpha and beta chain") +
       ggplot2::theme(legend.position="none") +
       ggplot2::facet_wrap(~donor)
+
+  return(distinctiveness_barplot)
 }
 
