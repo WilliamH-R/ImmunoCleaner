@@ -66,7 +66,8 @@ relevant_binder_frequency_plot <- function(.data,
     ggplot2::labs(x = "Non-promiscuous TCR-sequences",
                   title = "Frequencies of binding between pMHC and TCR-sequences",
                   size = "Barcodes",
-                  color = "Concordance") +
+                  color = "Concordance"
+                  ) +
     ggplot2::theme(
       axis.ticks = ggplot2::element_blank(),
       axis.text = ggplot2::element_blank(),
@@ -76,10 +77,14 @@ relevant_binder_frequency_plot <- function(.data,
     ) +
     ggplot2::scale_size_continuous(range = c(1, 7)) +
     ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
-    ggplot2::scale_colour_gradient(low = "#FFFF0095", high = "#FF000095", na.value = NA)
+    ggplot2::scale_colour_gradient(low = "#FFFF0095",
+                                   high = "#FF000095",
+                                   na.value = NA)
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
-                                            tooltip = "text")
+                                            tooltip = "text") %>%
+    plotly::layout(legend = list(text = "New"))
+
   if (plotly_option) {
     return(frequency_plot_plotly)
   } else {

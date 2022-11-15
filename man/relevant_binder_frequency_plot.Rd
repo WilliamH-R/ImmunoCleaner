@@ -4,7 +4,12 @@
 \alias{relevant_binder_frequency_plot}
 \title{Interactive plot showing relevant binders between pMHC and TCR-sequences}
 \usage{
-relevant_binder_frequency_plot(.data, identifier = barcode, max_frequency = 1)
+relevant_binder_frequency_plot(
+  .data,
+  identifier = barcode,
+  max_frequency = 1,
+  plotly_option = TRUE
+)
 }
 \arguments{
 \item{.data}{An prepared data frame ready for modelling.}
