@@ -22,7 +22,7 @@ count_binding_pr_allele <- function(.data,
                                     identifier = barcode) {
 
   scatter_plot <- .data %>%
-  dplyr::select({{identifier}}, pMHC, allele, is_binder, HLA_match) %>%
+  dplyr::select({{identifier}}, donor, pMHC, allele, is_binder, HLA_match) %>%
   dplyr::filter(is_binder == TRUE) %>%
   dplyr::group_by({{identifier}}) %>%
   dplyr::distinct(pMHC,
