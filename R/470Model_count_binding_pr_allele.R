@@ -32,23 +32,11 @@ count_binding_pr_allele <- function(.data,
   ggplot2::ggplot(ggplot2::aes(x = forcats::fct_infreq(allele),
                                fill = HLA_match)) +
     ggplot2::geom_bar() +
-    ggplot2::facet_wrap(~stringr::str_match(allele,
-                                            "[A|B|N]"),
+    ggplot2::facet_wrap(donor ~ stringr::str_match(allele,
+                                                   "[A|B|N]"),
                         scales = "free") +
     ggplot2::theme(axis.title = ggplot2::element_blank()) +
     ggplot2::scale_fill_discrete(name = "HLA-match")
 
   return(scatter_plot)
 }
-
-
-
-
-# To have one column and three rows
-#ggplot2::ggplot(ggplot2::aes(x = forcats:: fct_infreq(allele))) +
-#  ggplot2::geom_bar() +
-#  ggplot2::facet_grid(rows = dplyr::vars(stringr::str_match(allele,
-#                                                            "[A|B|N]")),
-#                      cols = dplyr::vars(donor),
-#                      scales = "free") +
-#  ggplot2::theme(axis.title = ggplot2::element_blank())

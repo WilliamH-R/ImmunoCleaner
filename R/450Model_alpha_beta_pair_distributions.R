@@ -58,7 +58,7 @@ alpha_beta_pair_distribution <- function(.data,
                       y = "Frequencies",
                       title = "Frequency distribution of different combinations of TCR") +
         ggplot2::theme(legend.position="none") +
-        ggplot2::facet_wrap(~donor)
+        ggplot2::facet_wrap(~  donor)
 
   return(frequency_barplot)
 }

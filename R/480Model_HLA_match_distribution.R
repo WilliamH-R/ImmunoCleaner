@@ -22,11 +22,12 @@ HLA_match_distribution <- function(.data,
 
   distribution_plot <-
     .data %>%
-    dplyr::select({{identifier}}, is_binder, pMHC, HLA_match) %>%
+    dplyr::select({{identifier}}, donor, is_binder, pMHC, HLA_match) %>%
     dplyr::filter(is_binder == TRUE) %>%
     dplyr::group_by({{identifier}}) %>%
     dplyr::distinct(pMHC,
                     .keep_all = TRUE) %>%
+    dplyr::ungroup() %>%
 
     ggplot2::ggplot(ggplot2::aes(x = HLA_match,
                                  fill = HLA_match)) +
@@ -34,7 +35,8 @@ HLA_match_distribution <- function(.data,
     ggplot2::labs(x = "HLA-match",
                   y = "Count",
                   title = "Distribution of whether HLA-typing matches") +
-    ggplot2::theme(legend.position = "none")
+    ggplot2::theme(legend.position = "none") +
+    ggplot2::facet_wrap(~ donor)
 
   return(distribution_plot)
 }

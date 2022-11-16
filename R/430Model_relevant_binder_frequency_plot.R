@@ -43,14 +43,14 @@ relevant_binder_frequency_plot <- function(.data,
                                            plotly_option = TRUE) {
   frequency_plot_ggplot <-
     .data %>%
-    dplyr::select({{identifier}}, non_promiscuous_pair, pMHC, is_binder) %>%
+    dplyr::select({{identifier}}, donor, non_promiscuous_pair, pMHC, is_binder) %>%
     dplyr::filter(is_binder == TRUE) %>%
     tidyr::drop_na(non_promiscuous_pair) %>%
     dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
-    dplyr::count(non_promiscuous_pair, pMHC,
+    dplyr::count(donor, non_promiscuous_pair, pMHC,
                      name = "barcode_count") %>%
-    dplyr::group_by(non_promiscuous_pair) %>%
+    dplyr::group_by(donor, non_promiscuous_pair) %>%
     dplyr::mutate(barcode_freq = barcode_count/sum(barcode_count)) %>%
     dplyr::filter(barcode_freq <= max_frequency) %>%
 
@@ -61,7 +61,8 @@ relevant_binder_frequency_plot <- function(.data,
                                  text = paste('TCR: ', non_promiscuous_pair,
                                               '<br>pMHC:', pMHC,
                                               '<br>Frequency:', round(barcode_freq,
-                                                                      digits = 2)))) +
+                                                                      digits = 2),
+                                              '<br>Barcodes:', barcode_count))) +
     ggplot2::geom_point(alpha = 0.5) +
     ggplot2::labs(x = "Non-promiscuous TCR-sequences",
                   title = "Frequencies of binding between pMHC and TCR-sequences",
@@ -75,16 +76,15 @@ relevant_binder_frequency_plot <- function(.data,
       panel.grid.minor.x = ggplot2::element_blank(),
       legend.position = "bottom"
     ) +
-    ggplot2::scale_size_continuous(range = c(1, 7)) +
+    ggplot2::scale_size_continuous(range = c(2, 7)) +
     ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
     ggplot2::scale_colour_gradient(low = "#FFFF0095",
                                    high = "#FF000095",
-                                   na.value = NA)
+                                   na.value = NA) +
+    ggplot2::facet_wrap(~ donor)
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
-                                            tooltip = "text") %>%
-    plotly::layout(legend = list(text = "New"))
-
+                                            tooltip = "text")
   if (plotly_option) {
     return(frequency_plot_plotly)
   } else {
@@ -92,3 +92,4 @@ relevant_binder_frequency_plot <- function(.data,
   }
 
 }
+

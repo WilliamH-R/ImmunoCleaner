@@ -27,7 +27,7 @@ alpha_beta_distinctiveness <- function(.data,
                                    identifier = barcode) {
 
   distinctiveness_barplot <-
-    data_combined_tidy %>%
+    .data %>%
     dplyr::select({{identifier}}, donor, TCR_sequence, chain) %>%
     dplyr::group_by(donor,
                     {{identifier}}) %>%
@@ -52,27 +52,8 @@ alpha_beta_distinctiveness <- function(.data,
                     y = "Relative distinctiveness",
                     title = "Relative distinctiveness for the alpha and beta chain") +
       ggplot2::theme(legend.position="none") +
-      ggplot2::facet_wrap(~donor,
+      ggplot2::facet_wrap(~ donor,
                           scales = "free_y")
 
   return(distinctiveness_barplot)
 }
-
-
-data_combined_tidy %>%
-  dplyr::select(barcode, donor, TCR_sequence, chain) %>%
-  dplyr::group_by(donor,
-                  barcode) %>%
-  dplyr::distinct(TCR_sequence,
-                  .keep_all = TRUE) %>%
-  dplyr::group_by(donor) %>%
-  dplyr::add_count(chain,
-                   name = "total_chains") %>%
-  dplyr::distinct(TCR_sequence,
-                  .keep_all = TRUE) %>%
-  dplyr::add_count(chain,
-                   name = "unique_chains") %>%
-  dplyr::mutate(distinctiveness = unique_chains/total_chains) %>%
-  dplyr::distinct(donor, chain,
-                  .keep_all = TRUE) %>%
-  View()
