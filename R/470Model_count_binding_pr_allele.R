@@ -32,9 +32,7 @@ count_binding_pr_allele <- function(.data,
   ggplot2::ggplot(ggplot2::aes(x = forcats::fct_infreq(allele),
                                fill = HLA_match)) +
     ggplot2::geom_bar() +
-    ggplot2::facet_wrap(donor ~ stringr::str_match(allele,
-                                                   "[A|B|N]"),
-                        scales = "free") +
+    ggplot2::facet_wrap(~ donor) +
     ggplot2::theme(axis.title = ggplot2::element_blank()) +
     ggplot2::scale_fill_discrete(name = "HLA-match")
 

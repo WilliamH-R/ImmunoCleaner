@@ -81,7 +81,9 @@ relevant_binder_frequency_plot <- function(.data,
     ggplot2::scale_colour_gradient(low = "#FFFF0095",
                                    high = "#FF000095",
                                    na.value = NA) +
-    ggplot2::facet_wrap(~ donor)
+    ggplot2::facet_wrap(~ donor,
+                        ncol = 1,
+                        scales = "free_x")
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
                                             tooltip = "text")
