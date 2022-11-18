@@ -29,7 +29,8 @@ check_if_HLA_match <- function(.data) {
                                                stringr::str_starts(allele, "B") &
                                                  "UNKNOWN" %in% lookup[[donor]][["B"]] ~ "UNKNOWN",
                                                TRUE ~ "FALSE"
-                                               ))
+                                               )) %>%
+    dplyr::ungroup()
 
   return(data_aug)
 }
