@@ -4,7 +4,7 @@
 #'     Raw data files were combined and piped through all cleaning and
 #'     augmenting functions.
 #'
-#' @format A data frame with 2.1 mill rows and 27 columns
+#' @format A data frame with 2.1 mill rows and 28 columns
 #'
 #' @source Prepared data from all four raw data files:
 #' \itemize{

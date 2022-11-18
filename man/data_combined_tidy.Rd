@@ -5,7 +5,7 @@
 \alias{data_combined_tidy}
 \title{Prepared data from all four donors}
 \format{
-A data frame with 2.1 mill rows and 27 columns
+A data frame with 2.1 mill rows and 28 columns
 }
 \source{
 Prepared data from all four raw data files:

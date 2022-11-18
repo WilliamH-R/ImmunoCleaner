@@ -58,7 +58,8 @@ run_all_prep <- function(.data) {
     tidy_pMHC_names() %>%
     add_max_non_specific_binder() %>%
     evaluate_binder() %>%
-    add_TCR_combination_identifier
+    add_TCR_combination_identifier() %>%
+    check_if_HLA_match()
 
   return(data_clean)
 }
