@@ -34,7 +34,10 @@ count_binding_pr_allele <- function(.data,
     ggplot2::geom_bar() +
     ggplot2::facet_wrap(~ donor) +
     ggplot2::theme(axis.title = ggplot2::element_blank()) +
-    ggplot2::scale_fill_discrete(name = "HLA-match")
+    ggplot2::scale_fill_manual(name = "HLA-match",
+                               values = c("TRUE" = "#00BFC4",
+                                          "UNKNOWN" = "#00BA38",
+                                          "FALSE" = "#F8766D"))
 
   return(scatter_plot)
 }

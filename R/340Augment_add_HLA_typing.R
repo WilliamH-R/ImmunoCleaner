@@ -21,6 +21,7 @@ check_if_HLA_match <- function(.data) {
 
 
   data_aug <- .data %>%
+    dplyr::rowwise() %>%
     dplyr::mutate(HLA_match = dplyr::case_when(allele %in% lookup[[donor]][["A"]] ~ "TRUE",
                                                allele %in% lookup[[donor]][["B"]] ~ "TRUE",
                                                stringr::str_starts(allele, "A") &
