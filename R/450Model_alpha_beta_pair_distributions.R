@@ -45,7 +45,7 @@ alpha_beta_pair_distribution <- function(.data,
     dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = TCR_combination,
-                                           y = ..prop..,
+                                           y = ggplot2::after_stat(prop),
                                            group = 1,
                                            fill = factor(..x..)
                                            )) +
