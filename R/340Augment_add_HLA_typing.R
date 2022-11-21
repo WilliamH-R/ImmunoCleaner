@@ -14,28 +14,23 @@
 
 check_if_HLA_match <- function(.data) {
 
-  if (stringr::str_detect(.data$donor[1],
-                           "donor1")) {
-    HLA_A_typing <- c("A0201", "A1101", "B3501")
-    HLA_B_typing <- c("B3501")
-  } else if (stringr::str_detect(.data$donor[1],
-                                  "donor2")) {
-    HLA_A_typing <- c("A0201", "A0101", "B0801")
-    HLA_B_typing <- c("B0801")
-  } else if (stringr::str_detect(.data$donor[1],
-                                 "donor3")) {
-    HLA_A_typing <- c("A2402", "A2902", "B3502", "B4403")
-    HLA_B_typing <- c("B3502", "B4403")
-  } else {
-    HLA_A_typing <- c("A0301", "A0301", "B0702", "B5701")
-    HLA_B_typing <- c("B0702", "B5701")
-  }
+  lookup <- list("donor1" = list("A" = c("A0201", "A1101"), "B" = c("B3501", "UNKNOWN")),
+                 "donor2" = list("A" = c("A0201", "A0101"), "B" = c("B0801", "UNKNOWN")),
+                 "donor3" = list("A" = c("A2402", "A2902"), "B" = c("B3502", "B4403")),
+                 "donor4" = list("A" = c("A0301", "A0301"), "B" = c("B0702", "B5701")))
 
 
-  data_aug <-
-    .data %>%
-    dplyr::mutate(HLA_match = dplyr::case_when(allele %in% HLA_A_typing == TRUE ~ TRUE,
-                                               TRUE ~ FALSE))
+  data_aug <- .data %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(HLA_match = dplyr::case_when(allele %in% lookup[[donor]][["A"]] ~ "TRUE",
+                                               allele %in% lookup[[donor]][["B"]] ~ "TRUE",
+                                               stringr::str_starts(allele, "A") &
+                                                 "UNKNOWN" %in% lookup[[donor]][["A"]] ~ "UNKNOWN",
+                                               stringr::str_starts(allele, "B") &
+                                                 "UNKNOWN" %in% lookup[[donor]][["B"]] ~ "UNKNOWN",
+                                               TRUE ~ "FALSE"
+                                               )) %>%
+    dplyr::ungroup()
 
   return(data_aug)
 }

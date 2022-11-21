@@ -38,20 +38,52 @@
 #'                                            "peptide_source"))
 #'
 
-summarise_with_filter <- function(.data,
+summarise_with_filter <- function(.data_old = data_combined_tidy,
+                                  .data_new,
                                   summarise_by = c("allele",
                                                    "peptide",
                                                    "peptide_source"),
                                   identifier = barcode) {
 
-  data_model <-
-    .data %>%
+  data_old <-
+    .data_old %>%
+    dplyr::select(barcode, donor, pMHC, allele,
+                  peptide, peptide_source, is_binder) %>%
     dplyr::filter(is_binder == TRUE) %>%
-    dplyr::distinct({{identifier}},
+    dplyr::group_by({{identifier}}) %>%
+    dplyr::distinct(pMHC,
                     .keep_all = TRUE) %>%
     dplyr::group_by_at(summarise_by) %>%
-    dplyr::count(name = "count") %>%
+    dplyr::count(donor,
+                 name = "count") %>%
     dplyr::ungroup() %>%
-    dplyr::arrange(desc(count))
+    dplyr::arrange(donor) %>%
+    tidyr::pivot_wider(names_from = donor,
+                       values_from = count)
+
+  data_new  <-
+    .data_new %>%
+    dplyr::select(barcode, donor, pMHC, allele,
+                  peptide, peptide_source, is_binder) %>%
+    dplyr::filter(is_binder == TRUE) %>%
+    dplyr::group_by({{identifier}}) %>%
+    dplyr::distinct(pMHC,
+                    .keep_all = TRUE) %>%
+    dplyr::group_by_at(summarise_by) %>%
+    dplyr::count(donor,
+                 name = "count") %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(donor) %>%
+    tidyr::pivot_wider(names_from = donor,
+                       values_from = count)
+
+  data_model <-
+    dplyr::full_join(data_old,
+                     data_new,
+                     by = summarise_by,
+                     suffix = c("_old",
+                                "_new")
+                     )
+
   return(data_model)
 }
