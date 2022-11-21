@@ -5,20 +5,21 @@
 \title{Count of relevant binders stratified on user input}
 \usage{
 summarise_with_filter(
-  .data,
+  .data_old = data_combined_tidy,
+  .data_new,
   summarise_by = c("allele", "peptide", "peptide_source"),
   identifier = barcode
 )
 }
 \arguments{
-\item{.data}{An prepared data frame ready for modelling.}
-
 \item{summarise_by}{The column(s) a user wishes to get a summary of. Provide
 as a string or vector of strings. Default is the columns prepared from
 pMHC.}
 
 \item{identifier}{A variable in the data frame with which the data set should
 be distinct by to avoid a bias towards experiments with many observations.}
+
+\item{.data}{An prepared data frame ready for modelling.}
 }
 \value{
 A table with a count of relevant binders stratified on \code{summarise_by}.

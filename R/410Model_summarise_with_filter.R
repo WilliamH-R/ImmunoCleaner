@@ -57,6 +57,7 @@ summarise_with_filter <- function(.data_old = data_combined_tidy,
     dplyr::count(donor,
                  name = "count") %>%
     dplyr::ungroup() %>%
+    dplyr::arrange(donor) %>%
     tidyr::pivot_wider(names_from = donor,
                        values_from = count)
 
@@ -72,20 +73,17 @@ summarise_with_filter <- function(.data_old = data_combined_tidy,
     dplyr::count(donor,
                  name = "count") %>%
     dplyr::ungroup() %>%
+    dplyr::arrange(donor) %>%
     tidyr::pivot_wider(names_from = donor,
                        values_from = count)
 
   data_model <-
     dplyr::full_join(data_old,
                      data_new,
-                     by = c("allele",
-                            "peptide",
-                            "peptide_source"),
+                     by = summarise_by,
                      suffix = c("_old",
                                 "_new")
-                     ) %>%
-    dplyr::relocate(donor1_old, donor1_new, donor2_old, donor2_new,
-                    donor3_old, donor3_new, donor4_old, donor4_new,
-                    .after = peptide_source)
+                     )
+
   return(data_model)
 }
