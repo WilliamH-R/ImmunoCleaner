@@ -47,7 +47,7 @@ alpha_beta_pair_distribution <- function(.data,
     ggplot2::ggplot(mapping = ggplot2::aes(x = TCR_combination,
                                            y = ggplot2::after_stat(prop),
                                            group = 1,
-                                           fill = factor(..x..)
+                                           fill = factor(ggplot2::after_stat(x))
                                            )) +
         ggplot2::geom_bar() +
         ggplot2::scale_x_discrete(labels = c("one_alpha_only" = "alpha:",
