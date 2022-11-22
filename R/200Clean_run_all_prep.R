@@ -59,7 +59,8 @@ run_all_prep <- function(.data) {
     add_max_non_specific_binder() %>%
     evaluate_binder() %>%
     add_TCR_combination_identifier() %>%
-    check_if_HLA_match()
+    check_if_HLA_match() %>%
+    find_unique_binders()
 
   return(data_clean)
 }

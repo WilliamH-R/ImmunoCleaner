@@ -1,7 +1,7 @@
 #' Check if binding event match HLA-typing
 #'
-#' `check_if_HLA_match()` simply checks if the noted allele for a barcode match the
-#'     noted HLA-type.
+#' `check_if_HLA_match()` simply checks if the noted allele for a barcode match
+#'     the noted HLA-type.
 #'
 #' @inheritParams add_max_non_specific_binder
 #'
