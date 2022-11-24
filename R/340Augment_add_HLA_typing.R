@@ -14,6 +14,10 @@
 
 check_if_HLA_match <- function(.data) {
 
+  tribble(~donor, ~allele, ~match,
+          "donor1", "A0201", "1",
+          )
+
   lookup <- list("donor1" = list("A" = c("A0201", "A1101"), "B" = c("B3501", "UNKNOWN")),
                  "donor2" = list("A" = c("A0201", "A0101"), "B" = c("B0801", "UNKNOWN")),
                  "donor3" = list("A" = c("A2402", "A2902"), "B" = c("B3502", "B4403")),
