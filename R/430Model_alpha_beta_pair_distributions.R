@@ -22,11 +22,11 @@
 #'
 #' @examples
 #' # The function is run by simply piping `.data` into it:
-#' data_donor_one_tidy %>%
+#' data_combined_tidy %>%
 #'     alpha_beta_pair_distribution()
 #'
 #' # A specific pMHC can be specified to show distribution of only that pMHC:
-#' data_donor_one_tidy %>%
+#' data_combined_tidy %>%
 #'     alpha_beta_pair_distribution(pMHC_filter = "A0101_VTEHDTLLY_IE-1_CMV")
 #'
 

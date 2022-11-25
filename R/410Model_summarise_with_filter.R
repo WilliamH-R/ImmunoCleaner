@@ -22,7 +22,7 @@
 #' @examples
 #' # A prepared data frame needs to be provided. Can either be done by using
 #' # the already cleaned data frames or the raw data files piped through `?run_all_prep`
-#' data_donor_one_tidy %>%
+#' data_combined_tidy %>%
 #'     summarise_with_filter()
 #'
 #' data_donor_one_raw %>%
@@ -30,10 +30,10 @@
 #'     summarise_with_filter()
 #'
 #' # The stratification can be done for one or several columns:
-#' data_donor_one_tidy %>%
+#' data_combined_tidy %>%
 #'     summarise_with_filter(summarise_by = "allele")
 #'
-#' data_donor_one_tidy %>%
+#' data_combined_tidy %>%
 #'     summarise_with_filter(summarise_by = c("allele",
 #'                                            "peptide_source"))
 #'

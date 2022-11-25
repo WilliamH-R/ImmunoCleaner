@@ -19,12 +19,12 @@
 #'
 #' @examples
 #' # The function takes no arguments to alter the plot:
-#' data_donor_two_tidy %>%
+#' data_combined_tidy %>%
 #'     alpha_distinctiveness()
 #'
 
 alpha_beta_distinctiveness <- function(.data,
-                                   identifier = barcode) {
+                                       identifier = barcode) {
 
   distinctiveness_barplot <-
     .data %>%

@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' # A prepared data frame is simply piped through the function:
-#' data_donor_four_tidy %>%
+#' data_combined_tidy %>%
 #'     count_binding_pr_allele()
 #'
 

@@ -4,20 +4,15 @@
 #'     plot pMHC vs non-promiscuous TCR-sequences. Marker size represent number
 #'     of barcodes which support that specific interaction. The color is based
 #'     on concordance which is fraction of barcodes that support a given pMHC
-#'     stratified on non-promiscuous TCR-sequences
-#'
-#'
-#'
-#'
-#'     count the number of relevant binders stratified on both non-promiscuous
-#'     pairs and pMHC. The frequency of a specific pMHC is calculated based on
-#'     the total number of pMHCs which bind to a non-promiscuous pair. The output
-#'     is a plotly plot, meaning it is interactive. The x- and y-values can be
+#'     stratified on non-promiscuous TCR-sequences. The output is by default a
+#'     plotly plot, meaning it is interactive. The x- and y-values can be
 #'     found by hovering a dot in the plot.
 #'
 #' @inheritParams summarise_with_filter
 #'
 #' @param max_frequency A float representing the maximum allowed value of frequencies.
+#' @param plotly_option A bool to choose between ggplot or plotly. Default is
+#'     `TRUE` and the output is plotly. Otherwise a regular scatterplot.
 #'
 #' @return An interactive plotly plot with different relevant non-promiscuous pairs
 #'     and pMHC. The size of dots depends on the frequency of that specific
@@ -29,11 +24,11 @@
 #'
 #' @examples
 #' # A prepared data frame is simply piped through the function:
-#' data_donor_four_tidy %>%
+#' data_combined_tidy %>%
 #'     relevant_binder_frequency_plot()
 #'
 #' # The maximum value of allowed frequencies can be changed:
-#' data_donor_four_tidy %>%
+#' data_combined_tidy %>%
 #'     relevant_binder_frequency_plot(max_frequency = 0.8)
 #'
 
@@ -78,9 +73,8 @@ relevant_binder_frequency_plot <- function(.data,
     ) +
     ggplot2::scale_size_continuous(range = c(2, 7)) +
     ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
-    ggplot2::scale_colour_gradient(low = "#FFFF0095",
-                                   high = "#FF000095",
-                                   na.value = NA) +
+    ggplot2::scale_color_continuous(type = "viridis",
+                                    direction = -1) +
     ggplot2::facet_wrap(~ donor,
                         ncol = 1,
                         scales = "free_x")

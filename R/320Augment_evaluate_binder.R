@@ -27,9 +27,8 @@
 #' @export
 #'
 #' @examples
-#' # The function can be run without any arguments except `.data` if `.data` is
-#' # a tidy data frame such as:
-#' data_donor_one_tidy %>%
+#' # The function can be run without any arguments except `.data` as:
+#' data_combined_tidy %>%
 #'     evaluate_binder()
 #'
 #' # Otherwise, an un-tidy data frame can be piped through the wrapper `?run_all_prep`:
@@ -38,7 +37,7 @@
 #'     evaluate_binder
 #'
 #' # If supplied, the thresholds can be changed from the 10X Genomics standard as:
-#' data_donor_one_tidy %>%
+#' data_combined_tidy %>%
 #'     evaluate_binder(UMI_count_min = 20,
 #'                     non_specific_UMI_count_min = 10)
 #'
