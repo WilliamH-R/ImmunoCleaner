@@ -31,20 +31,20 @@ A total of four categories exist:
 }
 \examples{
 # The function is run by simply piping `.data` into it:
-data_donor_one_tidy \%>\%
+data_combined_tidy \%>\%
     alpha_beta_pair_distribution()
 
 # A specific pMHC can be specified to show distribution of only that pMHC:
-data_donor_one_tidy \%>\%
+data_combined_tidy \%>\%
     alpha_beta_pair_distribution(pMHC_filter = "A0101_VTEHDTLLY_IE-1_CMV")
 
 }
 \seealso{
 Other Modelling functions: 
-\code{\link{HLA_match_distribution}()},
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{relevant_binder_frequency_plot}()},
-\code{\link{summarise_with_filter}()}
+\code{\link{summarise_with_filter}()},
+\code{\link{umap_of_protein_expressions}()}
 }
 \concept{Modelling functions}

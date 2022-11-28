@@ -28,16 +28,16 @@ number of unique divided by total number of chains, statified on chain type.
 }
 \examples{
 # The function takes no arguments to alter the plot:
-data_donor_two_tidy \%>\%
+data_combined_tidy \%>\%
     alpha_distinctiveness()
 
 }
 \seealso{
 Other Modelling functions: 
-\code{\link{HLA_match_distribution}()},
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{relevant_binder_frequency_plot}()},
-\code{\link{summarise_with_filter}()}
+\code{\link{summarise_with_filter}()},
+\code{\link{umap_of_protein_expressions}()}
 }
 \concept{Modelling functions}

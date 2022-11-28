@@ -23,16 +23,16 @@ counting.
 }
 \examples{
 # A prepared data frame is simply piped through the function:
-data_donor_four_tidy \%>\%
+data_combined_tidy \%>\%
     count_binding_pr_allele()
 
 }
 \seealso{
 Other Modelling functions: 
-\code{\link{HLA_match_distribution}()},
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{relevant_binder_frequency_plot}()},
-\code{\link{summarise_with_filter}()}
+\code{\link{summarise_with_filter}()},
+\code{\link{umap_of_protein_expressions}()}
 }
 \concept{Modelling functions}

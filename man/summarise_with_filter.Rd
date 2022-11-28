@@ -5,21 +5,20 @@
 \title{Count of relevant binders stratified on user input}
 \usage{
 summarise_with_filter(
-  .data_old = data_combined_tidy,
-  .data_new,
+  .data,
   summarise_by = c("allele", "peptide", "peptide_source"),
   identifier = barcode
 )
 }
 \arguments{
+\item{.data}{An prepared data frame ready for modelling.}
+
 \item{summarise_by}{The column(s) a user wishes to get a summary of. Provide
 as a string or vector of strings. Default is the columns prepared from
 pMHC.}
 
 \item{identifier}{A variable in the data frame with which the data set should
 be distinct by to avoid a bias towards experiments with many observations.}
-
-\item{.data}{An prepared data frame ready for modelling.}
 }
 \value{
 A table with a count of relevant binders stratified on \code{summarise_by}.
@@ -33,7 +32,7 @@ The counting is grouped by columns provided by the user through the argument
 \examples{
 # A prepared data frame needs to be provided. Can either be done by using
 # the already cleaned data frames or the raw data files piped through `?run_all_prep`
-data_donor_one_tidy \%>\%
+data_combined_tidy \%>\%
     summarise_with_filter()
 
 data_donor_one_raw \%>\%
@@ -41,20 +40,20 @@ data_donor_one_raw \%>\%
     summarise_with_filter()
 
 # The stratification can be done for one or several columns:
-data_donor_one_tidy \%>\%
+data_combined_tidy \%>\%
     summarise_with_filter(summarise_by = "allele")
 
-data_donor_one_tidy \%>\%
+data_combined_tidy \%>\%
     summarise_with_filter(summarise_by = c("allele",
                                            "peptide_source"))
 
 }
 \seealso{
 Other Modelling functions: 
-\code{\link{HLA_match_distribution}()},
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{count_binding_pr_allele}()},
-\code{\link{relevant_binder_frequency_plot}()}
+\code{\link{relevant_binder_frequency_plot}()},
+\code{\link{umap_of_protein_expressions}()}
 }
 \concept{Modelling functions}

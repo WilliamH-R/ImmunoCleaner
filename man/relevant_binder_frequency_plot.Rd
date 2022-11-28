@@ -18,6 +18,9 @@ relevant_binder_frequency_plot(
 be distinct by to avoid a bias towards experiments with many observations.}
 
 \item{max_frequency}{A float representing the maximum allowed value of frequencies.}
+
+\item{plotly_option}{A bool to choose between ggplot or plotly. Default is
+\code{TRUE} and the output is plotly. Otherwise a regular scatterplot.}
 }
 \value{
 An interactive plotly plot with different relevant non-promiscuous pairs
@@ -30,32 +33,26 @@ non-promiscuous pair.
 plot pMHC vs non-promiscuous TCR-sequences. Marker size represent number
 of barcodes which support that specific interaction. The color is based
 on concordance which is fraction of barcodes that support a given pMHC
-stratified on non-promiscuous TCR-sequences
-}
-\details{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{count the number of relevant binders stratified on both non-promiscuous
-pairs and pMHC. The frequency of a specific pMHC is calculated based on
-the total number of pMHCs which bind to a non-promiscuous pair. The output
-is a plotly plot, meaning it is interactive. The x- and y-values can be
+stratified on non-promiscuous TCR-sequences. The output is by default a
+plotly plot, meaning it is interactive. The x- and y-values can be
 found by hovering a dot in the plot.
-}\if{html}{\out{</div>}}
 }
 \examples{
 # A prepared data frame is simply piped through the function:
-data_donor_four_tidy \%>\%
+data_combined_tidy \%>\%
     relevant_binder_frequency_plot()
 
 # The maximum value of allowed frequencies can be changed:
-data_donor_four_tidy \%>\%
+data_combined_tidy \%>\%
     relevant_binder_frequency_plot(max_frequency = 0.8)
 
 }
 \seealso{
 Other Modelling functions: 
-\code{\link{HLA_match_distribution}()},
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{count_binding_pr_allele}()},
-\code{\link{summarise_with_filter}()}
+\code{\link{summarise_with_filter}()},
+\code{\link{umap_of_protein_expressions}()}
 }
 \concept{Modelling functions}
