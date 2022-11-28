@@ -28,28 +28,38 @@
 #'
 
 umap_of_protein_expressions <- function(.data,
-                                        color_by = "CD45RA") {
+                                        color_by = CD45RA,
+                                        frac_include = 0.2) {
 
-  data_combined_tidy_temp <- .data %>%
-    dplyr::filter(donor == "donor4") %>%
-    dplyr::distinct(barcode, .keep_all = TRUE) %>%
-    dplyr::select(dplyr::matches("CD|Ig|HLA")) %>%
-    dplyr::slice_sample(prop = 1)
+  umap_model <- tibble::tibble()
+
+  for (chosen_donor in data_combined_tidy %>% dplyr::select(donor) %>% dplyr::distinct()) {
+
+    data_combined_tidy_temp <- .data %>%
+      dplyr::filter(donor == chosen_donor[1]) %>%
+      dplyr::distinct(barcode,
+                      .keep_all = TRUE) %>%
+      dplyr::select(dplyr::matches("CD|Ig|HLA-DR|donor")) %>%
+      dplyr::slice_sample(prop = frac_include)
 
 
-  umap_model <- data_combined_tidy_temp %>%
-                  dplyr::select(dplyr::matches("CD|Ig|HLA-DR")) %>%
-                  uwot::umap(n_neighbors = 15,
-                             min_dist = 0.2,
-                             metric = "euclidean")
+    umap_model <- dplyr::bind_rows(data_combined_tidy_temp %>%
+                                     dplyr::select(dplyr::matches("CD|Ig|HLA-DR")) %>%
+                                     uwot::umap(n_neighbors = 15,
+                                                min_dist = 0.2,
+                                                metric = "euclidean") %>%
+                                     tibble::as_tibble() %>%
+                                     dplyr::bind_cols(data_combined_tidy_temp),
+                                   umap_model)
+  }
 
-  umap_plot <- dplyr::bind_cols(umap_model %>% tibble::as_tibble(.name_repair = "unique"),
-                                data_combined_tidy_temp) %>%
-    ggplot2::ggplot(ggplot2::aes_string(x = "V1",
-                                 y = "V2",
-                                 color = color_by)) +
+  umap_plot <- umap_model %>%
+    ggplot2::ggplot(ggplot2::aes(x = V1,
+                                 y = V2,
+                                 color = {{color_by}})) +
     ggplot2::geom_point() +
-    ggplot2::scale_color_continuous(type = "viridis")
+    ggplot2::scale_color_continuous(type = "viridis") +
+    ggplot2::facet_wrap(~ donor)
 
   return(umap_plot)
 }

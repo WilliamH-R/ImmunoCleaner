@@ -53,11 +53,12 @@ relevant_binder_frequency_plot <- function(.data,
                                  y = pMHC,
                                  size = barcode_count,
                                  color = barcode_freq,
-                                 text = paste('TCR: ', non_promiscuous_pair,
+                                 text = stringr::str_c('TCR: ', non_promiscuous_pair,
                                               '<br>pMHC:', pMHC,
                                               '<br>Frequency:', round(barcode_freq,
                                                                       digits = 2),
-                                              '<br>Barcodes:', barcode_count))) +
+                                              '<br>Barcodes:', barcode_count,
+                                              sep = " "))) +
     ggplot2::geom_point(alpha = 0.5) +
     ggplot2::labs(x = "Non-promiscuous TCR-sequences",
                   title = "Frequencies of binding between pMHC and TCR-sequences",
