@@ -5,7 +5,41 @@
 \alias{data_combined_tidy}
 \title{Prepared data from all four donors}
 \format{
-A data frame with 2.1 mill rows and 28 columns
+\subsection{'data_combined_tidy'}{
+
+A data frame with 2.1 mill rows and 28 columns:
+\describe{
+\item{barcode}{\code{character}. Unique identifier for each cell in Single Cell Experiment}
+\item{TCR_sequence}{\code{character}. Amino acid sequence of either the alpha or beta chain. Specified in \code{chain}}
+\item{TCR_combination}{\code{factor}. Category to note types of \code{chain} belonging to the \code{barcode}}
+\item{donor}{\code{character}. Specifies which \code{donor} the \code{barcode} originates from}
+\item{chain}{\code{character}. Specifies the type of \code{chain}}
+\item{CD3}{\code{numeric}. Expression level of protein}
+\item{CD19}{\code{numeric}. Expression level of protein}
+\item{CD45RA}{\code{numeric}. Expression level of protein}
+\item{CD4}{\code{numeric}. Expression level of protein}
+\item{CD8a}{\code{numeric}. Expression level of protein}
+\item{CD14}{\code{numeric}. Expression level of protein}
+\item{CD45RO}{\code{numeric}. Expression level of protein}
+\item{CD279_PD-1}{\code{numeric}. Expression level of protein}
+\item{IgG1}{\code{numeric}. Expression level of protein}
+\item{IgG2a}{\code{numeric}. Expression level of protein}
+\item{IgG2b}{\code{numeric}. Expression level of protein}
+\item{CD127}{\code{numeric}. Expression level of protein}
+\item{CD197_CCR7}{\code{numeric}. Expression level of protein}
+\item{HLA-DR}{\code{numeric}. Expression level of protein}
+\item{non_promiscuous_pair}{\code{character}. Contains the combined alpha:beta sequence, if exactly one of each exist for a \code{barcode}. Otherwise \code{NA}}
+\item{pMHC}{\code{character}. The pMHC which the \code{TCR_sequence} binds to}
+\item{allele}{\code{character}. The specific \code{allele} in the \code{pMHC}}
+\item{peptide}{\code{character}. The specific \code{peptide} in the \code{pMHC}}
+\item{peptide_source}{\code{character}. The origin of the \code{peptide} in the \code{pMHC}}
+\item{UMI_count}{\code{numeric}. The number of transcripts observed. Used to score how trustworthy an interaction is. Higher number means more trustworthy}
+\item{max_non_specific_binder}{\code{numeric}. The \code{UMI_count} of the highest scoring non-specific binder to the \code{barcode}. If no binder, \code{0}}
+\item{is_binder}{\code{boolean}. If the \code{UMI_count} complies with a set of thresholds, the value is \code{TRUE}, otherwise \code{FALSE}. When \code{TRUE} the interaction between \code{TCR_sequence} and \code{pMHC} is relevant}
+\item{HLA_match}{\code{character}. Check of whether \code{allele} match the HLA-typing belonging to \code{donor}, in that case \code{TRUE}. If typing for \code{donor} is missing, \code{UNKNOWN}. Otherwise \code{FALSE}}
+\item{unique_binder}{\code{boolean}. Check if the binding between \code{TCR_sequence} and \code{pMHC} is only observed once, then \code{TRUE}. Otherwise, \code{FALSE}}
+}
+}
 }
 \source{
 Prepared data from all four raw data files:
