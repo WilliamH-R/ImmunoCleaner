@@ -62,7 +62,12 @@ summarise_with_filter <- function(.data,
     return(data_prep)
   }
 
+  donors_present <- .data %>%
+    dplyr::distinct(donor) %>%
+    as.matrix()
+
   data_old <- TCRSequenceFunctions::data_combined_tidy %>%
+    dplyr::filter(donor %in% donors_present) %>%
     prep_data_for_summarise()
 
   data_new  <- .data %>%
