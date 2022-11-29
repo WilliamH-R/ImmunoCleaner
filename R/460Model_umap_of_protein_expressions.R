@@ -53,8 +53,8 @@ umap_of_protein_expressions <- function(.data,
                                      uwot::umap(n_neighbors = 15,
                                                 min_dist = 0.2,
                                                 metric = "euclidean") %>%
-                                     as.array() %>%
-                                     tibble::as_tibble() %>%
+                                     tibble::as_tibble("V1" = .[1],
+                                                       "V2" = .[2]) %>%
                                      dplyr::bind_cols(data_combined_tidy_temp),
                                    umap_model)
   }
@@ -65,7 +65,9 @@ umap_of_protein_expressions <- function(.data,
                                  color = eval(parse(text = color_by)))) +
     ggplot2::geom_point() +
     ggplot2::scale_color_continuous(type = "viridis") +
-    ggplot2::labs(color = stringr::str_c("Expression of", color_by, sep = " ")) +
+    ggplot2::labs(color = stringr::str_c("Protein expression of",
+                                         color_by,
+                                         sep = " ")) +
     ggplot2::facet_wrap(~ donor)
 
   return(umap_plot)
