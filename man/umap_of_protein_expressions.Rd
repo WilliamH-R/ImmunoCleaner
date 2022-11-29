@@ -12,14 +12,16 @@ umap_of_protein_expressions(.data, color_by = CD45RA, frac_include = 0.2)
 \item{color_by}{A variable name to choose which protein expression level to
 color by.}
 
-\item{max_frequency}{A float representing the maximum allowed value of frequencies.}
+\item{frac_include}{A float ranging \verb{[0..1]} representing the fraction of
+randomly selected rows to use for modelling. Computation time can
+otherwise be quite high, and a low default of \code{0.2} is chosen.}
 }
 \value{
 A scatter plot to show tendencies of the gene expression levels.
 }
 \description{
 \code{umap_of_protein_expressions()} takes a prepared data frame, \code{.data}, and
-reduces the expression levels of all 13 proteins to 2 dimensions,
+reduces the expression levels of all 14 proteins to 2 dimensions,
 to show general tendencies.
 }
 \examples{
@@ -27,9 +29,10 @@ to show general tendencies.
 data_combined_tidy \%>\%
     umap_of_protein_expressions()
 
-# The protein to color by can be changed:
+# The protein to color by can be changed along with fraction of inlcuded rows:
 data_combined_tidy \%>\%
-    umap_of_protein_expressions(color_by = "CD3")
+    umap_of_protein_expressions(color_by = "CD3",
+                                frac_include = 0.5)
 
 }
 \seealso{

@@ -1,16 +1,18 @@
 #' Umap of the protein expression levels
 #'
 #' `umap_of_protein_expressions()` takes a prepared data frame, `.data`, and
-#'     reduces the expression levels of all 13 proteins to 2 dimensions,
+#'     reduces the expression levels of all 14 proteins to 2 dimensions,
 #'     to show general tendencies.
 #'
 #'
 #' @inheritParams summarise_with_filter
 #'
-#' @param max_frequency A float representing the maximum allowed value of frequencies.
-#'
 #' @param color_by A variable name to choose which protein expression level to
 #'     color by.
+#'
+#' @param frac_include A float ranging `[0..1]` representing the fraction of
+#'     randomly selected rows to use for modelling. Computation time can
+#'     otherwise be quite high, and a low default of `0.2` is chosen.
 #'
 #' @return A scatter plot to show tendencies of the gene expression levels.
 #'
@@ -22,9 +24,10 @@
 #' data_combined_tidy %>%
 #'     umap_of_protein_expressions()
 #'
-#' # The protein to color by can be changed:
+#' # The protein to color by can be changed along with fraction of inlcuded rows:
 #' data_combined_tidy %>%
-#'     umap_of_protein_expressions(color_by = "CD3")
+#'     umap_of_protein_expressions(color_by = "CD3",
+#'                                 frac_include = 0.5)
 #'
 
 umap_of_protein_expressions <- function(.data,
