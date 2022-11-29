@@ -8,7 +8,7 @@ evaluate_binder(
   .data,
   identifier = barcode,
   UMI_count_min = 10,
-  non_specific_UMI_count_min = 5
+  negative_control_UMI_count_min = 5
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ experiment. Default is set to \code{barcode}.}
 observed before a binding can be assessed as relevant. The default
 is set to \code{10} by 10X Genomics.}
 
-\item{non_specific_UMI_count_min}{An integer which is multiplied with the
+\item{negative_control_UMI_count_min}{An integer which is multiplied with the
 maximum value for a non-specific binder. The product is used as
 another minimum requirement for the UMI-count to be relevant.
 Default is set to \code{5} by 10X Genomics.}
@@ -50,7 +50,7 @@ data_donor_one_raw \%>\%
 # If supplied, the thresholds can be changed from the 10X Genomics standard as:
 data_combined_tidy \%>\%
     evaluate_binder(UMI_count_min = 20,
-                    non_specific_UMI_count_min = 10)
+                    negative_control_UMI_count_min = 10)
 
 }
 \seealso{

@@ -117,7 +117,7 @@ This step is important as to not have multiple pieces of information in one cell
 
 Generally speaking, augmenting the data refers to adding new columns which enable later modelling. In some cases, it makes more sense to do augmenting while cleaning (e.g. `find_non_promiscuous_split_TCR_sequences()`). The list of augmenting functions are as follows:
 
-1.  `add_max_non_specific_binder()`
+1.  `add_max_negative_control_binder()`
 2.  `evaluate_binder()`
 3.  `add_TCR_combination_identifier()`
 
@@ -128,24 +128,24 @@ The first and second function are both required to find the relevant binders. A 
 3.  If multiple specificities exist, only use the one with the highest UMI-count
 4.  Disregard a cell if it shows specificity towards more than four pMHC
 
-And so, the purpose of the first function is to find the highest UMI-count of all non-specific binders for each barcode. The count is added in a new column called `max_non_specific_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. `relevant_binder_frequency_plot()`. Some examples of evaluation can be seen in @tbl-binder_evaluation.
+And so, the purpose of the first function is to find the highest UMI-count of all non-specific binders for each barcode. The count is added in a new column called `max_negative_control_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. `relevant_binder_frequency_plot()`. Some examples of evaluation can be seen in @tbl-binder_evaluation.
 
 ```{r}
 #| echo: false
 #| label: tbl-binder_evaluation
-#| tbl-cap: "Examples of how different combinations of UMI-count and max_non_specific_binder are evaluated to either `TRUE` or `FALSE`"
+#| tbl-cap: "Examples of how different combinations of UMI-count and max_negative_control_binder are evaluated to either `TRUE` or `FALSE`"
 
 data_donor_one_tidy %>% 
   dplyr::group_by(is_binder) %>% 
   dplyr::slice_head(n = 3) %>% 
   dplyr::select(pMHC,
                 UMI_count,
-                max_non_specific_binder,
+                max_negative_control_binder,
                 is_binder) %>% 
   gt(rowname_col = "pMHC") %>% 
   cols_label(
     UMI_count = md("**UMI_count**"),
-    max_non_specific_binder = md("**max_non_specific_binder**"),
+    max_negative_control_binder = md("**max_negative_control_binder**"),
     is_binder = md("**is_binder**")
   ) %>% 
   tab_style(

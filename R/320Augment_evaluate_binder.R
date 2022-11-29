@@ -14,7 +14,7 @@
 #'     observed before a binding can be assessed as relevant. The default
 #'     is set to `10` by 10X Genomics.
 #'
-#' @param non_specific_UMI_count_min An integer which is multiplied with the
+#' @param negative_control_UMI_count_min An integer which is multiplied with the
 #'     maximum value for a non-specific binder. The product is used as
 #'     another minimum requirement for the UMI-count to be relevant.
 #'     Default is set to `5` by 10X Genomics.
@@ -39,19 +39,19 @@
 #' # If supplied, the thresholds can be changed from the 10X Genomics standard as:
 #' data_combined_tidy %>%
 #'     evaluate_binder(UMI_count_min = 20,
-#'                     non_specific_UMI_count_min = 10)
+#'                     negative_control_UMI_count_min = 10)
 #'
 
 evaluate_binder <- function(.data,
                             identifier = barcode,
                             UMI_count_min = 10,
-                            non_specific_UMI_count_min = 5){
+                            negative_control_UMI_count_min = 5){
 
   data_aug <-
     .data %>%
     dplyr::group_by({{identifier}}) %>%
     dplyr::mutate(is_binder = dplyr::case_when(UMI_count > UMI_count_min &
-                                                 UMI_count > non_specific_UMI_count_min * max_non_specific_binder &
+                                                 UMI_count > negative_control_UMI_count_min * max_negative_control_binder &
                                                  UMI_count == max(UMI_count,
                                                                   na.rm = TRUE) ~ TRUE,
                                                TRUE ~ FALSE),

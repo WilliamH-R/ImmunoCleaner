@@ -8,7 +8,7 @@
 #'    * `"one_alpha_one_beta"`
 #'    * `"other"`
 #'
-#' @inheritParams add_max_non_specific_binder
+#' @inheritParams add_max_negative_control_binder
 #'
 #' @param identifier_string Same as `identifier`, but supplied as a string.
 #'

@@ -43,7 +43,7 @@ The following functions are run:
 \item \code{add_chain_ident_remove_prefix()}
 \item \code{pivot_longer_pMHC()}
 \item \code{tidy_allele_names()}
-\item \code{add_max_non_specific_binder()}
+\item \code{add_max_negative_control_binder()}
 \item \code{evaluate_binder()}
 \item \code{add_TCR_combination_identifier()}
 }

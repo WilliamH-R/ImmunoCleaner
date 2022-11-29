@@ -32,7 +32,7 @@
 #'     \item{peptide}{`character`. The specific `peptide` in the `pMHC`}
 #'     \item{peptide_source}{`character`. The origin of the `peptide` in the `pMHC`}
 #'     \item{UMI_count}{`numeric`. The number of transcripts observed. Used to score how trustworthy an interaction is. Higher number means more trustworthy}
-#'     \item{max_non_specific_binder}{`numeric`. The `UMI_count` of the highest scoring non-specific binder to the `barcode`. If no binder, `0`}
+#'     \item{max_negative_control_binder}{`numeric`. The `UMI_count` of the highest scoring non-specific binder to the `barcode`. If no binder, `0`}
 #'     \item{is_binder}{`boolean`. If the `UMI_count` complies with a set of thresholds, the value is `TRUE`, otherwise `FALSE`. When `TRUE` the interaction between `TCR_sequence` and `pMHC` is relevant}
 #'     \item{HLA_match}{`character`. Check of whether `allele` match the HLA-typing belonging to `donor`, in that case `TRUE`. If typing for `donor` is missing, `UNKNOWN`. Otherwise `FALSE`}
 #'     \item{unique_binder}{`boolean`. Check if the binding between `TCR_sequence` and `pMHC` is only observed once, then `TRUE`. Otherwise, `FALSE`}

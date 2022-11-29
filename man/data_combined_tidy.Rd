@@ -34,7 +34,7 @@ A data frame with 2.1 mill rows and 28 columns:
 \item{peptide}{\code{character}. The specific \code{peptide} in the \code{pMHC}}
 \item{peptide_source}{\code{character}. The origin of the \code{peptide} in the \code{pMHC}}
 \item{UMI_count}{\code{numeric}. The number of transcripts observed. Used to score how trustworthy an interaction is. Higher number means more trustworthy}
-\item{max_non_specific_binder}{\code{numeric}. The \code{UMI_count} of the highest scoring non-specific binder to the \code{barcode}. If no binder, \code{0}}
+\item{max_negative_control_binder}{\code{numeric}. The \code{UMI_count} of the highest scoring non-specific binder to the \code{barcode}. If no binder, \code{0}}
 \item{is_binder}{\code{boolean}. If the \code{UMI_count} complies with a set of thresholds, the value is \code{TRUE}, otherwise \code{FALSE}. When \code{TRUE} the interaction between \code{TCR_sequence} and \code{pMHC} is relevant}
 \item{HLA_match}{\code{character}. Check of whether \code{allele} match the HLA-typing belonging to \code{donor}, in that case \code{TRUE}. If typing for \code{donor} is missing, \code{UNKNOWN}. Otherwise \code{FALSE}}
 \item{unique_binder}{\code{boolean}. Check if the binding between \code{TCR_sequence} and \code{pMHC} is only observed once, then \code{TRUE}. Otherwise, \code{FALSE}}

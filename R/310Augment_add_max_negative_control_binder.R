@@ -1,6 +1,6 @@
 #' Identify non-specific binder with highest UMI-count
 #'
-#' `add_max_non_specific_binder()` adds a new column `max_non_specific_binder` by
+#' `add_max_negative_control_binder()` adds a new column `max_negative_control_binder` by
 #'     checking if a pMHC is in a list of known non-specific pMHC. If yes, add
 #'     the respective UMI-count in that new column, otherwise set to 0. If a
 #'     TCR-sequence bound multiple non-specific binders, only choose the
@@ -19,10 +19,10 @@
 #' @noRd
 #'
 
-add_max_non_specific_binder <- function(.data,
+add_max_negative_control_binder <- function(.data,
                                         identifier = barcode){
   # Tibble of the non-specific binders
-  non_specific_binders_vector <- c("A0101_VTEHDTLLY_IE-1_CMV",
+  negative_control_binders_vector <- c("A0101_VTEHDTLLY_IE-1_CMV",
                                    "A0201_KVAELVHFL_MAGE-A3_Cancer",
                                    "A0201_LLMGTLGIVC_HPV-16E7_82-91",
                                    "A0201_CLGGLLTMV_LMP-2A_EBV",
@@ -33,10 +33,10 @@ add_max_non_specific_binder <- function(.data,
   data_aug <-
     .data %>%
     dplyr::group_by({{identifier}}) %>%
-    dplyr::mutate(max_non_specific_binder = dplyr::case_when(is.element(pMHC,
-                                                                        non_specific_binders_vector) == TRUE ~ UMI_count,
+    dplyr::mutate(max_negative_control_binder = dplyr::case_when(is.element(pMHC,
+                                                                        negative_control_binders_vector) == TRUE ~ UMI_count,
                                                              TRUE ~ 0),
-                  max_non_specific_binder = max(max_non_specific_binder)) %>%
+                  max_negative_control_binder = max(max_negative_control_binder)) %>%
     dplyr::ungroup()
 
   return(data_aug)

@@ -17,7 +17,7 @@
 #'  * `add_chain_ident_remove_prefix()`
 #'  * `pivot_longer_pMHC()`
 #'  * `tidy_allele_names()`
-#'  * `add_max_non_specific_binder()`
+#'  * `add_max_negative_control_binder()`
 #'  * `evaluate_binder()`
 #'  * `add_TCR_combination_identifier()`
 #'
@@ -56,7 +56,7 @@ run_all_prep <- function(.data) {
     add_chain_ident_remove_prefix() %>%
     pivot_longer_pMHC() %>%
     tidy_pMHC_names() %>%
-    add_max_non_specific_binder() %>%
+    add_max_negative_control_binder() %>%
     evaluate_binder() %>%
     add_TCR_combination_identifier() %>%
     check_if_HLA_match() %>%

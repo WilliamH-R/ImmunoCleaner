@@ -3,7 +3,7 @@
 #' `check_if_HLA_match()` simply checks if the noted allele for a barcode match
 #'     the noted HLA-type.
 #'
-#' @inheritParams add_max_non_specific_binder
+#' @inheritParams add_max_negative_control_binder
 #'
 #' @return Same data frame as `.data`, but with an added column `HLA_match`.
 #'     It contains a boolean. `TRUE` if the HLA noted in `allele` is a match.

@@ -68,7 +68,7 @@ data_donor_one_raw %>%
 #> #   `CD279_PD-1` <dbl>, IgG1 <dbl>, IgG2a <dbl>, IgG2b <dbl>, CD127 <dbl>,
 #> #   CD197_CCR7 <dbl>, `HLA-DR` <dbl>, non_promiscuous_pair <chr>, pMHC <chr>,
 #> #   allele <chr>, peptide <chr>, peptide_source <chr>, UMI_count <dbl>,
-#> #   max_non_specific_binder <dbl>, is_binder <lgl>, and abbreviated variable
+#> #   max_negative_control_binder <dbl>, is_binder <lgl>, and abbreviated variable
 #> #   names 1: TCR_sequence, 2: TCR_combination
 #> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 
@@ -88,7 +88,7 @@ data_donor_one_tidy
 #>10 AAACCT~ CASYTD~ one_al~ dono~ alpha  1598     3   3454     4  3383     1      0       5     0     5
 #> # ... with 512,254 more rows, 12 more variables: IgG2b <dbl>, CD127 <dbl>, CD197_CCR7 <dbl>,
 #> #   `HLA-DR` <dbl>, non_promiscuous_pair <chr>, pMHC <chr>, allele <chr>, peptide <chr>,
-#> #   peptide_source <chr>, UMI_count <dbl>, max_non_specific_binder <dbl>, is_binder <lgl>, and
+#> #   peptide_source <chr>, UMI_count <dbl>, max_negative_control_binder <dbl>, is_binder <lgl>, and
 #> #   abbreviated variable names 1: TCR_sequence, 2: TCR_combination, 3: `CD279_PD-1`
 #> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names  
 
@@ -113,7 +113,7 @@ data_donor_one_tidy %>%
 
 data_donor_one_tidy %>% 
     evaluate_binder(UMI_count_min = 20,
-                            non_specific_UMI_count_min = 10) %>% 
+                            negative_control_UMI_count_min = 10) %>% 
     summarise_with_filter()
 #> # A tibble: 30 x 4
 #> # Groups:   allele, peptide, peptide_source [30]
