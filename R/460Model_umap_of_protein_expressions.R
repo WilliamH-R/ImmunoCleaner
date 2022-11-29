@@ -31,12 +31,14 @@
 #'
 
 umap_of_protein_expressions <- function(.data,
-                                        color_by = CD45RA,
+                                        color_by = "CD45RA",
                                         frac_include = 0.2) {
 
   umap_model <- tibble::tibble()
 
-  for (chosen_donor in data_combined_tidy %>% dplyr::select(donor) %>% dplyr::distinct()) {
+  for (chosen_donor in .data %>%
+                         dplyr::select(donor) %>%
+                         dplyr::distinct()) {
 
     data_combined_tidy_temp <- .data %>%
       dplyr::filter(donor == chosen_donor[1]) %>%
@@ -51,6 +53,7 @@ umap_of_protein_expressions <- function(.data,
                                      uwot::umap(n_neighbors = 15,
                                                 min_dist = 0.2,
                                                 metric = "euclidean") %>%
+                                     as.array() %>%
                                      tibble::as_tibble() %>%
                                      dplyr::bind_cols(data_combined_tidy_temp),
                                    umap_model)
@@ -59,9 +62,10 @@ umap_of_protein_expressions <- function(.data,
   umap_plot <- umap_model %>%
     ggplot2::ggplot(ggplot2::aes(x = V1,
                                  y = V2,
-                                 color = {{color_by}})) +
+                                 color = eval(parse(text = color_by)))) +
     ggplot2::geom_point() +
     ggplot2::scale_color_continuous(type = "viridis") +
+    ggplot2::labs(color = stringr::str_c("Expression of", color_by, sep = " ")) +
     ggplot2::facet_wrap(~ donor)
 
   return(umap_plot)

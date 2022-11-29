@@ -4,7 +4,7 @@
 \alias{umap_of_protein_expressions}
 \title{Umap of the protein expression levels}
 \usage{
-umap_of_protein_expressions(.data, color_by = CD45RA, frac_include = 0.2)
+umap_of_protein_expressions(.data, color_by = "CD45RA", frac_include = 0.2)
 }
 \arguments{
 \item{.data}{An prepared data frame ready for modelling.}
