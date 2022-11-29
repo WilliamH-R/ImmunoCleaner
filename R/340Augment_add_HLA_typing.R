@@ -33,7 +33,6 @@ check_if_HLA_match <- function(.data) {
                             )
 
   data_aug <- .data %>%
-    dplyr::select(-HLA_match) %>%
     dplyr::left_join(lookup,
                      by = c("donor", "allele")) %>%
     dplyr::mutate(HLA_match = dplyr::case_when(is.na(HLA_match) &
