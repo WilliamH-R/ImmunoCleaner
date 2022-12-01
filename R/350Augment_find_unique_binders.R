@@ -1,12 +1,12 @@
 #' Find TCR-sequences and pMHC which only match with each other once
 #'
-#' `check_if_HLA_match()` simply checks if the noted allele for a barcode match
-#'     the noted HLA-type.
+#' `find_unique_binders()` checks if a pMHC binding to a TCR_sequence only occur
+#'     once.
 #'
 #' @inheritParams add_max_negative_control_binder
 #'
-#' @return Same data frame as `.data`, but with an added column `HLA_match`.
-#'     It contains a boolean. `TRUE` if the HLA noted in `allele` is a match.
+#' @return Same data frame as `.data`, but with an added column `unique_binder`.
+#'     It contains a boolean. `TRUE` if it is unique, otherwise `FALSE`.
 #'
 #' @family Preparation functions
 #' @noRd

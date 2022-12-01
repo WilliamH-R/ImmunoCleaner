@@ -66,8 +66,9 @@ relevant_binder_frequency_plot <- function(.data,
                   color = "Concordance"
                   ) +
     ggplot2::theme(
-      axis.ticks = ggplot2::element_blank(),
-      axis.text = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank(),
+      #axis.text.y = stringr::str_c(allele, peptide),
       panel.grid.major.x = ggplot2::element_blank(),
       panel.grid.minor.x = ggplot2::element_blank(),
       legend.position = "bottom"
