@@ -4,41 +4,37 @@
 \alias{umap_of_protein_expressions}
 \title{Umap of the protein expression levels}
 \usage{
-umap_of_protein_expressions(.data, color_by = "CD45RA", frac_include = 0.2)
+umap_of_protein_expressions(.data, color_by = "CD45RA")
 }
 \arguments{
 \item{.data}{An prepared data frame ready for modelling.}
 
 \item{color_by}{A variable name to choose which protein expression level to
 color by.}
-
-\item{frac_include}{A float ranging \verb{[0..1]} representing the fraction of
-randomly selected rows to use for modelling. Computation time can
-otherwise be quite high, and a low default of \code{0.2} is chosen.}
 }
 \value{
 A scatter plot to show tendencies of the gene expression levels.
 }
 \description{
 \code{umap_of_protein_expressions()} takes a prepared data frame, \code{.data}, and
-reduces the expression levels of all 14 proteins to 2 dimensions,
-to show general tendencies.
+projects the data points via the already made models included in the
+package.
 }
 \examples{
 # A prepared data frame is simply piped through the function:
 data_combined_tidy \%>\%
     umap_of_protein_expressions()
 
-# The protein to color by can be changed along with fraction of inlcuded rows:
+# The protein to color by can be changed:
 data_combined_tidy \%>\%
-    umap_of_protein_expressions(color_by = "CD3",
-                                frac_include = 0.5)
+    umap_of_protein_expressions(color_by = "CD3")
 
 }
 \seealso{
 Other Modelling functions: 
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{alpha_beta_pair_distribution}()},
+\code{\link{boxplot_protein_expressions}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{relevant_binder_frequency_plot}()},
 \code{\link{summarise_with_filter}()}

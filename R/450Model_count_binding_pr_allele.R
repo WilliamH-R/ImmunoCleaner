@@ -34,7 +34,9 @@ count_binding_pr_allele <- function(.data,
     ggplot2::geom_bar() +
     ggplot2::facet_wrap(~ donor,
                         scales = "free") +
-    ggplot2::theme(axis.title = ggplot2::element_blank()) +
+    ggplot2::labs(x = "Alleles",
+                  y = "Count of occurences",
+                  title = "Shows the count of occurences of alleles stratified by donor")
     ggplot2::scale_fill_manual(name = "HLA-match",
                                values = c("TRUE" = "#00BFC4",
                                           "UNKNOWN" = "#00BA38",

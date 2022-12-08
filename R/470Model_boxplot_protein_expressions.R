@@ -17,21 +17,23 @@
 #'     boxplot_protein_expressions()
 #'
 
-boxplot_protein_expressions <- function(.data) {
+boxplot_protein_expressions <- function(.data,
+                                        plot_protein = "CD4") {
 
   boxplot <- .data %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
-    dplyr::select(dplyr::matches("donor|CD|Ig|HLA-DR")) %>%
-    tidyr::pivot_longer(names_to = "protein_name",
-                        values_to = "expression_level",
-                        cols = -donor) %>%
 
-    ggplot2::ggplot(ggplot2::aes(x = protein_name,
-                                 y = log10(expression_level))) +
+    ggplot2::ggplot(ggplot2::aes(x = donor,
+                                 y = log10(eval(parse(text = plot_protein))),
+                                 fill = donor)) +
       ggplot2::geom_boxplot() +
-      ggplot2::facet_wrap(donor ~ protein_name,
-                          scales = "free")
+      ggplot2::labs(x = "Donor",
+                    y = stringr::str_c("log10(expression of ",
+                                       plot_protein,
+                                       ")"),
+                    title = "Protein expression of chosen protein stratified on donor") +
+      ggplot2::theme(legend.position = "none")
 
   return(boxplot)
 

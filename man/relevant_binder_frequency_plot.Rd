@@ -51,6 +51,7 @@ data_combined_tidy \%>\%
 Other Modelling functions: 
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{alpha_beta_pair_distribution}()},
+\code{\link{boxplot_protein_expressions}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{summarise_with_filter}()},
 \code{\link{umap_of_protein_expressions}()}

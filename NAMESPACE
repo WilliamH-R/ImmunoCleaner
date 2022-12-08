@@ -3,6 +3,7 @@
 export("%>%")
 export(alpha_beta_distinctiveness)
 export(alpha_beta_pair_distribution)
+export(boxplot_protein_expressions)
 export(count_binding_pr_allele)
 export(evaluate_binder)
 export(relevant_binder_frequency_plot)

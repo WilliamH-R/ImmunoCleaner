@@ -19,10 +19,10 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
-    ggseqlogo,
     plotly,
     tidyr,
-    tibble
+    tibble,
+    compositions
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

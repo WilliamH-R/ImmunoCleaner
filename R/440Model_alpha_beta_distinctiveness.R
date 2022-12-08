@@ -51,7 +51,7 @@ alpha_beta_distinctiveness <- function(.data,
       ggplot2::labs(x = "Chain",
                     y = "Relative distinctiveness",
                     title = "Relative distinctiveness for the alpha and beta chain") +
-      ggplot2::theme(legend.position="none") +
+      ggplot2::theme(legend.position = "none") +
       ggplot2::facet_wrap(~ donor,
                           scales = "free_y")
 
