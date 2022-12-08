@@ -1,18 +1,14 @@
 #' Umap of the protein expression levels
 #'
 #' `umap_of_protein_expressions()` takes a prepared data frame, `.data`, and
-#'     reduces the expression levels of all 14 proteins to 2 dimensions,
-#'     to show general tendencies.
+#'     projects the data points via the already made models included in the
+#'     package.
 #'
 #'
 #' @inheritParams summarise_with_filter
 #'
 #' @param color_by A variable name to choose which protein expression level to
 #'     color by.
-#'
-#' @param frac_include A float ranging `[0..1]` representing the fraction of
-#'     randomly selected rows to use for modelling. Computation time can
-#'     otherwise be quite high, and a low default of `0.2` is chosen.
 #'
 #' @return A scatter plot to show tendencies of the gene expression levels.
 #'
@@ -24,42 +20,44 @@
 #' data_combined_tidy %>%
 #'     umap_of_protein_expressions()
 #'
-#' # The protein to color by can be changed along with fraction of inlcuded rows:
+#' # The protein to color by can be changed:
 #' data_combined_tidy %>%
-#'     umap_of_protein_expressions(color_by = "CD3",
-#'                                 frac_include = 0.5)
+#'     umap_of_protein_expressions(color_by = "CD3")
 #'
 
 umap_of_protein_expressions <- function(.data,
-                                        color_by = "CD45RA",
-                                        frac_include = 0.2) {
+                                        color_by = "CD45RA") {
 
-  umap_model <- tibble::tibble()
+  umap_coords <- NULL
 
   for (chosen_donor in .data %>%
-                         dplyr::select(donor) %>%
-                         dplyr::distinct()) {
+                         dplyr::pull(donor) %>%
+                         unique()) {
 
     data_combined_tidy_temp <- .data %>%
-      dplyr::filter(donor == chosen_donor[1]) %>%
+      dplyr::filter(donor == chosen_donor) %>%
       dplyr::distinct(barcode,
                       .keep_all = TRUE) %>%
-      dplyr::select(dplyr::matches("CD|Ig|HLA-DR|donor")) %>%
-      dplyr::slice_sample(prop = frac_include)
+      dplyr::select(dplyr::matches("CD|HLA-DR|donor"))
+
+    umap_model <- uwot::load_uwot(file = stringr::str_c("data/umap_model_",
+                                                        chosen_donor))
+
+    umap_embed <- data_combined_tidy_temp %>%
+      dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+      uwot::umap_transform(model = umap_model) %>%
+      as.data.frame() %>%
+      tibble::as_tibble()
+
+    uwot::unload_uwot(umap_model)
 
 
-    umap_model <- dplyr::bind_rows(data_combined_tidy_temp %>%
-                                     dplyr::select(dplyr::matches("CD|Ig|HLA-DR")) %>%
-                                     uwot::umap(n_neighbors = 15,
-                                                min_dist = 0.2,
-                                                metric = "euclidean") %>%
-                                     tibble::as_tibble("V1" = .[1],
-                                                       "V2" = .[2]) %>%
-                                     dplyr::bind_cols(data_combined_tidy_temp),
-                                   umap_model)
+    umap_coords <- dplyr::bind_rows(umap_coords,
+                                    dplyr::bind_cols(umap_embed,
+                                                     data_combined_tidy_temp))
   }
 
-  umap_plot <- umap_model %>%
+  umap_plot <- umap_coords %>%
     ggplot2::ggplot(ggplot2::aes(x = V1,
                                  y = V2,
                                  color = eval(parse(text = color_by)))) +
