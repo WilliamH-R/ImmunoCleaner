@@ -38,19 +38,23 @@ relevant_binder_frequency_plot <- function(.data,
                                            plotly_option = TRUE) {
   frequency_plot_ggplot <-
     .data %>%
-    dplyr::select({{identifier}}, donor, non_promiscuous_pair, pMHC, is_binder) %>%
+    dplyr::select({{identifier}}, donor, non_promiscuous_pair,
+                  pMHC, is_binder, allele, peptide) %>%
     dplyr::filter(is_binder == TRUE) %>%
     tidyr::drop_na(non_promiscuous_pair) %>%
     dplyr::distinct({{identifier}},
                     .keep_all = TRUE) %>%
-    dplyr::count(donor, non_promiscuous_pair, pMHC,
-                     name = "barcode_count") %>%
+    dplyr::mutate(label_name = stringr::str_c(allele,
+                                              peptide,
+                                              sep = "_")) %>%
+    dplyr::count(donor, non_promiscuous_pair, pMHC, label_name,
+                 name = "barcode_count") %>%
     dplyr::group_by(donor, non_promiscuous_pair) %>%
     dplyr::mutate(barcode_freq = barcode_count/sum(barcode_count)) %>%
     dplyr::filter(barcode_freq <= max_frequency) %>%
 
     ggplot2::ggplot(ggplot2::aes(x = non_promiscuous_pair,
-                                 y = pMHC,
+                                 y = label_name,
                                  size = barcode_count,
                                  color = barcode_freq,
                                  text = stringr::str_c('TCR: ', non_promiscuous_pair,
@@ -68,7 +72,6 @@ relevant_binder_frequency_plot <- function(.data,
     ggplot2::theme(
       axis.ticks.x = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_blank(),
-      #axis.text.y = stringr::str_c(allele, peptide),
       panel.grid.major.x = ggplot2::element_blank(),
       panel.grid.minor.x = ggplot2::element_blank(),
       legend.position = "bottom"
