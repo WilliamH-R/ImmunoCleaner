@@ -10,10 +10,6 @@
 #'
 #' @inheritParams summarise_with_filter
 #'
-#' @param pMHC_filter A pMHC to use for filtering, to only include that specific
-#'     pMHC from the data set. Default is `NULL`, i.e. no filtering. Must be
-#'     supplied as string.
-#'
 #' @return Returns a bar plot with a frequency distribution of the different
 #'     combinations of alpha- beta pairs.
 #'
@@ -25,20 +21,10 @@
 #' data_combined_tidy %>%
 #'     alpha_beta_pair_distribution()
 #'
-#' # A specific pMHC can be specified to show distribution of only that pMHC:
-#' data_combined_tidy %>%
-#'     alpha_beta_pair_distribution(pMHC_filter = "A0101_VTEHDTLLY_IE-1_CMV")
 #'
 
 alpha_beta_pair_distribution <- function(.data,
-                                         identifier = barcode,
-                                         pMHC_filter = NULL) {
-
-  if (!is.null(pMHC_filter)) {
-    .data <-
-      .data %>%
-      dplyr::filter(pMHC == pMHC_filter)
-  }
+                                         identifier = barcode) {
 
   frequency_barplot <-
     .data %>%
