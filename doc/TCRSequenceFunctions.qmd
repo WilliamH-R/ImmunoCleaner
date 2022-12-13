@@ -23,26 +23,70 @@ format: html
 ```{r setup}
 library(TCRSequenceFunctions)
 library(gt)
-library(notly)
+load("../R/sysdata.rda")
 ```
 
 # Introduction {#sec-Intro}
 
-This package, [TCRSequenceFunctions](https://github.com/WilliamH-R/TCRSequenceFunctions), is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment made by 10x Genomics @10XGenomics2022. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their own respective donor.
+This package, [TCRSequenceFunctions](https://github.com/WilliamH-R/TCRSequenceFunctions), is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment made by 10x Genomics @10XGenomics2022. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their respective donor.
 
-The data sets contains binding counts between the donors' library of T-Cell Receptors (TCRs) and a set of peptide-major histocompatibility complexes (pMHCs). The before-mentioned binding counts are so called unique molecular identifier (UMI) counts. For an explanation of all columns see @sec-AppendixA.
+The data sets contain binding counts between the donors' library of T-Cell Receptors (TCRs) and a set of peptide-major histocompatibility complexes (pMHCs). The before-mentioned binding counts are so called unique molecular identifier (UMI) counts. For an explanation of all columns see @sec-AppendixA.
 
 In the following sections, each of the functions contained in [TCRSequenceFunctions](https://github.com/WilliamH-R/TCRSequenceFunctions) will be explained, demonstrated and reasoned for. Generally, they can be divided into three types: Cleaning, Augmenting and Modelling where the main goal of the two first is to make the data tidy.
 
-Lastly will be a short section on a Shiny Package, [TCRSequenceShiny](https://github.com/WilliamH-R/TCRSequenceShiny), which utilizes these functions to make a user-friendly interactive interface for data exploration.
+Lastly will be a short section on a Shiny Package, [TCRSequenceShiny](https://github.com/WilliamH-R/TCRSequenceShiny), which utilizes these functions to make a user-friendly interactive interface for data filtering and exploration.
+
+# Data curation {#sec-DataCuration}
+
+In the folder `"data-raw"` is four files located:
+
+1.  `01data_download_raw.R`
+2.  `02data_combined_tidy.R`
+3.  `03data_generate_umap_models.R`
+4.  `aux_alleles_status_each_dono.R`
+
+The purpose of the first script is to simply download the raw data sets from 10x Genomics and store them internally. The second script then tidies the data and combine them to `data_combined_tidy` by running a wrapper function - `run_all_prep()` which will be described in @sec-CleaningData. Number three of the scripts generates a UMAP-model for each donor and stores them in some data files, to be later used by a function to plot. This is described in more detail in @sec-umap_of_protein_expressions. Finally, the last script is a static file containing the HLA-typings and virus statuses of all four donors.
 
 # Tidying the data {#sec-TidyData}
 
-The aim of tidying the data is to enable the data handling, and to ensure a reproducible result. Firstly, the data is cleaned e.g. by making sure, all cells only contain one piece of information. Afterwards, some augmented was needed to enable the modelling. This was done by e.g. adding new columns. A wrapper function was used to run all the preparation functions: `run_all_prep()`. This wrapper simply takes one of the raw data files included in the package as input, and pipe it through all the preparation functions, and output tidy data as in @lst-tidydata_pipeline.
+The aim of tidying the data is to enable the data handling/modelling, and to ensure a reproducible result. Firstly, the data is cleaned e.g. by making sure, all cells only contain one piece of information. Afterwards, some augmentation was needed to enable the modelling. This was done by e.g. adding new columns. A wrapper function was used to run all the preparation functions: `run_all_prep()`. This wrapper simply takes all the internally stored raw data files as input, and pipe it through all the preparation functions, and output tidy data. Then the data is exported. The process is showed in @lst-tidydata_pipeline.
 
-``` {#lst-tidydata_pipeline .R lst-cap="How to pipe data through wrapper"}
-data_donor_one_raw %>%
+``` {#lst-tidydata_pipeline .R lst-cap="How to update tidy data"}
+# Downloading and internalising raw data
+data_donor_one_raw <-
+  readr::read_csv(url("https://cf.10xgenomics.com/samples/cell-vdj/3.0.2/vdj_v1_hs_aggregated_donor1/vdj_v1_hs_aggregated_donor1_binarized_matrix.csv"),
+                  show_col_types = FALSE)
+
+data_donor_two_raw <-
+  readr::read_csv(url("https://cf.10xgenomics.com/samples/cell-vdj/3.0.2/vdj_v1_hs_aggregated_donor2/vdj_v1_hs_aggregated_donor2_binarized_matrix.csv"),
+                  show_col_types = FALSE)
+
+data_donor_three_raw <-
+  readr::read_csv(url("https://cf.10xgenomics.com/samples/cell-vdj/3.0.2/vdj_v1_hs_aggregated_donor3/vdj_v1_hs_aggregated_donor3_binarized_matrix.csv"),
+                  show_col_types = FALSE)
+
+data_donor_four_raw <-
+  readr::read_csv(url("https://cf.10xgenomics.com/samples/cell-vdj/3.0.2/vdj_v1_hs_aggregated_donor4/vdj_v1_hs_aggregated_donor4_binarized_matrix.csv"),
+                  show_col_types = FALSE)
+
+usethis::use_data(data_donor_one_raw,
+                  data_donor_two_raw,
+                  data_donor_three_raw,
+                  data_donor_four_raw,
+                  overwrite = TRUE,
+                  internal = TRUE)
+
+# Tidying and exporting data
+load("R/sysdata.rda")
+
+data_combined_tidy <- dplyr::bind_rows(data_donor_one_raw,
+                                       data_donor_two_raw,
+                                       data_donor_three_raw,
+                                       data_donor_four_raw) %>%
   run_all_prep()
+
+usethis::use_data(data_combined_tidy,
+                  overwrite = TRUE)
 ```
 
 ## Cleaning {#sec-CleaningData}
@@ -58,52 +102,28 @@ As mentioned above, cleaning the data is mostly focusing on handling already pre
 
 The first function takes the raw data frame as input, and simply removes the unnecessary columns as these aren't needed. By default, the columns removed are those containing `"_binder"` and the column `"cell_clono_cdr3_nt"`.
 
-`find_non_promiscuous_split_TCR_sequences()`, `pivot_longer_TCR_sequence()` and `add_chain_ident_remove_prefix()` works in close relation with one another. The main purpose is to tidy the TCR-sequences, as to not have cells with multiple pieces of information. @tbl-TCR_sequence_example_before shows three examples as to how these are written. A column is added to indicate a non-promiscuous pair (i.e., a pair with one alpha- and beta chain respectively) and contains the TCR-sequence of said pair. This is done since the sequences of non-promiscuous pairs are needed for modelling in `relevant_binder_frequency_plot()`. The TCR-sequences are then split into new columns, one for each chain. These new columns are then pivot longer into the column `TCR_sequence` by `pivot_longer_TCR_sequence()`. Lastly, a new column is added to indicate chain type, `chain`, and the chain indicator `"TR[A|B]"` is removed. The result can be seen in @tbl-TCR_sequence_example_after.
+`find_non_promiscuous_split_TCR_sequences()`, `pivot_longer_TCR_sequence()` and `add_chain_ident_remove_prefix()` works in close relation with one another. The main purpose is to tidy the TCR-sequences, as to not have cells with multiple pieces of information. @tbl-TCR_sequence_example_before shows three non-tidy examples. A column is added to indicate a non-promiscuous pair (i.e., a pair with one alpha- and beta chain respectively) and contains the TCR-sequence of said pair. This is done since the sequences of non-promiscuous pairs are needed for modelling in @sec-relevant_binder_frequency_plot. The TCR-sequences are then split into new columns, one for each chain. These new columns are then pivot longer into the column `TCR_sequence` by `pivot_longer_TCR_sequence()`. Lastly, a new column is added to indicate chain type, `chain`, and the chain indicator `"TR[A|B]"` is removed. The result can be seen in @tbl-TCR_sequence_example_after.
 
-```{r}
-#| echo: false
-#| label: tbl-TCR_sequence_example_before
-#| tbl-cap: "A snippet of `data_donor_one_raw` to show two examples as to how TCR-sequences are written"
+| **cell_clono_cdr3_aa**                                         |
+|----------------------------------------------------------------|
+| TRA:CAASVSIWTGTASKLTF;TRA:CAAWDMEYGNKLVF;TRB:CAISDPGLAGGGGEQFF |
+| TRB:CASDTPVGQFF                                                |
+| TRA:CASYTDKLIF;TRB:CASSGGSISTDTQYF                             |
 
-data_donor_one_raw %>% 
-  dplyr::slice_head(n = 3) %>%
-  dplyr::select(cell_clono_cdr3_aa) %>%
-  gt() %>%
-  cols_label(
-    cell_clono_cdr3_aa = md("**cell_clono_cdr3_aa**")
-  ) %>% 
-  tab_style(
-    style = cell_text(align = "center"),
-    locations = cells_column_labels()
-  ) %>% 
-  tab_options(table.width = pct(80))
-```
+: {#tbl-TCR_sequence_example_before}
 
-```{r}
-#| echo: false
-#| label: tbl-TCR_sequence_example_after
-#| tbl-cap: "A snippet of the output from `find_non_promiscuous_split_TCR_sequences()` to show a tidy version of the TCR-sequences"
+| **TCR_sequence**  | **chain** | **non_promiscuous_pair**   |
+|-------------------|-----------|----------------------------|
+| CAASVSIWTGTASKLTF | alpha     | NA                         |
+| CAAWDMEYGNKLVF    | alpha     | NA                         |
+| CAISDPGLAGGGGEQFF | beta      | NA                         |
+| CASDTPVGQFF       | beta      | NA                         |
+| CASYTDKLIF        | alpha     | CASYTDKLIF;CASSGGSISTDTQYF |
+| CASSGGSISTDTQYF   | beta      | CASYTDKLIF;CASSGGSISTDTQYF |
 
-data_donor_one_raw %>%
-  dplyr::slice_head(n = 3) %>%
-  TCRSequenceFunctions:::find_non_promiscuous_split_TCR_sequences() %>% 
-  TCRSequenceFunctions:::pivot_longer_TCR_sequences() %>% 
-  TCRSequenceFunctions:::add_chain_ident_remove_prefix() %>% 
-  dplyr::select(TCR_sequence, chain, non_promiscuous_pair) %>%
-  gt() %>%
-  cols_label(
-    TCR_sequence = md("**TCR_sequence**"),
-    chain = md("**chain**"),
-    non_promiscuous_pair = md("**non_promiscuous_pair**")
-  ) %>% 
-  cols_align(
-    align = "center",
-    columns = non_promiscuous_pair
-  ) %>% 
-  tab_options(table.width = pct(80))
-```
+: {#tbl-TCR_sequence_example_after}
 
-A similar process is applied to all column names which follow the general structure: `"allele_peptide_peptidesource"`. This is done through `pivot_longer_pMHC()` and `tidy_pMHC_names()`. First the names are pivot longer with their associated UMI-counts as values. Here, only non-zero values are kept as they are otherwise irrelevant. The names, now as rows, are made tidy by splitting into three new columns:
+All columns names following the general structure `"allele_peptide_peptide-source"` is also pivot longer and split to have the data available in cells and only one piece of information in each cell. This is done through `pivot_longer_pMHC()` and `tidy_pMHC_names()`. First the names are pivot longer with their associated UMI-counts as values. Here, only non-zero values are kept as they are otherwise irrelevant. The names, now as rows, are made tidy by splitting into three new columns:
 
 1.  `allele`
 
@@ -111,7 +131,7 @@ A similar process is applied to all column names which follow the general struct
 
 3.  `peptide_source`
 
-This step is important as to not have multiple pieces of information in one cell, and as they are used for modelling in `summarise_with_filter()`.
+This step is important as to not have multiple pieces of information in one cell, and as they are used for modelling in @sec-summarise_with_filter.
 
 ## Augmenting {#sec-AugmentingData}
 
@@ -120,22 +140,24 @@ Generally speaking, augmenting the data refers to adding new columns which enabl
 1.  `add_max_negative_control_binder()`
 2.  `evaluate_binder()`
 3.  `add_TCR_combination_identifier()`
+4.  `check_if_HLA_match()`
+5.  `find_unique_binders()`
 
-The first and second function are both required to find the relevant binders. A relevant binder has four requirements which needs to be met:
+The first and second function are both required to find the relevant binders. A relevant binding event has four requirements which needs to be met:
 
 1.  UMI-count needs to be larger than some threshold
-2.  The UMI-count has to be another threshold times higher than the non-specific binder with the highest UMI-count for that barcode
-3.  If multiple specificities exist, only use the one with the highest UMI-count
-4.  Disregard a cell if it shows specificity towards more than four pMHC
+2.  The UMI-count has to be another threshold times higher than the negative control with the highest UMI-count for that barcode
+3.  If multiple relevant binders exist for a barcode (cell), only use the one with the highest UMI-count
+4.  Disregard a entire barcode if it shows to be relevant towards more than four pMHC
 
-And so, the purpose of the first function is to find the highest UMI-count of all non-specific binders for each barcode. The count is added in a new column called `max_negative_control_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. `relevant_binder_frequency_plot()`. Some examples of evaluation can be seen in @tbl-binder_evaluation.
+And so, the purpose of the first function is to find the highest UMI-count of all negative controls for each barcode. The count is added in a new column called `max_negative_control_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. @sec-relevant_binder_frequency_plot. Some examples of evaluation can be seen in @tbl-binder_evaluation.
 
 ```{r}
 #| echo: false
 #| label: tbl-binder_evaluation
 #| tbl-cap: "Examples of how different combinations of UMI-count and max_negative_control_binder are evaluated to either `TRUE` or `FALSE`"
 
-data_donor_one_tidy %>% 
+data_combined_tidy %>% 
   dplyr::group_by(is_binder) %>% 
   dplyr::slice_head(n = 3) %>% 
   dplyr::select(pMHC,
@@ -156,21 +178,21 @@ data_donor_one_tidy %>%
   )
 ```
 
-Lastly, `add_TCR_combination_identifier()` categorizes the TCR-sequence chain combinations for each barcode. I.e. it determines which of the following groups the TCR-sequence for a barcode belongs to:
+`add_TCR_combination_identifier()` categorizes the TCR-sequence chain combinations for each barcode. I.e. it determines which of the following groups the TCR-sequence for a barcode belongs to:
 
 1.  Containing only one alpha chain and no beta chains
 2.  Containing no alpha chain and only one beta chain
 3.  Containing one alpha chain and beta chain respectively
 4.  Some other combination
 
-This allows for a distribution of the above-mentioned categories to perform a quick check on the data through `alpha_beta_pair_distributions()`. A few examples can be seen in @tbl-chain_categorizing.
+This allows for a distribution of the above-mentioned categories to perform a quick check on the data through @sec-alpha_beta_pair_distribution. A few examples can be seen in @tbl-chain_categorizing.
 
 ```{r}
 #| echo: false
 #| label: tbl-chain_categorizing
 #| tbl-cap: "Examples of how barcodes are categorized depending on their alpha- and beta chain combination"
 
-data_donor_one_tidy %>%
+data_combined_tidy %>%
   dplyr::slice_head(n = 11) %>% 
   dplyr::select(barcode,
                 chain,
@@ -188,40 +210,83 @@ data_donor_one_tidy %>%
   tab_options(table.width = pct(80))
 ```
 
+For data filtering and -modelling, it would be interesting to check if a donors' cells also binds pMHCs which is outside of the donors' HLA-typings. This is done through `check_if_HLA_match()` by comparing the allele noted in the column `allele` to a static table provided by 10x Genomics @10XGenomics2022. If the alleles match, the new column `HLA_match()` will contain `"TRUE"`. In some cases, only one typing is known, and it's not known whether the donor is heterozygous or homozygous. You can't explicitly determine an allele not present in the typing to be `"FALSE"`, as the true secondary typing is not known. The solution is to determine such a case as `"UNKNOWN"` instead.
+
+Lastly, `find_unique_binders()` is meant to find unique combinations of `TCR-sequence` and `pMHC`. If the binding event is evaluated to be relevant, but only observed once in a data set, the support is very low. The function then adds a column `unique_binder` to enable filtering, as it would make sense to have the option to filter out these observations.
+
 ## Change of dimensions
 
-Naturally, the dimensions of all included data sets change after being piped through `run_all_prep()`. @tbl-dimensions shows the dimensions for both the raw and tidy data sets stratified on donor. The number of columns are always reduced to 27, but the number of rows depend on the original number of rows and the data itself.
+Naturally, the dimensions of all included data sets change after being piped through `run_all_prep()`. @tbl-dimensions shows the dimensions for both the raw and tidy data sets stratified on donor. The number of columns are always reduced to 29, but the number of rows depend on the original number of rows and the data itself.
 
 ::: {#tbl-dimensions layout-ncol="2"}
-|      **Donor 1**      |          **`raw`**           |          **`tidy`**           |
-|:------------------:|:------------------------:|:------------------------:|
-| **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_donor_one_tidy)` |
-|  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_donor_one_tidy)` |
+|      **Donor 1**      |          **`raw`**           |                            **`tidy`**                             |
+|:------------------:|:------------------------:|:-------------------------:|
+| **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1"))` |
+|  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1"))` |
 
 : {#tbl-dimensions_donor_one}
 
-|      **Donor 2**      |          **`raw`**           |          **`tidy`**           |
-|:------------------:|:------------------------:|:------------------------:|
-| **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_donor_two_tidy)` |
-|  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_donor_two_tidy)` |
+|      **Donor 2**      |          **`raw`**           |                            **`tidy`**                             |
+|:------------------:|:------------------------:|:-------------------------:|
+| **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2"))` |
+|  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2"))` |
 
 : {#tbl-dimensions_donor_two}
 
-|      **Donor 3**      |           **`raw`**            |           **`tidy`**            |
+|      **Donor 3**      |           **`raw`**            |                            **`tidy`**                             |
 |:-----------------:|:------------------------:|:-------------------------:|
-| **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_donor_three_tidy)` |
-|  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_donor_three_tidy)` |
+| **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3"))` |
+|  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3"))` |
 
 : {#tbl-dimensions_donor_three}
 
-|      **Donor 4**      |           **`raw`**           |           **`tidy`**           |
+|      **Donor 4**      |           **`raw`**           |                            **`tidy`**                             |
 |:------------------:|:------------------------:|:-------------------------:|
-| **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_donor_four_tidy)` |
-|  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_donor_four_tidy)` |
+| **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4"))` |
+|  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4"))` |
 
 : {#tbl-dimensions_donor_four}
 
 Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 and **(d)** Donor 4 before and after being prepared by the wrapper `run_all_prep()`
+:::
+
+::: {layout-ncol="2"}
+|      **Donor 1**      |          **`raw`**           |
+|:---------------------:|:----------------------------:|
+| **Number of columns** | `r ncol(data_donor_one_raw)` |
+|  **Number of rows**   | `r nrow(data_donor_one_raw)` |
+
+: {#tbl-dimensions_donor_one}
+
+|      **Donor 2**      |          **`raw`**           |
+|:---------------------:|:----------------------------:|
+| **Number of columns** | `r ncol(data_donor_two_raw)` |
+|  **Number of rows**   | `r nrow(data_donor_two_raw)` |
+
+: {#tbl-dimensions_donor_two}
+
+|      **Donor 3**      |           **`raw`**            |
+|:---------------------:|:------------------------------:|
+| **Number of columns** | `r ncol(data_donor_three_raw)` |
+|  **Number of rows**   | `r nrow(data_donor_three_raw)` |
+
+: {#tbl-dimensions_donor_three}
+
+|      **Donor 4**      |           **`raw`**           |
+|:---------------------:|:-----------------------------:|
+| **Number of columns** | `r ncol(data_donor_four_raw)` |
+|  **Number of rows**   | `r nrow(data_donor_four_raw)` |
+
+: {#tbl-dimensions_donor_four}
+
+|     **Combined**      |          **`tidy`**          |
+|:---------------------:|:----------------------------:|
+| **Number of columns** | `r ncol(data_combined_tidy)` |
+|  **Number of rows**   | `r nrow(data_combined_tidy)` |
+
+: {#tbl-dimensions_combined_tidy}
+
+Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 and **(d)** Donor 4 before being prepared by the wrapper `run_all_prep()`. **(e)** After being prepared by the wrapper `run_all_prep()` and combined.
 :::
 
 # Modelling {#sec-ModelData}
@@ -231,16 +296,19 @@ All of the tidying done in the above enables the modelling which are described i
 1.  `summarise_with_filter()`
 2.  `relevant_binder_frequency_plot()`
 3.  `alpha_beta_pair_distributions()`
-4.  `alpha_beta_consistency()`
+4.  `alpha_beta_distinctiveness()`
+5.  `count_binding_pr_allele()`
+6.  `umap_of_protein_expressions()`
+7.  `boxplot_protein_expressions()`
 
 ## `summarise_with_filter()` {#sec-summarise_with_filter}
 
-As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind more often than others which could prove interesting.
+As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. The output is then a table with counts of the binding events. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind more often than others which could prove interesting.
 
 ```{r}
 #| eval: false
 
-data_donor_one_tidy %>%
+data_combined_tidy %>%
   summarise_with_filter(summarise_by = c("allele", "peptide"))
 ```
 
@@ -249,18 +317,18 @@ data_donor_one_tidy %>%
 #| label: tbl-summarise_with_filter
 #| tbl-cap: "Output of the function `summarise_with_filter()`. For each allele and for each peptide a count as noted indicating the number of binding events to cells."
 
-data_donor_one_tidy %>%
+data_combined_tidy %>%
+  dplyr::filter(donor %in% c("donor1", "donor2")) %>% 
   summarise_with_filter(summarise_by = c("allele", "peptide")) %>% 
   dplyr::slice_head(n = 10) %>% 
   gt() %>%
   cols_label(
     allele = md("**allele**"),
     peptide = md("**peptide**"),
-    count = md("**count**")
   ) %>% 
   cols_align(
     align = "left",
-    columns = count
+    columns = everything()
   ) %>% 
   tab_options(
     heading.border.bottom.width = 10,
@@ -270,68 +338,93 @@ data_donor_one_tidy %>%
 
 ## `relevant_binder_frequency_plot()` {#sec-relevant_binder_frequency_plot}
 
-As the function above, this one also takes a tidy data frame as input. The model counts the number of pMHC which bind to non-promiscuous pairs stratified on barcode. Based om that count, a frequency is calculated showing how often a pMHC bind to a non-promiscuous pair out of all the other pMHC which bind to that exact pair. The output is then a plotly plot (i.e., its interactive) where each dot represent a binding event between pMHC and a non-promiscuous pair. The size of the dot increases with increasing frequency. The axis ticks have been disables due to cluttering, but as mentioned the values can be found by hovering a dot. It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of threshold in that function will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something less than `1`. For a demonstration on how to use the model see @fig-relevant_binder_frequency_plot (will only work properly when rendering in HTML format).
+As the function above, this also takes a tidy data frame as input. The model shows which pMHC have a relevant binding to which non-promiscuous pairs stratified on donor. From this model, the output is a plotly (i.e., interactive) plot where each dot represent a relevant binding event between pMHC and a non-promiscuous pair. For each specific relevant match between TCR-sequence and pMHC, the number of barcodes supporting that match was counted and used as size for the dots. Further, a concordance is calculated which represent the fraction of barcodes supporting a match out of all barcodes carrying that specific TCR-sequence.
+
+The x-axis text have been disabled due to cluttering, but the values can be found by hovering a dot. It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of filtering will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something lower than `1`. For a demonstration on how to use the model see @fig-relevant_binder_frequency_plot (will only work properly when rendering in HTML format).
 
 ```{r}
 #| label: fig-relevant_binder_frequency_plot
 #| fig-cap: "Output of the function `relevant_binder_frequency_plot`. Each dot represent a relevant binding between a non-promiscous TCR-sequence and pMHC."
-#| layout: [[90]]
+#| fig-height: 15
 
-data_donor_four_tidy %>%
+data_combined_tidy %>%
+  dplyr::filter(donor %in% c("donor1", "donor2")) %>% 
   relevant_binder_frequency_plot()
 ```
 
 ## `alpha_beta_pair_distribution()` {#sec-alpha_beta_pair_distribution}
 
-As with the other model functions, it takes a tidy data frame as input with the option to only look at distributions for a single pMHC provided through the arguments. From `add_TCR_combination_identifier()` we have the categorization of each cell. By making each barcode unique, and counting number of occurrences for each category, a frequency distribution is obtainable. The output is a bar plot showing exactly that (see @fig-alpha_beta_pair_distribution). It can be used as a quality check of the data.
+As with the other model functions, it takes a tidy data frame as input. From `add_TCR_combination_identifier()` we have the categorization of each cell. By making each barcode unique, and counting number of occurrences for each category, a frequency distribution is obtainable. The output is a bar plot showing exactly that (see @fig-alpha_beta_pair_distribution). It can be used as a quality check of the data.
 
 ```{r}
 #| label: fig-alpha_beta_pair_distribution
 #| fig-cap: "Output of the function `alpha_beta_pair_distribution`. Each bar represent the freuqency of that respective category."
 
-data_donor_four_tidy %>%
+data_combined_tidy %>%
   alpha_beta_pair_distribution()
 ```
 
-## `alpha_beta_consistency()` {#sec-alpha_beta_sequence_consistency}
+## `alpha_beta_distinctiveness()` {#sec-alpha_beta_sequence_consistency}
 
-The input to the function is a tidy data frame from which a frequency to plot is made. The function groups on the barcode, then make TCR-sequences unique, and ungroup again to do a data set wide counting of the number of TCR-sequences. A distinctiveness score is then calculated by comparing the number of completely unique sequences with the total number of TCR-sequences. I.e., a lower score means less distinctive. The calculations are done by stratifying on `chain`. This enables a quick quality check of the data set to whether it follows theory or not. The output is then a bar plot showing the distinctiveness score (See @fig-alpha_beta_consistency).
+The input to the function is a tidy data frame from which a frequency plot is made. The function groups on the barcode, then make TCR-sequences unique, and ungroup again to do a data set wide counting of the number of TCR-sequences. A distinctiveness score is then calculated by comparing the number of completely unique sequences with the total number of TCR-sequences. I.e., a lower score means less distinctive. The calculations are done by stratifying on `chain`. This enables a quick quality check of the data set to whether it follows theory or not. The output is then a bar plot showing the distinctiveness score (see @fig-alpha_beta_distinctiveness).
 
 ```{r}
-#| label: fig-alpha_beta_consistency
-#| fig-cap: "Output of the function `alpha_beta_consistency()`. Each bar represent the distinctiveness of that chain type."
+#| label: fig-alpha_beta_distinctiveness
+#| fig-cap: "Output of the function `alpha_beta_distinctiveness()`. Each bar represent the distinctiveness of that chain type."
 
-data_donor_four_tidy %>%
-  alpha_beta_consistency()
+data_combined_tidy %>%
+  alpha_beta_distinctiveness()
 ```
 
 ## `count_binding_pr_allele()` {#sec-count_binding_pr_allele}
 
-By inputting a tidy data frame, a scatter plot is provided as output which shows number of relevant bindings for each allele. It is done by, for each barcode, making pMHC distinct, ungrouping and simply count the alleles. The output is then as shown in @fig-count_binding_pr_allele.
+By inputting a tidy data frame, a scatter plot is provided as output which shows number of relevant bindings for each allele. It is done by, for each barcode, making pMHC distinct, ungrouping and simply count the alleles. Is mentioned in @sec-AugmentingData, the possibility of `"UNKNOWN"` exist. This happens when a HLA-type of a donor is unknown, and the allele noted down for a binding event is not present in the typings. The output is then as shown in @fig-count_binding_pr_allele.
 
 ```{r}
 #| label: fig-count_binding_pr_allele
-#| fig-cap: "Output of the function `count_binding_pr_allele()`. The y-axis shows the count of relevant binders for each label (which is the name of the allele)."
+#| fig-cap: "Output of the function `count_binding_pr_allele()`. The y-axis shows the count of relevant binders for each allele."
+#| fig-width: 15
 
-data_donor_four_tidy %>%
+data_combined_tidy %>%
   count_binding_pr_allele()
 ```
 
-## `predict_allele_typing()` {#sec-predict_allele_typing}
+## `umap_of_protein_expressions()` {#sec-umap_of_protein_expressions}
 
-For each of the donors who participated in the experiment, the HLA typing was noted @10XGenomics2022. In some instances, the allele typing is missing. The purpose of this function is to predict the missing allele typing. The top two scoring HLA's (i.e., HLA's with the highest number of relevant binders) are found from the input tidy data frame. Then, depending on the input file, either the highest or second highest scoring HLA is returned. If the top scoring HLA is already noted as a typing, then second highest scoring is instead returned. Further, if both HLA typings are already present a string will be returned informing, that both typings are already present. The output is simply a string as shown in @lst-predict_allele_typing.
+As mentioned in @sec-DataCuration a script has been made for generating a UMAP model for each donor. This is done by using the package `uwot`. It takes the protein expressions of all 11 proteins in the tidy data frame, and creates a model which reduces the dimension to 2D. This allows better visual representation of the tendencies by applying coloring.
 
-``` {#lst-predict_allele_typing .R lst-cap="Output of the function predict_allele_typing(). If donor which the input data frame refers to are missing a HLA type, a prediction of the typing is returned. Otherwise a string will be returned informing, that both HLA typings are present."}
+The function `umap_of_protein_expressions()` loads the created models mentioned above and project the piped in data frame onto the model outputting a 2D scatter plot. By supplying a protein name present in the data as a string, it is possible to color by the expression of said protein. This allows us to tell which protein can explain the largest amount of variability in the expressions. In the examples shown in @fig-umap_of_protein_expressions it can be seen, that the protein CD45RA can explain a lot of the variability whereas the protein CD8a doesn't show any clear tendencies.
 
-data_donor_one_tidy %>%
-  predict_allele_typing()
+```{r}
+#| label: fig-umap_of_protein_expressions
+#| fig-cap: "Output of the function `umap_of_protein_expressions()`. The plots show the dimensionality reduction and how the variance is explained by the expressions levels of (a) CD45RA and (b) CD8a."
+#| fig-subcap: true
+#| layout-ncol: 2
 
-[1] "The predicted allele typing is: B0801"
+# data_combined_tidy %>%
+#   dplyr::filter(donor == "donor4") %>% 
+#   umap_of_protein_expressions(color_by = "CD45RA")
+#   
+# data_combined_tidy %>%
+#   dplyr::filter(donor == "donor4") %>% 
+#   umap_of_protein_expressions(color_by = "CD8a")
+```
 
-data_donor_four_tidy %>%
-  predict_allele_typing()
-  
-[1] "You chose a data set where all HLA typings are known"
+## `boxplot_protein_expressions()` {#sec-boxplot_protein_expressions}
+
+By supplying a tidy data frame and a protein name present in the data (with the default being CD4), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. The boxplots contain the name of the donor on the x-axis and the `log10()`-values of the expressions on the y-axis.
+
+```{r}
+#| label: fig-boxplot_protein_expressions
+#| fig-cap: "Output of the function `boxplot_protein_expressions()`. The plots show distribution of expression levels for each donor for the proteins (a) CD45RA and (b) CD8a."
+#| fig-subcap: true
+#| layout-ncol: 1
+
+data_combined_tidy %>%
+  boxplot_protein_expressions(plot_protein = "CD45RA")
+
+data_combined_tidy %>%
+  boxplot_protein_expressions(plot_protein = "CD8a")
 ```
 
 # Shiny Integration {#sec-Shiny}
