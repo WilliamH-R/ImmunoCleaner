@@ -65,20 +65,21 @@ relevant_binder_frequency_plot <- function(.data,
                                               sep = " "))) +
     ggplot2::geom_point(alpha = 0.5) +
     ggplot2::labs(title = "Frequencies of binding between pMHC and TCR-sequences",
+                  x = "Non-promiscuous TCR-sequences",
+                  y = 'pMHC',
                   size = "Barcodes",
                   color = "Concordance"
                   ) +
     ggplot2::theme(
+      axis.text = ggplot2::element_text(size = 7),
       axis.ticks.x = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_blank(),
-      axis.title.y = ggplot2::element_blank(),
-      axis.title.x = ggplot2::element_blank(),
       panel.grid.major.x = ggplot2::element_blank(),
       panel.grid.minor.x = ggplot2::element_blank(),
       legend.position = "bottom"
     ) +
     ggplot2::scale_size_continuous(range = c(2, 7)) +
-    ggplot2::scale_x_discrete(expand=c(0.015, 0)) +
+    ggplot2::scale_x_discrete(expand = c(0.015, 0)) +
     ggplot2::scale_color_continuous(type = "viridis",
                                     direction = -1) +
     ggplot2::facet_wrap(~ donor,
@@ -86,12 +87,7 @@ relevant_binder_frequency_plot <- function(.data,
                         scales = "free_x")
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
-                                            tooltip = "text") %>%
-    plotly::layout(xaxis = list(title = list(text = "Non-promiscuous TCR-sequences",
-                                             font = list(size = 15))),
-                   yaxis = list(title = list(text = 'pMHC',
-                                             standoff = 10,
-                                             font = list(size = 15))))
+                                             tooltip = "text")
 
   if (plotly_option) {
     return(frequency_plot_plotly)
