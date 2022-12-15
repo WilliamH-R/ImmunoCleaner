@@ -1,12 +1,12 @@
 umap_models <- vector(mode = "list",
                       length = TCRSequenceFunctions::data_combined_tidy %>%
-                        dplyr::pull(donor) %>%
-                        unique() %>%
+                        dplyr::distinct(donor) %>%
+                        dplyr::pull() %>%
                         length())
 
 for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
-                        dplyr::pull(donor) %>%
-                        unique()) {
+                        dplyr::distinct(donor) %>%
+                        dplyr::pull()) {
 
   umap_model <- TCRSequenceFunctions::data_combined_tidy %>%
     dplyr::filter(donor == chosen_donor) %>%
@@ -28,3 +28,9 @@ for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
               to = stringr::str_c("data/umap_model_", chosen_donor))
 
 }
+
+
+TCRSequenceFunctions::data_combined_tidy %>%
+  dplyr::distinct(donor) %>%
+  dplyr::pull() %>%
+  length()
