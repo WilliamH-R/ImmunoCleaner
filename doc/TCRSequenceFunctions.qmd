@@ -110,7 +110,7 @@ The first function takes the raw data frame as input, and simply removes the unn
 | TRB:CASDTPVGQFF                                                |
 | TRA:CASYTDKLIF;TRB:CASSGGSISTDTQYF                             |
 
-: {#tbl-TCR_sequence_example_before}
+: Shows how the TCR-sequences were noted in the raw data file. As shown, multiple sequences exist in one cell. {#tbl-TCR_sequence_example_before}
 
 | **TCR_sequence**  | **chain** | **non_promiscuous_pair**   |
 |-------------------|-----------|----------------------------|
@@ -121,7 +121,7 @@ The first function takes the raw data frame as input, and simply removes the unn
 | CASYTDKLIF        | alpha     | CASYTDKLIF;CASSGGSISTDTQYF |
 | CASSGGSISTDTQYF   | beta      | CASYTDKLIF;CASSGGSISTDTQYF |
 
-: {#tbl-TCR_sequence_example_after}
+: Shows how the TCR-sequences are noted in the tidy data file. Now, each sequence is on its own row and the chain indicator has been moved to a new column `chain`. If cell only contained one alpha and one beta sequence in the raw data file, that sequence will appear in the new column `non_promiscuous_pair`. {#tbl-TCR_sequence_example_after}
 
 All columns names following the general structure `"allele_peptide_peptide-source"` is also pivot longer and split to have the data available in cells and only one piece of information in each cell. This is done through `pivot_longer_pMHC()` and `tidy_pMHC_names()`. First the names are pivot longer with their associated UMI-counts as values. Here, only non-zero values are kept as they are otherwise irrelevant. The names, now as rows, are made tidy by splitting into three new columns:
 
@@ -145,10 +145,10 @@ Generally speaking, augmenting the data refers to adding new columns which enabl
 
 The first and second function are both required to find the relevant binders. A relevant binding event has four requirements which needs to be met:
 
-1.  UMI-count needs to be larger than some threshold
-2.  The UMI-count has to be another threshold times higher than the negative control with the highest UMI-count for that barcode
-3.  If multiple relevant binders exist for a barcode (cell), only use the one with the highest UMI-count
-4.  Disregard a entire barcode if it shows to be relevant towards more than four pMHC
+1.  UMI-count needs to be larger than some threshold (10x Genomics standard is 10)
+2.  The UMI-count has to be another threshold times higher than the negative control with the highest UMI-count for that barcode (10x Genomics standard is 5)
+3.  If multiple relevant binders exist for a barcode (cell), only use the one with the highest UMI-count (10x Genomics standard)
+4.  Disregard a entire barcode if it shows to be relevant towards more than four pMHC (10x Genomics standard)
 
 And so, the purpose of the first function is to find the highest UMI-count of all negative controls for each barcode. The count is added in a new column called `max_negative_control_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. @sec-relevant_binder_frequency_plot. Some examples of evaluation can be seen in @tbl-binder_evaluation.
 
@@ -216,77 +216,38 @@ Lastly, `find_unique_binders()` is meant to find unique combinations of `TCR-seq
 
 ## Change of dimensions
 
-Naturally, the dimensions of all included data sets change after being piped through `run_all_prep()`. @tbl-dimensions shows the dimensions for both the raw and tidy data sets stratified on donor. The number of columns are always reduced to 29, but the number of rows depend on the original number of rows and the data itself.
+Naturally, the dimensions of all included data sets change after being piped through `run_all_prep()`. @tbl-dimensions shows the dimensions for both the raw and tidy data sets stratified on donor. Furthermore, the 10x Genomics standards mentioned in @sec-AugmentingData have been applied and barcodes have been made unique. Further filtering of the data is user-defined through the Shiny App described in section @sec-Shiny. The number of columns are always reduced to 29 (due to removal of unnecessary columns), but the number of rows depend on the original number of rows and the data itself.
 
 ::: {#tbl-dimensions layout-ncol="2"}
-|      **Donor 1**      |          **`raw`**           |                            **`tidy`**                             |
-|:------------------:|:------------------------:|:-------------------------:|
-| **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1"))` |
-|  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1"))` |
+|      **Donor 1**      |          **`raw`**           |                                                             **`tidy`**                                                              |
+|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
+|  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_one}
 
-|      **Donor 2**      |          **`raw`**           |                            **`tidy`**                             |
-|:------------------:|:------------------------:|:-------------------------:|
-| **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2"))` |
-|  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2"))` |
+|      **Donor 2**      |          **`raw`**           |                                                             **`tidy`**                                                              |
+|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
+|  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_two}
 
-|      **Donor 3**      |           **`raw`**            |                            **`tidy`**                             |
-|:-----------------:|:------------------------:|:-------------------------:|
-| **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3"))` |
-|  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3"))` |
+|      **Donor 3**      |           **`raw`**            |                                                             **`tidy`**                                                              |
+|:---------------------:|:------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
+|  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_three}
 
-|      **Donor 4**      |           **`raw`**           |                            **`tidy`**                             |
-|:------------------:|:------------------------:|:-------------------------:|
-| **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4"))` |
-|  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4"))` |
+|      **Donor 4**      |           **`raw`**           |                                                             **`tidy`**                                                              |
+|:---------------------:|:-----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
+|  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_four}
 
-Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 and **(d)** Donor 4 before and after being prepared by the wrapper `run_all_prep()`
-:::
-
-::: {layout-ncol="2"}
-|      **Donor 1**      |          **`raw`**           |
-|:---------------------:|:----------------------------:|
-| **Number of columns** | `r ncol(data_donor_one_raw)` |
-|  **Number of rows**   | `r nrow(data_donor_one_raw)` |
-
-: {#tbl-dimensions_donor_one}
-
-|      **Donor 2**      |          **`raw`**           |
-|:---------------------:|:----------------------------:|
-| **Number of columns** | `r ncol(data_donor_two_raw)` |
-|  **Number of rows**   | `r nrow(data_donor_two_raw)` |
-
-: {#tbl-dimensions_donor_two}
-
-|      **Donor 3**      |           **`raw`**            |
-|:---------------------:|:------------------------------:|
-| **Number of columns** | `r ncol(data_donor_three_raw)` |
-|  **Number of rows**   | `r nrow(data_donor_three_raw)` |
-
-: {#tbl-dimensions_donor_three}
-
-|      **Donor 4**      |           **`raw`**           |
-|:---------------------:|:-----------------------------:|
-| **Number of columns** | `r ncol(data_donor_four_raw)` |
-|  **Number of rows**   | `r nrow(data_donor_four_raw)` |
-
-: {#tbl-dimensions_donor_four}
-
-|     **Combined**      |          **`tidy`**          |
-|:---------------------:|:----------------------------:|
-| **Number of columns** | `r ncol(data_combined_tidy)` |
-|  **Number of rows**   | `r nrow(data_combined_tidy)` |
-
-: {#tbl-dimensions_combined_tidy}
-
-Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 and **(d)** Donor 4 before being prepared by the wrapper `run_all_prep()`. **(e)** After being prepared by the wrapper `run_all_prep()` and combined.
+Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 and **(d)** Donor 4 before and after being prepared by the wrapper `run_all_prep()` and the 10x Genomics standards have been applied.
 :::
 
 # Modelling {#sec-ModelData}
@@ -384,6 +345,7 @@ By inputting a tidy data frame, a scatter plot is provided as output which shows
 #| label: fig-count_binding_pr_allele
 #| fig-cap: "Output of the function `count_binding_pr_allele()`. The y-axis shows the count of relevant binders for each allele."
 #| fig-width: 15
+#| fig-height: 10
 
 data_combined_tidy %>%
   count_binding_pr_allele()

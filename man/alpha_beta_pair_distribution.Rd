@@ -4,17 +4,13 @@
 \alias{alpha_beta_pair_distribution}
 \title{Bar plot showing distribution of TCR-sequence promiscuity}
 \usage{
-alpha_beta_pair_distribution(.data, identifier = barcode, pMHC_filter = NULL)
+alpha_beta_pair_distribution(.data, identifier = barcode)
 }
 \arguments{
 \item{.data}{An prepared data frame ready for modelling.}
 
 \item{identifier}{A variable in the data frame with which the data set should
 be distinct by to avoid a bias towards experiments with many observations.}
-
-\item{pMHC_filter}{A pMHC to use for filtering, to only include that specific
-pMHC from the data set. Default is \code{NULL}, i.e. no filtering. Must be
-supplied as string.}
 }
 \value{
 Returns a bar plot with a frequency distribution of the different
@@ -34,9 +30,6 @@ A total of four categories exist:
 data_combined_tidy \%>\%
     alpha_beta_pair_distribution()
 
-# A specific pMHC can be specified to show distribution of only that pMHC:
-data_combined_tidy \%>\%
-    alpha_beta_pair_distribution(pMHC_filter = "A0101_VTEHDTLLY_IE-1_CMV")
 
 }
 \seealso{
@@ -44,6 +37,7 @@ Other Modelling functions:
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{boxplot_protein_expressions}()},
 \code{\link{count_binding_pr_allele}()},
+\code{\link{percentage_rows_kept}()},
 \code{\link{relevant_binder_frequency_plot}()},
 \code{\link{summarise_with_filter}()},
 \code{\link{umap_of_protein_expressions}()}

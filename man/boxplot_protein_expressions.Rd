@@ -22,12 +22,16 @@ expression levels.
 data_combined_tidy \%>\%
     boxplot_protein_expressions()
 
+# The protein to be plotted can be changed by supplying it as a string:
+data_combined_tidy \%>\%
+    boxplot_protein_expressions(plot_protein = "CD8a")
 }
 \seealso{
 Other Modelling functions: 
 \code{\link{alpha_beta_distinctiveness}()},
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{count_binding_pr_allele}()},
+\code{\link{percentage_rows_kept}()},
 \code{\link{relevant_binder_frequency_plot}()},
 \code{\link{summarise_with_filter}()},
 \code{\link{umap_of_protein_expressions}()}

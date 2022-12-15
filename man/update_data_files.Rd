@@ -2,10 +2,24 @@
 % Please edit documentation in R/100update_data_files.R
 \name{update_data_files}
 \alias{update_data_files}
-\title{Title}
+\title{Wrapper for updating data files}
 \usage{
 update_data_files()
 }
 \description{
-Title
+\code{update_data_files()} runs all files in \code{"data-raw"} which both re-downloads
+the raw data files and run them through the wrapper \code{run_all_prep()} to
+produce \code{data_combined_tidy} again. The umap-model will also be
+re-calculated to match the newly updated data. The final script is a
+static file containing the HLA-types and virus statuses of the donors.
+The following scripts are run:
+\itemize{
+\item \verb{01data_download_raw.R}
+\item \verb{02data_combined_tidy.R}
+\item \verb{03data_generate_umap_models.R}
+\item \code{aux_alleles_status_each_dono.R}
+}
+}
+\details{
+@noRd
 }

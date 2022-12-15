@@ -30,14 +30,11 @@ The counting is grouped by columns provided by the user through the argument
 \code{...}.
 }
 \examples{
-# A prepared data frame needs to be provided. Can either be done by using
-# the already cleaned data frames or the raw data files piped through `?run_all_prep`
+# A prepared data frame needs to be provided. Can either be done by piping
+# a tidy data frame through the function:
 data_combined_tidy \%>\%
     summarise_with_filter()
 
-data_donor_one_raw \%>\%
-    run_all_prep() \%>\%
-    summarise_with_filter()
 
 # The stratification can be done for one or several columns:
 data_combined_tidy \%>\%
@@ -54,6 +51,7 @@ Other Modelling functions:
 \code{\link{alpha_beta_pair_distribution}()},
 \code{\link{boxplot_protein_expressions}()},
 \code{\link{count_binding_pr_allele}()},
+\code{\link{percentage_rows_kept}()},
 \code{\link{relevant_binder_frequency_plot}()},
 \code{\link{umap_of_protein_expressions}()}
 }
