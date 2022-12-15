@@ -40,8 +40,9 @@ umap_of_protein_expressions <- function(.data,
                       .keep_all = TRUE) %>%
       dplyr::select(dplyr::matches("CD|HLA-DR|donor"))
 
-    umap_model <- uwot::load_uwot(file = stringr::str_c("./data/umap_model_",
-                                                        chosen_donor))
+    umap_model <- uwot::load_uwot(file = system.file(stringr::str_c("data/umap_model_",
+                                                                    chosen_donor),
+                                                     package = "TCRSequenceFunctions"))
 
     umap_embed <- data_combined_tidy_temp %>%
       dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
