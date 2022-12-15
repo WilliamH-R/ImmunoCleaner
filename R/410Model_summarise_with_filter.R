@@ -20,14 +20,11 @@
 #' @export
 #'
 #' @examples
-#' # A prepared data frame needs to be provided. Can either be done by using
-#' # the already cleaned data frames or the raw data files piped through `?run_all_prep`
+#' # A prepared data frame needs to be provided. Can either be done by piping
+#' # a tidy data frame through the function:
 #' data_combined_tidy %>%
 #'     summarise_with_filter()
 #'
-#' data_donor_one_raw %>%
-#'     run_all_prep() %>%
-#'     summarise_with_filter()
 #'
 #' # The stratification can be done for one or several columns:
 #' data_combined_tidy %>%
@@ -64,7 +61,7 @@ summarise_with_filter <- function(.data,
 
   donors_present <- .data %>%
     dplyr::distinct(donor) %>%
-    as.matrix()
+    dplyr::pull()
 
   data_old <- TCRSequenceFunctions::data_combined_tidy %>%
     dplyr::filter(donor %in% donors_present) %>%
