@@ -220,28 +220,28 @@ Naturally, the dimensions of all included data sets change after being piped thr
 
 ::: {#tbl-dimensions layout-ncol="2"}
 |      **Donor 1**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:--------------:|:--------------:|:---------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_one}
 
 |      **Donor 2**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:---------------:|:--------------:|:---------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_two}
 
 |      **Donor 3**      |           **`raw`**            |                                                             **`tidy`**                                                              |
-|:---------------------:|:------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:---------------:|:--------------:|:---------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_three}
 
 |      **Donor 4**      |           **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------------:|:-----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:---------------:|:--------------:|:---------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
