@@ -13,7 +13,6 @@ for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
     dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-    dplyr::slice_sample(n = 100) %>%
     compositions::clr() %>%
     as.matrix() %>%
     uwot::umap(n_neighbors = 15,
@@ -28,9 +27,3 @@ for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
               to = stringr::str_c("data/umap_model_", chosen_donor))
 
 }
-
-
-TCRSequenceFunctions::data_combined_tidy %>%
-  dplyr::distinct(donor) %>%
-  dplyr::pull() %>%
-  length()
