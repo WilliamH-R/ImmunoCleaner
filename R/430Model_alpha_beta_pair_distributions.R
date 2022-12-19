@@ -28,7 +28,8 @@ alpha_beta_pair_distribution <- function(.data,
 
   frequency_barplot <-
     .data %>%
-    dplyr::distinct({{identifier}},
+    dplyr::distinct(donor,
+                    {{identifier}},
                     .keep_all = TRUE) %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = TCR_combination,
                                            y = ggplot2::after_stat(prop),
