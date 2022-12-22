@@ -26,6 +26,7 @@ boxplot_protein_expressions <- function(.data,
   boxplot <- .data %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
+    compositions::clr() %>%
 
     ggplot2::ggplot(ggplot2::aes(x = donor,
                                  y = eval(parse(text = plot_protein)),

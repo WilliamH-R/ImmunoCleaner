@@ -40,12 +40,24 @@ umap_of_protein_expressions <- function(.data,
                       .keep_all = TRUE) %>%
       dplyr::select(dplyr::matches("CD|HLA-DR|donor"))
 
+
+    data_combined_tidy_temp <- dplyr::bind_cols(data_combined_tidy_temp %>%
+                                                  dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+                                                  compositions::clr() %>%
+                                                  tibble::as_tibble(),
+                                                data_combined_tidy_temp %>%
+                                                  dplyr::select(donor))
+
+    colnames(data_combined_tidy_temp) <- data_combined_tidy_temp %>%
+                                            colnames() %>%
+                                            make.names()
+
     umap_model <- uwot::load_uwot(file = system.file(stringr::str_c("data/umap_model_",
                                                                     chosen_donor),
                                                      package = "TCRSequenceFunctions"))
 
     umap_embed <- data_combined_tidy_temp %>%
-      dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+      dplyr::select(dplyr::matches("CD|HLA.DR")) %>%
       uwot::umap_transform(model = umap_model) %>%
       as.data.frame() %>%
       tibble::as_tibble()
@@ -71,3 +83,22 @@ umap_of_protein_expressions <- function(.data,
 
   return(umap_plot)
 }
+
+
+data_combined_tidy_temp <- data_combined_tidy %>%
+  dplyr::filter(donor == chosen_donor) %>%
+  dplyr::distinct(barcode,
+                  .keep_all = TRUE) %>%
+  dplyr::select(dplyr::matches("CD|HLA-DR|donor"))
+
+
+data_combined_tidy_temp <- dplyr::bind_cols(data_combined_tidy_temp %>%
+                                              dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+                                              compositions::clr() %>%
+                                              tibble::as_tibble(),
+                                            data_combined_tidy_temp %>%
+                                              dplyr::select(donor))
+
+colnames(data_combined_tidy_temp) <- data_combined_tidy_temp %>%
+  colnames() %>%
+  make.names()
