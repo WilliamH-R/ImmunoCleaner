@@ -26,7 +26,7 @@ percentage_rows_kept <- function(.data,
     data_prep <- .data_to_prep %>%
       dplyr::select(is_binder, barcode, donor) %>%
       dplyr::filter(is_binder == TRUE) %>%
-      dplyr::distinct(barcode,
+      dplyr::distinct({{identifier}},
                       .keep_all = TRUE) %>%
       dplyr::count(donor,
                    name = name)

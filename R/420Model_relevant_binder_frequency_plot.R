@@ -59,7 +59,7 @@ relevant_binder_frequency_plot <- function(.data,
                                  color = barcode_freq,
                                  text = stringr::str_c('TCR: ', non_promiscuous_pair,
                                               '<br>pMHC:', pMHC,
-                                              '<br>Frequency:', round(barcode_freq,
+                                              '<br>Concordance:', round(barcode_freq,
                                                                       digits = 2),
                                               '<br>Barcodes:', barcode_count,
                                               sep = " "))) +
