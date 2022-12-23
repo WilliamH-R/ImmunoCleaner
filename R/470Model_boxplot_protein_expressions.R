@@ -23,22 +23,30 @@
 boxplot_protein_expressions <- function(.data,
                                         plot_protein = "CD4") {
 
-  boxplot <- .data %>%
+  .data_temp <- dplyr::bind_cols(.data %>%
+                                   dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+                                   compositions::clr() %>%
+                                   tibble::as_tibble(),
+                                .data %>%
+                                   dplyr::select(donor, barcode))
+
+  boxplot <- .data_temp %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
-    compositions::clr() %>%
 
     ggplot2::ggplot(ggplot2::aes(x = donor,
                                  y = eval(parse(text = plot_protein)),
                                  fill = donor)) +
-      ggplot2::geom_boxplot() +
+      ggplot2::geom_boxplot(outlier.shape = NA) +
+      ggplot2::geom_point(size = 1.5,
+                          pch = 21,
+                          color = "black",
+                          position = ggplot2::position_jitterdodge(jitter.width = 0.05)) +
       ggplot2::labs(x = "Donor",
-                    caption = "log10 transformed",
-                    y = stringr::str_c("expression of ",
-                                       plot_protein),
-                    title = "Protein expression of chosen protein stratified on donor") +
-      ggplot2::theme(legend.position = "none") +
-      ggplot2::scale_y_log10()
+                    caption = "clr transformed",
+                    y = stringr::str_c("Expression of ", plot_protein),
+                    title = stringr::str_c("Protein expression of ", plot_protein, " stratified on donor")) +
+      ggplot2::theme(legend.position = "none")
 
   return(boxplot)
 
