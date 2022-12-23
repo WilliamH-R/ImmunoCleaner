@@ -75,7 +75,8 @@ umap_of_protein_expressions <- function(.data,
                                  y = V2,
                                  color = eval(parse(text = color_by)))) +
     ggplot2::geom_point() +
-    ggplot2::scale_color_continuous(type = "viridis") +
+    ggplot2::scale_color_continuous(type = "viridis",
+                                    direction = -1) +
     ggplot2::labs(color = stringr::str_c("Protein expression of",
                                          color_by,
                                          sep = " ")) +
@@ -83,22 +84,3 @@ umap_of_protein_expressions <- function(.data,
 
   return(umap_plot)
 }
-
-
-data_combined_tidy_temp <- data_combined_tidy %>%
-  dplyr::filter(donor == chosen_donor) %>%
-  dplyr::distinct(barcode,
-                  .keep_all = TRUE) %>%
-  dplyr::select(dplyr::matches("CD|HLA-DR|donor"))
-
-
-data_combined_tidy_temp <- dplyr::bind_cols(data_combined_tidy_temp %>%
-                                              dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-                                              compositions::clr() %>%
-                                              tibble::as_tibble(),
-                                            data_combined_tidy_temp %>%
-                                              dplyr::select(donor))
-
-colnames(data_combined_tidy_temp) <- data_combined_tidy_temp %>%
-  colnames() %>%
-  make.names()
