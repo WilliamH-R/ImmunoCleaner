@@ -1,9 +1,3 @@
-umap_models <- vector(mode = "list",
-                      length = TCRSequenceFunctions::data_combined_tidy %>%
-                        dplyr::distinct(donor) %>%
-                        dplyr::pull() %>%
-                        length())
-
 for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
                         dplyr::distinct(donor) %>%
                         dplyr::pull()) {
