@@ -31,11 +31,6 @@
 #' data_combined_tidy %>%
 #'     evaluate_binder()
 #'
-#' # Otherwise, an un-tidy data frame can be piped through the wrapper `?run_all_prep`:
-#' data_donor_one_raw %>%
-#'     run_all_prep() %>%
-#'     evaluate_binder
-#'
 #' # If supplied, the thresholds can be changed from the 10X Genomics standard as:
 #' data_combined_tidy %>%
 #'     evaluate_binder(UMI_count_min = 20,
