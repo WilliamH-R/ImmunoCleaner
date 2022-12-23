@@ -220,28 +220,28 @@ Naturally, the dimensions of all included data sets change after being piped thr
 
 ::: {#tbl-dimensions layout-ncol="2"}
 |      **Donor 1**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:--------------:|:--------------:|:---------------------------------------:|
+|:---------------:|:---------------:|:------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_one}
 
 |      **Donor 2**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------:|:--------------:|:---------------------------------------:|
+|:---------------:|:---------------:|:------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_two}
 
 |      **Donor 3**      |           **`raw`**            |                                                             **`tidy`**                                                              |
-|:---------------:|:--------------:|:---------------------------------------:|
+|:---------------:|:---------------:|:------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_three}
 
 |      **Donor 4**      |           **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------:|:--------------:|:---------------------------------------:|
+|:---------------:|:---------------:|:------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
@@ -353,7 +353,7 @@ data_combined_tidy %>%
 
 ## `umap_of_protein_expressions()` {#sec-umap_of_protein_expressions}
 
-As mentioned in @sec-DataCuration a script has been made for generating a UMAP model for each donor. This is done by using the package `uwot`. It takes the protein expressions of all 11 proteins in the tidy data frame, and creates a model which reduces the dimension to 2D. This allows better visual representation of the tendencies by applying coloring.
+As mentioned in @sec-DataCuration a script has been made for generating a UMAP model for each donor. This is done by using the package `uwot`. It takes the protein expressions of all 11 proteins in the tidy data frame, and creates a model which reduces the dimension to 2D. This allows better visual representation of the tendencies by applying coloring [@McInnes2018].
 
 The function `umap_of_protein_expressions()` loads the created models mentioned above and project the piped in data frame onto the model outputting a 2D scatter plot. By supplying a protein name present in the data as a string, it is possible to color by the expression of said protein. This allows us to tell which protein can explain the largest amount of variability in the expressions. In the examples shown in @fig-umap_of_protein_expressions it can be seen, that the protein CD45RA can explain a lot of the variability whereas the protein CD8a doesn't show any clear tendencies.
 
@@ -363,18 +363,18 @@ The function `umap_of_protein_expressions()` loads the created models mentioned 
 #| fig-subcap: true
 #| layout-ncol: 2
 
-# data_combined_tidy %>%
-#   dplyr::filter(donor == "donor4") %>% 
-#   umap_of_protein_expressions(color_by = "CD45RA")
-#   
-# data_combined_tidy %>%
-#   dplyr::filter(donor == "donor4") %>% 
-#   umap_of_protein_expressions(color_by = "CD8a")
+data_combined_tidy %>%
+  dplyr::filter(donor == "donor4") %>%
+  umap_of_protein_expressions(color_by = "CD45RA")
+
+data_combined_tidy %>%
+  dplyr::filter(donor == "donor4") %>%
+  umap_of_protein_expressions(color_by = "CD8a")
 ```
 
 ## `boxplot_protein_expressions()` {#sec-boxplot_protein_expressions}
 
-By supplying a tidy data frame and a protein name present in the data (with the default being CD4), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. The boxplots contain the name of the donor on the x-axis and the `log10()`-values of the expressions on the y-axis.
+By supplying a tidy data frame and a protein name present in the data (with the default being CD4), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. Before plotting, the data is transformed via Centered Log Ratio (CLR). The boxplots contain the name of the donor on the x-axis and the `CLR-transformed` values of the expressions on the y-axis.
 
 ```{r}
 #| label: fig-boxplot_protein_expressions
