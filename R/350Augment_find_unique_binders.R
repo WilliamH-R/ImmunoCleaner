@@ -15,9 +15,10 @@
 find_unique_binders <- function(.data) {
 
   data_aug <- .data %>%
-    dplyr::group_by(donor, TCR_sequence, pMHC) %>%
-    dplyr::add_count(name = "count") %>%
-    dplyr::ungroup() %>%
+    dplyr::add_count(donor,
+                     TCR_sequence,
+                     pMHC,
+                     name = "count") %>%
     dplyr::mutate(unique_binder = dplyr::case_when(count == 1 ~ TRUE,
                                                    TRUE ~ FALSE)) %>%
     dplyr::select(-count)

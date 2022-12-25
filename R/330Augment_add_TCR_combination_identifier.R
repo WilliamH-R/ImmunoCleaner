@@ -29,7 +29,8 @@ add_TCR_combination_identifier <- function(.data,
                                            identifier_string = "barcode") {
   data_aug <-
     .data %>%
-    dplyr::group_by({{identifier}}) %>%
+    dplyr::group_by(donor,
+                    {{identifier}}) %>%
     dplyr::distinct(TCR_sequence,
                     .keep_all = TRUE) %>%
     dplyr::mutate(TCR_combination = dplyr::case_when(sum(stringr::str_count(string = chain,
@@ -49,8 +50,8 @@ add_TCR_combination_identifier <- function(.data,
                                            levels = c("one_alpha_one_beta", "one_alpha_only",
                                                       "one_beta_only", "other"))) %>%
     dplyr::ungroup() %>%
-    dplyr::select({{identifier}}, TCR_sequence, TCR_combination) %>%
-    dplyr::right_join(.data, by = c(identifier_string, "TCR_sequence"))
+    dplyr::select(donor, {{identifier}}, TCR_sequence, TCR_combination) %>%
+    dplyr::right_join(.data, by = c("donor", identifier_string, "TCR_sequence"))
 
   return(data_aug)
 }
