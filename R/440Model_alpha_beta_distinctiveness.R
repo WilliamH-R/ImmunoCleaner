@@ -28,15 +28,19 @@ alpha_beta_distinctiveness <- function(.data,
 
   distinctiveness_barplot <-
     .data %>%
-    dplyr::select({{identifier}}, donor, TCR_sequence, chain) %>%
-    dplyr::group_by(donor,
-                    {{identifier}}) %>%
-    dplyr::distinct(TCR_sequence,
+    dplyr::select({{identifier}}, donor,
+                  TCR_sequence, chain, pMHC) %>%
+    dplyr::distinct(donor,
+                    {{identifier}},
+                    TCR_sequence,
+                    chain,
                     .keep_all = TRUE) %>%
     dplyr::group_by(donor) %>%
     dplyr::add_count(chain,
                      name = "total_chains") %>%
-    dplyr::distinct(TCR_sequence,
+    dplyr::distinct(donor,
+                    TCR_sequence,
+                    chain,
                     .keep_all = TRUE) %>%
     dplyr::add_count(chain,
                      name = "unique_chains") %>%

@@ -46,8 +46,8 @@ summarise_with_filter <- function(.data,
       dplyr::select(barcode, donor, pMHC, allele,
                     peptide, peptide_source, is_binder) %>%
       dplyr::filter(is_binder == TRUE) %>%
-      dplyr::group_by({{identifier}}) %>%
-      dplyr::distinct(pMHC,
+      dplyr::distinct({{identifier}},
+                      pMHC,
                       .keep_all = TRUE) %>%
       dplyr::group_by_at(summarise_by) %>%
       dplyr::count(donor,

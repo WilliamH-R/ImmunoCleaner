@@ -35,7 +35,7 @@ add_max_negative_control_binder <- function(.data,
     dplyr::group_by(donor,
                     {{identifier}}) %>%
     dplyr::mutate(max_negative_control_binder = dplyr::case_when(is.element(pMHC,
-                                                                        negative_control_binders_vector) == TRUE ~ UMI_count,
+                                                                            negative_control_binders_vector) == TRUE ~ UMI_count,
                                                              TRUE ~ 0),
                   max_negative_control_binder = max(max_negative_control_binder)) %>%
     dplyr::ungroup()

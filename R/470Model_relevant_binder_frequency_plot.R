@@ -42,7 +42,9 @@ relevant_binder_frequency_plot <- function(.data,
                   pMHC, is_binder, allele, peptide) %>%
     dplyr::filter(is_binder == TRUE) %>%
     tidyr::drop_na(non_promiscuous_pair) %>%
-    dplyr::distinct({{identifier}},
+    dplyr::distinct(donor,
+                    {{identifier}},
+                    pMHC,
                     .keep_all = TRUE) %>%
     dplyr::mutate(label_name = stringr::str_c(allele,
                                               peptide,

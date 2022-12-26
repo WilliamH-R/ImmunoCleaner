@@ -21,6 +21,7 @@
 #'     boxplot_protein_expressions(plot_protein = "CD8a")
 
 boxplot_protein_expressions <- function(.data,
+                                        identifier = barcode,
                                         plot_protein = "CD4") {
   plot_protein <- plot_protein %>%
     make.names()
@@ -30,13 +31,14 @@ boxplot_protein_expressions <- function(.data,
                                   compositions::clr() %>%
                                   tibble::as_tibble(),
                                 .data %>%
-                                  dplyr::select(donor, barcode))
+                                  dplyr::select(donor, {{identifier}}))
   colnames(data_temp) <- data_temp %>%
     colnames() %>%
     make.names()
 
   boxplot <- data_temp %>%
-    dplyr::distinct(barcode,
+    dplyr::distinct(donor,
+                    {{identifier}},
                     .keep_all = TRUE) %>%
 
     ggplot2::ggplot(ggplot2::aes(x = donor,

@@ -24,10 +24,14 @@ percentage_rows_kept <- function(.data,
   prep_data <- function(.data_to_prep,
                         name) {
     data_prep <- .data_to_prep %>%
-      dplyr::select(is_binder, barcode, donor) %>%
+      dplyr::select(is_binder,
+                    {{identifier}},
+                    donor,
+                    pMHC) %>%
       dplyr::filter(is_binder == TRUE) %>%
       dplyr::distinct(donor,
                       {{identifier}},
+                      pMHC,
                       .keep_all = TRUE) %>%
       dplyr::count(donor,
                    name = name)

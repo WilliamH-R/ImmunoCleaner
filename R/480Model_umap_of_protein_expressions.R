@@ -26,6 +26,7 @@
 #'
 
 umap_of_protein_expressions <- function(.data,
+                                        identifier = barcode,
                                         color_by = "CD45RA") {
 
   umap_coords <- NULL
@@ -39,7 +40,8 @@ umap_of_protein_expressions <- function(.data,
 
     data_combined_tidy_temp <- .data %>%
       dplyr::filter(donor == chosen_donor) %>%
-      dplyr::distinct(barcode,
+      dplyr::distinct({{identifier}},
+                      pMHC,
                       .keep_all = TRUE) %>%
       dplyr::select(dplyr::matches("CD|HLA-DR|donor"))
 

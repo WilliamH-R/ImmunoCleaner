@@ -22,12 +22,13 @@ count_binding_pr_allele <- function(.data,
                                     identifier = barcode) {
 
   scatter_plot <- .data %>%
-  dplyr::select({{identifier}}, donor, pMHC, allele, is_binder, HLA_match) %>%
+  dplyr::select({{identifier}}, donor, pMHC,
+                allele, is_binder, HLA_match) %>%
   dplyr::filter(is_binder == TRUE) %>%
-  dplyr::group_by({{identifier}}) %>%
-  dplyr::distinct(pMHC,
+  dplyr::distinct(donor,
+                  {{identifier}},
+                  pMHC,
                   .keep_all = TRUE) %>%
-  dplyr::ungroup() %>%
 
   ggplot2::ggplot(ggplot2::aes(x = forcats::fct_infreq(allele),
                                fill = HLA_match)) +
@@ -36,10 +37,10 @@ count_binding_pr_allele <- function(.data,
                         scales = "free") +
     ggplot2::labs(x = "Alleles",
                   y = "Count of occurences",
-                  title = "Shows the count of occurences of alleles \nstratified by donor")
+                  title = "Shows the count of occurences of alleles \nstratified by donor") +
     ggplot2::scale_fill_manual(name = "HLA-match",
-                               values = c("TRUE" = "#00BFC4",
-                                          "UNKNOWN" = "#00BA38",
+                               values = c("TRUE" = "#00BA38",
+                                          "UNKNOWN" = "#00BFC4",
                                           "FALSE" = "#F8766D")
                                )
 
