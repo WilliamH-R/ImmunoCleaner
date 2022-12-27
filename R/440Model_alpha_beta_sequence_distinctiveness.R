@@ -1,6 +1,6 @@
 #' Bar plot showing distinctiveness of the alpha- and beta chains
 #'
-#' `alpha_beta_distinctiveness()` takes as input a prepared data frame. Firstly,
+#' `alpha_beta_sequence_distinctiveness()` takes as input a prepared data frame. Firstly,
 #'     the total number of alpha- and beta chains are calculated respectively.
 #'     This is done by grouping on `identifier` (i.e. experiments) and making
 #'     `TCR_sequence` distinct and then counting. Secondly, the number of different
@@ -23,7 +23,7 @@
 #'     alpha_distinctiveness()
 #'
 
-alpha_beta_distinctiveness <- function(.data,
+alpha_beta_sequence_distinctiveness <- function(.data,
                                        identifier = barcode) {
 
   distinctiveness_barplot <-

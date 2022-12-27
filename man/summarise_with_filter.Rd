@@ -47,12 +47,12 @@ data_combined_tidy \%>\%
 }
 \seealso{
 Other Modelling functions: 
-\code{\link{alpha_beta_distinctiveness}()},
-\code{\link{alpha_beta_pair_distribution}()},
+\code{\link{alpha_beta_category_distribution}()},
+\code{\link{alpha_beta_sequence_distinctiveness}()},
 \code{\link{boxplot_protein_expressions}()},
 \code{\link{count_binding_pr_allele}()},
 \code{\link{percentage_rows_kept}()},
-\code{\link{relevant_binder_frequency_plot}()},
+\code{\link{relevant_binders_plot}()},
 \code{\link{umap_of_protein_expressions}()}
 }
 \concept{Modelling functions}

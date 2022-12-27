@@ -1,6 +1,6 @@
 #' Bar plot showing distribution of TCR-sequence promiscuity
 #'
-#' `alpha_beta_pair_distribution()` takes as input a prepared data frame. It plots
+#' `alpha_beta_category_distribution()` takes as input a prepared data frame. It plots
 #'     the distribution of categories found in the column `TCR_combination`.
 #'     A total of four categories exist:
 #'     * Only one alpha chain and no beta chain
@@ -19,11 +19,11 @@
 #' @examples
 #' # The function is run by simply piping `.data` into it:
 #' data_combined_tidy %>%
-#'     alpha_beta_pair_distribution()
+#'     alpha_beta_category_distribution()
 #'
 #'
 
-alpha_beta_pair_distribution <- function(.data,
+alpha_beta_category_distribution <- function(.data,
                                          identifier = barcode) {
 
   frequency_barplot <-

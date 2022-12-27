@@ -1,6 +1,6 @@
 #' Interactive plot showing relevant binders between pMHC and TCR-sequences
 #'
-#' `relevant_binder_frequency_plot()` takes a prepared data frame, `.data`, and
+#' `relevant_binders_plot()` takes a prepared data frame, `.data`, and
 #'     plot pMHC vs non-promiscuous TCR-sequences. Marker size represent number
 #'     of barcodes which support that specific interaction. The color is based
 #'     on concordance which is fraction of barcodes that support a given pMHC
@@ -25,14 +25,14 @@
 #' @examples
 #' # A prepared data frame is simply piped through the function:
 #' data_combined_tidy %>%
-#'     relevant_binder_frequency_plot()
+#'     relevant_binders_plot()
 #'
 #' # The maximum value of allowed frequencies can be changed:
 #' data_combined_tidy %>%
-#'     relevant_binder_frequency_plot(max_frequency = 0.8)
+#'     relevant_binders_plot(max_frequency = 0.8)
 #'
 
-relevant_binder_frequency_plot <- function(.data,
+relevant_binders_plot <- function(.data,
                                            identifier = barcode,
                                            max_frequency = 1.0,
                                            plotly_option = TRUE) {
@@ -80,7 +80,7 @@ relevant_binder_frequency_plot <- function(.data,
       panel.grid.minor.x = ggplot2::element_blank(),
       legend.position = "bottom"
     ) +
-    ggplot2::scale_size_continuous(range = c(2, 7)) +
+    ggplot2::scale_size_continuous(range = c(2, 10)) +
     ggplot2::scale_x_discrete(expand = c(0.015, 0)) +
     ggplot2::scale_color_continuous(type = "viridis",
                                     direction = -1) +

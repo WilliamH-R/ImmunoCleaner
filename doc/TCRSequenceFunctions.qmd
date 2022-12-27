@@ -102,7 +102,7 @@ As mentioned above, cleaning the data is mostly focusing on handling already pre
 
 The first function takes the raw data frame as input, and simply removes the unnecessary columns as these aren't needed. By default, the columns removed are those containing `"_binder"` and the column `"cell_clono_cdr3_nt"`.
 
-`find_non_promiscuous_split_TCR_sequences()`, `pivot_longer_TCR_sequence()` and `add_chain_ident_remove_prefix()` works in close relation with one another. The main purpose is to tidy the TCR-sequences, as to not have cells with multiple pieces of information. @tbl-TCR_sequence_example_before shows three non-tidy examples. A column is added to indicate a non-promiscuous pair (i.e., a pair with one alpha- and beta chain respectively) and contains the TCR-sequence of said pair. This is done since the sequences of non-promiscuous pairs are needed for modelling in @sec-relevant_binder_frequency_plot. The TCR-sequences are then split into new columns, one for each chain. These new columns are then pivot longer into the column `TCR_sequence` by `pivot_longer_TCR_sequence()`. Lastly, a new column is added to indicate chain type, `chain`, and the chain indicator `"TR[A|B]"` is removed. The result can be seen in @tbl-TCR_sequence_example_after.
+`find_non_promiscuous_split_TCR_sequences()`, `pivot_longer_TCR_sequence()` and `add_chain_ident_remove_prefix()` works in close relation with one another. The main purpose is to tidy the TCR-sequences, as to not have cells with multiple pieces of information. @tbl-TCR_sequence_example_before shows three non-tidy examples. A column is added to indicate a non-promiscuous pair (i.e., a pair with one alpha- and beta chain respectively) and contains the TCR-sequence of said pair. This is done since the sequences of non-promiscuous pairs are needed for modelling in @sec-relevant_binders_plot. The TCR-sequences are then split into new columns, one for each chain. These new columns are then pivot longer into the column `TCR_sequence` by `pivot_longer_TCR_sequence()`. Lastly, a new column is added to indicate chain type, `chain`, and the chain indicator `"TR[A|B]"` is removed. The result can be seen in @tbl-TCR_sequence_example_after.
 
 | **cell_clono_cdr3_aa**                                         |
 |----------------------------------------------------------------|
@@ -150,7 +150,7 @@ The first and second function are both required to find the relevant binders. A 
 3.  If multiple relevant binders exist for a barcode (cell), only use the one with the highest UMI-count (10x Genomics standard)
 4.  Disregard a entire barcode if it shows to be relevant towards more than four pMHC (10x Genomics standard)
 
-And so, the purpose of the first function is to find the highest UMI-count of all negative controls for each barcode. The count is added in a new column called `max_negative_control_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. @sec-relevant_binder_frequency_plot. Some examples of evaluation can be seen in @tbl-binder_evaluation.
+And so, the purpose of the first function is to find the highest UMI-count of all negative controls for each barcode. The count is added in a new column called `max_negative_control_binder`. The second function then uses the above mentioned requirements to evaluate all binding events. The evaluation is used in e.g. @sec-relevant_binders_plot. Some examples of evaluation can be seen in @tbl-binder_evaluation.
 
 ```{r}
 #| echo: false
@@ -185,7 +185,7 @@ data_combined_tidy %>%
 3.  Containing one alpha chain and beta chain respectively
 4.  Some other combination
 
-This allows for a distribution of the above-mentioned categories to perform a quick check on the data through @sec-alpha_beta_pair_distribution. A few examples can be seen in @tbl-chain_categorizing.
+This allows for a distribution of the above-mentioned categories to perform a quick check on the data through @sec-alpha_beta_category_distribution. A few examples can be seen in @tbl-chain_categorizing.
 
 ```{r}
 #| echo: false
@@ -220,28 +220,28 @@ Naturally, the dimensions of all included data sets change after being piped thr
 
 ::: {#tbl-dimensions layout-ncol="2"}
 |      **Donor 1**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:------------:|:------------:|:-------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_one}
 
 |      **Donor 2**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:------------:|:------------:|:-------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_two}
 
 |      **Donor 3**      |           **`raw`**            |                                                             **`tidy`**                                                              |
-|:---------------------:|:------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:------------:|:------------:|:-------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_three}
 
 |      **Donor 4**      |           **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------------:|:-----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+|:------------:|:------------:|:-------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
@@ -255,16 +255,50 @@ Dimensions of data sets for **(a)** Donor 1, **(b)** Donor 2, **(c)** Donor 3 an
 All of the tidying done in the above enables the modelling which are described in this section. For each model, a subsection is included to describe the purpose and the output of said models. The list of modeling functions are:
 
 1.  `summarise_with_filter()`
-2.  `relevant_binder_frequency_plot()`
-3.  `alpha_beta_pair_distributions()`
-4.  `alpha_beta_distinctiveness()`
+2.  `relevant_binders_plot()`
+3.  `alpha_beta_category_distributions()`
+4.  `alpha_beta_sequence_distinctiveness()`
 5.  `count_binding_pr_allele()`
 6.  `umap_of_protein_expressions()`
 7.  `boxplot_protein_expressions()`
 
+## `percentage_rows_kept()` {#sec-percentage_rows_kept}
+This functions takes as input a tidy data frame. The number of unique barcodes are then counted and compared to the number of unique barcodes present in a non-filtered version of the data frame. The output is then a table showing the percentage of rows left in the input data stratified on donor as shown in @tbl-percentage_rows_kept.
+
+```{r}
+#| eval: false
+
+data_combined_tidy %>%
+  filter(HLA_match == "TRUE") %>% 
+  percentage_rows_kept
+```
+
+```{r}
+#| echo: false
+#| label: tbl-percentage_rows_kept
+#| tbl-cap: "Output of the function `percentage_rows_kept()`. For each donor the number of unique barcodes left in the input data frame is calculated as a percentage of the original number in the unfiltered data."
+
+data_combined_tidy %>%
+  dplyr::filter(HLA_match == "TRUE") %>%
+  percentage_rows_kept() %>% 
+  gt() %>%
+  cols_label(donor = gt::md("**donor**"),
+             percentage_left = gt::md("**percentage_left**")) %>% 
+  tab_options(
+    heading.border.bottom.width = 10,
+    table.width = pct(80)
+  ) %>% 
+  cols_align(
+    align = "left",
+    columns = everything()
+  ) %>%
+  fmt_number(columns = percentage_left,
+             decimals = 2)
+```
+
 ## `summarise_with_filter()` {#sec-summarise_with_filter}
 
-As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. The output is then a table with counts of the binding events. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind more often than others which could prove interesting.
+As input, this function takes a tidy data frame. For each cell - barcode - it counts all of the relevant binding events stratified on a user input. The output is then a table with counts of the binding events. The counts of the input is compared with the count of the non-filtered data set. Through its arguments it's possible to decide the stratification as shown in @tbl-summarise_with_filter. From the output it is then apparent, that some alleles and peptides bind less often when a stricter filtering is applied.
 
 ```{r}
 #| eval: false
@@ -280,8 +314,11 @@ data_combined_tidy %>%
 
 data_combined_tidy %>%
   dplyr::filter(donor %in% c("donor1", "donor2")) %>% 
+  evaluate_binder(UMI_count_min = 40) %>% 
+  dplyr::filter(is_binder == TRUE) %>% 
   summarise_with_filter(summarise_by = c("allele", "peptide")) %>% 
-  dplyr::slice_head(n = 10) %>% 
+  dplyr::arrange(desc(donor1_old)) %>%
+  dplyr::slice_head(n = 10) %>%
   gt() %>%
   cols_label(
     allele = md("**allele**"),
@@ -297,44 +334,46 @@ data_combined_tidy %>%
   )
 ```
 
-## `relevant_binder_frequency_plot()` {#sec-relevant_binder_frequency_plot}
+## `boxplot_protein_expressions()` {#sec-boxplot_protein_expressions}
 
-As the function above, this also takes a tidy data frame as input. The model shows which pMHC have a relevant binding to which non-promiscuous pairs stratified on donor. From this model, the output is a plotly (i.e., interactive) plot where each dot represent a relevant binding event between pMHC and a non-promiscuous pair. For each specific relevant match between TCR-sequence and pMHC, the number of barcodes supporting that match was counted and used as size for the dots. Further, a concordance is calculated which represent the fraction of barcodes supporting a match out of all barcodes carrying that specific TCR-sequence.
-
-The x-axis text have been disabled due to cluttering, but the values can be found by hovering a dot. It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of filtering will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something lower than `1`. For a demonstration on how to use the model see @fig-relevant_binder_frequency_plot (will only work properly when rendering in HTML format).
+By supplying a tidy data frame and a protein name present in the data (with the default being CD4), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. Before plotting, the data is transformed via Centered Log Ratio (CLR). The boxplots contain the name of the donor on the x-axis and the `CLR-transformed` values of the expressions on the y-axis.
 
 ```{r}
-#| label: fig-relevant_binder_frequency_plot
-#| fig-cap: "Output of the function `relevant_binder_frequency_plot`. Each dot represent a relevant binding between a non-promiscous TCR-sequence and pMHC."
-#| fig-height: 15
+#| label: fig-boxplot_protein_expressions
+#| fig-cap: "Output of the function `boxplot_protein_expressions()`. The plots show distribution of expression levels for each donor for the proteins (a) CD45RA and (b) CD8a."
+#| fig-subcap: true
+#| layout-ncol: 1
 
 data_combined_tidy %>%
-  dplyr::filter(donor %in% c("donor1", "donor2")) %>% 
-  relevant_binder_frequency_plot()
+  boxplot_protein_expressions(plot_protein = "CD45RA")
+
+data_combined_tidy %>%
+  boxplot_protein_expressions(plot_protein = "CD8a")
 ```
 
-## `alpha_beta_pair_distribution()` {#sec-alpha_beta_pair_distribution}
 
-As with the other model functions, it takes a tidy data frame as input. From `add_TCR_combination_identifier()` we have the categorization of each cell. By making each barcode unique, and counting number of occurrences for each category, a frequency distribution is obtainable. The output is a bar plot showing exactly that (see @fig-alpha_beta_pair_distribution). It can be used as a quality check of the data.
+## `alpha_beta_sequence_distinctiveness()` {#sec-alpha_beta_sequence_consistency}
+
+The input to the function is a tidy data frame from which a frequency plot is made. The function groups on the barcode, then make TCR-sequences unique, and ungroup again to do a data set wide counting of the number of TCR-sequences. A distinctiveness score is then calculated by comparing the number of completely unique sequences with the total number of TCR-sequences. I.e., a lower score means less distinctive. The calculations are done by stratifying on `chain`. This enables a quick quality check of the data set to whether it follows theory or not. The output is then a bar plot showing the distinctiveness score (see @fig-alpha_beta_sequence_distinctiveness).
 
 ```{r}
-#| label: fig-alpha_beta_pair_distribution
-#| fig-cap: "Output of the function `alpha_beta_pair_distribution`. Each bar represent the freuqency of that respective category."
+#| label: fig-alpha_beta_sequence_distinctiveness
+#| fig-cap: "Output of the function `alpha_beta_sequence_distinctiveness()`. Each bar represent the distinctiveness of that chain type."
 
 data_combined_tidy %>%
-  alpha_beta_pair_distribution()
+  alpha_beta_sequence_distinctiveness()
 ```
 
-## `alpha_beta_distinctiveness()` {#sec-alpha_beta_sequence_consistency}
+## `alpha_beta_category_distribution()` {#sec-alpha_beta_category_distribution}
 
-The input to the function is a tidy data frame from which a frequency plot is made. The function groups on the barcode, then make TCR-sequences unique, and ungroup again to do a data set wide counting of the number of TCR-sequences. A distinctiveness score is then calculated by comparing the number of completely unique sequences with the total number of TCR-sequences. I.e., a lower score means less distinctive. The calculations are done by stratifying on `chain`. This enables a quick quality check of the data set to whether it follows theory or not. The output is then a bar plot showing the distinctiveness score (see @fig-alpha_beta_distinctiveness).
+As with the other model functions, it takes a tidy data frame as input. From `add_TCR_combination_identifier()` we have the categorization of each cell. By making each barcode unique, and counting number of occurrences for each category, a frequency distribution is obtainable. The output is a bar plot showing exactly that (see @fig-alpha_beta_category_distribution). It can be used as a quality check of the data.
 
 ```{r}
-#| label: fig-alpha_beta_distinctiveness
-#| fig-cap: "Output of the function `alpha_beta_distinctiveness()`. Each bar represent the distinctiveness of that chain type."
+#| label: fig-alpha_beta_category_distribution
+#| fig-cap: "Output of the function `alpha_beta_category_distribution`. Each bar represent the freuqency of that respective category."
 
 data_combined_tidy %>%
-  alpha_beta_distinctiveness()
+  alpha_beta_category_distribution()
 ```
 
 ## `count_binding_pr_allele()` {#sec-count_binding_pr_allele}
@@ -350,6 +389,23 @@ By inputting a tidy data frame, a scatter plot is provided as output which shows
 data_combined_tidy %>%
   count_binding_pr_allele()
 ```
+
+## `relevant_binders_plot()` {#sec-relevant_binders_plot}
+
+As the function above, this also takes a tidy data frame as input. The model shows which pMHC have a relevant binding to which non-promiscuous pairs stratified on donor. From this model, the output is a plotly (i.e., interactive) plot where each dot represent a relevant binding event between pMHC and a non-promiscuous pair. For each specific relevant match between TCR-sequence and pMHC, the number of barcodes supporting that match was counted and used as size for the dots. Further, a concordance is calculated which represent the fraction of barcodes supporting a match out of all barcodes carrying that specific TCR-sequence.
+
+The x-axis text have been disabled due to cluttering, but the values can be found by hovering a dot. It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of filtering will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something lower than `1`. For a demonstration on how to use the model see @fig-relevant_binders_plot (will only work properly when rendering in HTML format).
+
+```{r}
+#| label: fig-relevant_binders_plot
+#| fig-cap: "Output of the function `relevant_binders_plot`. Each dot represent a relevant binding between a non-promiscous TCR-sequence and pMHC."
+#| fig-height: 15
+
+data_combined_tidy %>%
+  dplyr::filter(donor == "donor1") %>% 
+  relevant_binders_plot()
+```
+
 
 ## `umap_of_protein_expressions()` {#sec-umap_of_protein_expressions}
 
@@ -372,22 +428,7 @@ data_combined_tidy %>%
   umap_of_protein_expressions(color_by = "CD8a")
 ```
 
-## `boxplot_protein_expressions()` {#sec-boxplot_protein_expressions}
 
-By supplying a tidy data frame and a protein name present in the data (with the default being CD4), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. Before plotting, the data is transformed via Centered Log Ratio (CLR). The boxplots contain the name of the donor on the x-axis and the `CLR-transformed` values of the expressions on the y-axis.
-
-```{r}
-#| label: fig-boxplot_protein_expressions
-#| fig-cap: "Output of the function `boxplot_protein_expressions()`. The plots show distribution of expression levels for each donor for the proteins (a) CD45RA and (b) CD8a."
-#| fig-subcap: true
-#| layout-ncol: 1
-
-data_combined_tidy %>%
-  boxplot_protein_expressions(plot_protein = "CD45RA")
-
-data_combined_tidy %>%
-  boxplot_protein_expressions(plot_protein = "CD8a")
-```
 
 # Shiny Integration {#sec-Shiny}
 
