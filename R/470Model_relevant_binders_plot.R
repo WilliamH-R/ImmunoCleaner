@@ -54,6 +54,14 @@ relevant_binders_plot <- function(.data,
     dplyr::group_by(donor, non_promiscuous_pair) %>%
     dplyr::mutate(barcode_freq = barcode_count/sum(barcode_count)) %>%
     dplyr::filter(barcode_freq <= max_frequency) %>%
+    dplyr::arrange(donor, pMHC) %>%
+    dplyr::group_by(pMHC) %>%
+    dplyr::mutate(order = dplyr::cur_group_id()) %>%
+    dplyr::mutate(order = stringr::str_c(order,
+                                         dplyr::row_number(),
+                                         sep = ".")) %>%
+    transform(order = as.numeric(order)) %>%
+    dplyr::mutate(non_promiscuous_pair = forcats::fct_reorder(non_promiscuous_pair, dplyr::desc(order))) %>%
 
     ggplot2::ggplot(ggplot2::aes(x = non_promiscuous_pair,
                                  y = label_name,
