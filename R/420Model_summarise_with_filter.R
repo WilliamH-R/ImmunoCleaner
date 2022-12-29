@@ -77,7 +77,8 @@ summarise_with_filter <- function(.data,
                      by = summarise_by,
                      suffix = c("_old",
                                 "_new")
-                     )
+                     ) %>%
+    dplyr::arrange(desc(dplyr::across(starts_with("donor"))))
 
   return(data_model)
 }
