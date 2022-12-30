@@ -84,7 +84,7 @@ umap_of_protein_expressions <- function(.data,
                                     direction = -1) +
     ggplot2::labs(title = stringr::str_c("UMAP model for the expression of ",
                                          color_by),
-                  color = stringr::str_c("Protein expression of ",
+                  color = stringr::str_c("Expression of\n",
                                          color_by)) +
     ggplot2::facet_wrap(~ donor)
 
