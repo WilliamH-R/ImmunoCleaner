@@ -47,11 +47,13 @@ evaluate_binder <- function(.data,
     dplyr::group_by(donor,
                     {{identifier}}) %>%
     dplyr::mutate(is_binder = dplyr::case_when(UMI_count > UMI_count_min &
-                                                 UMI_count > negative_control_UMI_count_min * max_negative_control_binder &
-                                                 UMI_count == max(UMI_count,
-                                                                  na.rm = TRUE) ~ TRUE,
+                                                 UMI_count > negative_control_UMI_count_min * max_negative_control_binder ~ TRUE,
                                                TRUE ~ FALSE),
                   is_binder = dplyr::case_when(sum(is_binder == TRUE) > 4 ~ FALSE,
+                                               TRUE ~ is_binder),
+                  is_binder = dplyr::case_when(sum(is_binder == TRUE) >= 2 &
+                                                 UMI_count == !max(UMI_count,
+                                                                   na.rm = TRUE) ~ FALSE,
                                                TRUE ~ is_binder)) %>%
     dplyr::ungroup()
   return(data_aug)
