@@ -14,6 +14,8 @@
 #'  @noRd
 #'
 update_data_files <- function() {
-  list.files("data-raw", full.names = TRUE) %>%
-  purrr::walk(source)
+  source("data-raw/01data_download_raw.R")
+  source("data-raw/02data_combined_tidy.R")
+  source("data-raw/03data_generate_umap_models.R")
+  source("data-raw/aux_alleles_status_each_donor.R")
 }

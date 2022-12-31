@@ -15,7 +15,6 @@ Imports:
     knitr,
     rmarkdown,
     stringr,
-    purrr,
     dplyr,
     ggplot2,
     magrittr,
