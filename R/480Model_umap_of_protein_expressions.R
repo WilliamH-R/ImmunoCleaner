@@ -82,9 +82,10 @@ umap_of_protein_expressions <- function(.data,
     ggplot2::geom_point() +
     ggplot2::scale_color_continuous(type = "viridis",
                                     direction = -1) +
+    ggplot2::guides(color = ggplot2::guide_colourbar(barheight = 20)) +
     ggplot2::labs(title = stringr::str_c("UMAP model for the expression of ",
                                          color_by),
-                  color = stringr::str_c("Expression of\n",
+                  color = stringr::str_c("Expression\nof ",
                                          color_by)) +
     ggplot2::facet_wrap(~ donor)
 
