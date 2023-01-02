@@ -220,28 +220,28 @@ Naturally, the dimensions of all included data sets change after being piped thr
 
 ::: {#tbl-dimensions layout-ncol="2"}
 |      **Donor 1**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:------------:|:------------:|:-------------------------------------------:|
+|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_one}
 
 |      **Donor 2**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:------------:|:------------:|:-------------------------------------------:|
+|:---------------------:|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_two}
 
 |      **Donor 3**      |           **`raw`**            |                                                             **`tidy`**                                                              |
-|:------------:|:------------:|:-------------------------------------------:|
+|:---------------------:|:------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_three}
 
 |      **Donor 4**      |           **`raw`**           |                                                             **`tidy`**                                                              |
-|:------------:|:------------:|:-------------------------------------------:|
+|:---------------------:|:-----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
@@ -263,6 +263,7 @@ All of the tidying done in the above enables the modelling which are described i
 7.  `boxplot_protein_expressions()`
 
 ## `percentage_rows_kept()` {#sec-percentage_rows_kept}
+
 This functions takes as input a tidy data frame. The number of unique barcodes are then counted and compared to the number of unique barcodes present in a non-filtered version of the data frame. The output is then a table showing the percentage of rows left in the input data stratified on donor as shown in @tbl-percentage_rows_kept.
 
 ```{r}
@@ -351,7 +352,6 @@ data_combined_tidy %>%
   boxplot_protein_expressions(plot_protein = "CD8a")
 ```
 
-
 ## `alpha_beta_sequence_distinctiveness()` {#sec-alpha_beta_sequence_consistency}
 
 The input to the function is a tidy data frame from which a frequency plot is made. The function groups on the barcode, then make TCR-sequences unique, and ungroup again to do a data set wide counting of the number of TCR-sequences. A distinctiveness score is then calculated by comparing the number of completely unique sequences with the total number of TCR-sequences. I.e., a lower score means less distinctive. The calculations are done by stratifying on `chain`. This enables a quick quality check of the data set to whether it follows theory or not. The output is then a bar plot showing the distinctiveness score (see @fig-alpha_beta_sequence_distinctiveness).
@@ -406,7 +406,6 @@ data_combined_tidy %>%
   relevant_binders_plot()
 ```
 
-
 ## `umap_of_protein_expressions()` {#sec-umap_of_protein_expressions}
 
 As mentioned in @sec-DataCuration a script has been made for generating a UMAP model for each donor. This is done by using the package `uwot`. It takes the protein expressions of all 11 proteins in the tidy data frame, and creates a model which reduces the dimension to 2D. This allows better visual representation of the tendencies by applying coloring [@McInnes2018].
@@ -427,8 +426,6 @@ data_combined_tidy %>%
   dplyr::filter(donor == "donor4") %>%
   umap_of_protein_expressions(color_by = "CD8a")
 ```
-
-
 
 # Shiny Integration {#sec-Shiny}
 
