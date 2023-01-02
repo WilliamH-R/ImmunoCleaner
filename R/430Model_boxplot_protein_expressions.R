@@ -26,29 +26,36 @@ boxplot_protein_expressions <- function(.data,
   plot_protein <- plot_protein %>%
     make.names()
 
-  data_temp <- dplyr::bind_cols(.data %>%
-                                  dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-                                  compositions::clr() %>%
-                                  tibble::as_tibble(),
-                                .data %>%
-                                  dplyr::select(donor, {{identifier}}))
-  colnames(data_temp) <- data_temp %>%
+  .data <- dplyr::bind_cols(.data %>%
+                              dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+                              compositions::clr() %>%
+                              tibble::as_tibble(),
+                            .data %>%
+                              dplyr::select(donor, {{identifier}}))
+
+  colnames(.data) <- .data %>%
     colnames() %>%
     make.names()
 
-  boxplot <- data_temp %>%
+  data_summary <- .data %>%
     dplyr::distinct(donor,
                     {{identifier}},
                     .keep_all = TRUE) %>%
+    dplyr::group_by(donor) %>%
+    dplyr::summarise(count = dplyr::n())
 
-    ggplot2::ggplot(ggplot2::aes(x = donor,
+  boxplot <- .data %>%
+    dplyr::distinct(donor,
+                    {{identifier}},
+                    .keep_all = TRUE) %>%
+    dplyr::left_join(data_summary,
+                     by = "donor") %>%
+    dplyr::mutate(x_axis = stringr::str_c(donor, "\n", "count = ", count)) %>%
+
+    ggplot2::ggplot(ggplot2::aes(x = x_axis,
                                  y = eval(parse(text = plot_protein)),
                                  fill = donor)) +
-      ggplot2::geom_boxplot(outlier.shape = NA) +
-      ggplot2::geom_point(size = 1.5,
-                          pch = 21,
-                          color = "black",
-                          position = ggplot2::position_jitterdodge(jitter.width = 0.05)) +
+      ggplot2::geom_boxplot(width = 0.5) +
       ggplot2::labs(x = "Donor",
                     caption = "clr transformed",
                     y = stringr::str_c("Expression of ", plot_protein),
