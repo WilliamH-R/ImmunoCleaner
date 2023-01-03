@@ -73,7 +73,7 @@ relevant_binders_plot <- function(.data,
                                                                       digits = 2),
                                               '<br>Barcodes:', barcode_count,
                                               sep = " "))) +
-    ggplot2::geom_point(alpha = 0.5) +
+    ggplot2::geom_point(alpha = 0.7) +
     ggplot2::labs(title = "Frequencies of binding between pMHC and TCR-sequences",
                   x = "Non-promiscuous TCR-sequences",
                   y = 'pMHC',
@@ -94,7 +94,7 @@ relevant_binders_plot <- function(.data,
                                     direction = -1) +
     ggplot2::facet_wrap(~ donor,
                         ncol = 1,
-                        scales = "free_x")
+                        scales = "free")
 
   frequency_plot_plotly <- plotly::ggplotly(frequency_plot_ggplot,
                                              tooltip = "text")
