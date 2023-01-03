@@ -96,7 +96,7 @@
 #
 #   ggplot2::ggsave(stringr::str_c("boxplot_protein_expressions_mild_", protein, ".png"),
 #                   path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                   dpi = 400, scale = 0.7, width = 7)
+#                   dpi = 400, scale = 0.7, width = 7, height = 5.5)
 #
 #
 #   # Strict filter
@@ -107,7 +107,7 @@
 #
 #   ggplot2::ggsave(stringr::str_c("boxplot_protein_expressions_strict_", protein, ".png"),
 #                   path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                   dpi = 400, scale = 0.7, width = 7)
+#                   dpi = 400, scale = 0.7, width = 7, height = 5.5)
 # }
 #
 # ##  alpha_beta_sequence_distinctiveness
@@ -127,7 +127,7 @@
 #
 # ggplot2::ggsave("alpha_beta_sequence_distinctiveness_mild_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400, scale = 0.5, width = 7)
+#                 dpi = 400, scale = 0.65)
 #
 #
 # # Strict filter
@@ -150,7 +150,7 @@
 #
 # ggplot2::ggsave("alpha_beta_sequence_distinctiveness_strict_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400, scale = 0.5, width = 7)
+#                 dpi = 400, scale = 0.65)
 #
 # ##  alpha_beta_category_distribution
 # # Mild filter
@@ -169,7 +169,7 @@
 #
 # ggplot2::ggsave("alpha_beta_category_distribution_mild_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400, scale = 0.5, width = 7)
+#                 dpi = 400, scale = 0.65)
 #
 #
 # # Strict filter
@@ -192,7 +192,7 @@
 #
 # ggplot2::ggsave("alpha_beta_category_distribution_strict_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400, scale = 0.5, width = 7)
+#                 dpi = 400, scale = 0.65)
 #
 # ##  count_binding_pr_allele
 # # Mild filter
@@ -211,7 +211,7 @@
 #
 # ggplot2::ggsave("count_binding_pr_allele_mild_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400, scale = 0.5)
+#                 dpi = 400, scale = 0.8)
 #
 #
 # # Strict filter
@@ -234,7 +234,7 @@
 #
 # ggplot2::ggsave("count_binding_pr_allele_strict_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400, scale = 0.5)
+#                 dpi = 400, scale = 0.65)
 #
 # ##  relevant_binders_plot
 # # Mild filter
@@ -253,7 +253,7 @@
 #
 # ggplot2::ggsave("relevant_binders_plot_mild_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400)
+#                 dpi = 400, height = 16)
 #
 #
 # # Strict filter
@@ -276,7 +276,16 @@
 #
 # ggplot2::ggsave("relevant_binders_plot_strict_all.png",
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                 dpi = 400)
+#                 dpi = 400, height = 16)
+#
+# data_combined_tidy %>%
+#   evaluate_binder(UMI_count_min = 40) %>%
+#   dplyr::filter(is_binder == TRUE) %>%
+#   relevant_binders_plot(plotly_option = FALSE)
+#
+# ggplot2::ggsave("relevant_binders_plot_less_strict_all.png",
+#                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
+#                 dpi = 400, height = 16)
 #
 # ### Generate pictures from UMAP
 # # Fjern inner loop for at få alle donors i samme plot
@@ -285,17 +294,17 @@
 #                     dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
 #                     colnames() %>%
 #                     make.names()) {
-#   #for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
-#         #dplyr::distinct(donor) %>%
-#         #dplyr::pull()) {
+#   for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
+#         dplyr::distinct(donor) %>%
+#         dplyr::pull()) {
 #
 #   data_combined_tidy %>%
-#     dplyr::filter(donor == "donor1") %>%
+#     dplyr::filter(donor == chosen_donor) %>%
 #     #dplyr::slice_head(n = 100) %>%
 #     umap_of_protein_expressions(color_by = protein)
 #
-#   ggplot2::ggsave(stringr::str_c("umap_of_protein_expressions_", protein, "_donor_one", ".png"),
+#   ggplot2::ggsave(stringr::str_c("umap_of_protein_expressions_", protein,"_", chosen_donor, ".png"),
 #                   path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
-#                   dpi = 400, scale = 0.6)
-#   #}
+#                   dpi = 400, scale = 0.5, width = 9, height = 6, units = "in")
+#   }
 # }
