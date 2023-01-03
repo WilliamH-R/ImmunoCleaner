@@ -30,10 +30,8 @@ alpha_beta_sequence_distinctiveness <- function(.data,
     .data %>%
     dplyr::select({{identifier}}, donor,
                   TCR_sequence, chain, pMHC) %>%
-    dplyr::distinct(donor,
-                    {{identifier}},
-                    TCR_sequence,
-                    chain,
+    dplyr::distinct(donor, {{identifier}},
+                    TCR_sequence, chain,
                     .keep_all = TRUE) %>%
     dplyr::group_by(donor) %>%
     dplyr::add_count(chain,
