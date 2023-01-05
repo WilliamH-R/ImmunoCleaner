@@ -27,9 +27,9 @@ All of the tidy-functions needed to prepare the data as gathered in the wrapper 
 
 * `summarise_with_filter()`: A simple count of relevant binders stratified on user input. The output is a table.
 
-* `relevant_binder_frequency_plot()`: The output is a plotly plot showing all relevant binding events between TCR-sequences and pMHC.
+* `relevant_binders_plot()`: The output is a plotly plot showing all relevant binding events between TCR-sequences and pMHC.
 
-* `alpha_beta_pair_distribution()`: The function outputs a bar plot showing the distribution of alpha- beta chain composition. E.g., if a TCR-sequence only consists of an alpha chain, or perhaps only consists of a beta chain.
+* `alpha_beta_category_distribution()`: The function outputs a bar plot showing the distribution of alpha- beta chain composition. E.g., if a TCR-sequence only consists of an alpha chain, or perhaps only consists of a beta chain.
 
 * `alpha_beta_sequence_consistency()`: A bar plot showing the relative distinctiveness of all the alpha and beta chains.
 

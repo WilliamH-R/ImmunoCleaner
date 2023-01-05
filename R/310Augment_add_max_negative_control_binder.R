@@ -22,19 +22,19 @@
 add_max_negative_control_binder <- function(.data,
                                         identifier = barcode){
   # Tibble of the non-specific binders
-  negative_control_binders_vector <- c("A0101_VTEHDTLLY_IE-1_CMV",
-                                   "A0201_KVAELVHFL_MAGE-A3_Cancer",
-                                   "A0201_LLMGTLGIVC_HPV-16E7_82-91",
-                                   "A0201_CLGGLLTMV_LMP-2A_EBV",
-                                   "A0201_NLVPMVATV_pp65_CMV",
-                                   "A0201_KLQCVDLHV_PSA146-154",
-                                   "B0702_TPRVTGGGAM_pp65_CMV")
+  negative_control_binders_vector <- c("A0101_SLEGGGLGY_NC",
+                                   "A0101_STEGGGLAY_NC",
+                                   "A0201_ALIAPVHAV_NC",
+                                   "A2402_AYSSAGASI_NC",
+                                   "B0702_GPAESAAGL_NC",
+                                   "NR(B0801)_AAKGRGAAL_NC")
 
   data_aug <-
     .data %>%
-    dplyr::group_by({{identifier}}) %>%
+    dplyr::group_by(donor,
+                    {{identifier}}) %>%
     dplyr::mutate(max_negative_control_binder = dplyr::case_when(is.element(pMHC,
-                                                                        negative_control_binders_vector) == TRUE ~ UMI_count,
+                                                                            negative_control_binders_vector) == TRUE ~ UMI_count,
                                                              TRUE ~ 0),
                   max_negative_control_binder = max(max_negative_control_binder)) %>%
     dplyr::ungroup()

@@ -31,11 +31,6 @@
 #' data_combined_tidy %>%
 #'     evaluate_binder()
 #'
-#' # Otherwise, an un-tidy data frame can be piped through the wrapper `?run_all_prep`:
-#' data_donor_one_raw %>%
-#'     run_all_prep() %>%
-#'     evaluate_binder
-#'
 #' # If supplied, the thresholds can be changed from the 10X Genomics standard as:
 #' data_combined_tidy %>%
 #'     evaluate_binder(UMI_count_min = 20,
@@ -49,13 +44,16 @@ evaluate_binder <- function(.data,
 
   data_aug <-
     .data %>%
-    dplyr::group_by({{identifier}}) %>%
+    dplyr::group_by(donor,
+                    {{identifier}}) %>%
     dplyr::mutate(is_binder = dplyr::case_when(UMI_count > UMI_count_min &
-                                                 UMI_count > negative_control_UMI_count_min * max_negative_control_binder &
-                                                 UMI_count == max(UMI_count,
-                                                                  na.rm = TRUE) ~ TRUE,
+                                                 UMI_count > negative_control_UMI_count_min * max_negative_control_binder ~ TRUE,
                                                TRUE ~ FALSE),
                   is_binder = dplyr::case_when(sum(is_binder == TRUE) > 4 ~ FALSE,
+                                               TRUE ~ is_binder),
+                  is_binder = dplyr::case_when(sum(is_binder == TRUE) >= 2 &
+                                                 UMI_count == !max(UMI_count,
+                                                                   na.rm = TRUE) ~ FALSE,
                                                TRUE ~ is_binder)) %>%
     dplyr::ungroup()
   return(data_aug)

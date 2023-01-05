@@ -34,9 +34,9 @@ find_non_promiscuous_split_TCR_sequences <- function(.data,
   data_clean <-
     .data %>%
     dplyr::mutate(non_promiscuous_pair = dplyr::case_when(stringr::str_count(string = {{TCR_col}},
-                                                                             pattern = "TRA") == 1 &
+                                                                             pattern = "TRA:") == 1 &
                                                             stringr::str_count(string = {{TCR_col}},
-                                                                               pattern = "TRB") == 1 ~ {{TCR_col}},
+                                                                               pattern = "TRB:") == 1 ~ {{TCR_col}},
                                                           TRUE ~ NA_character_),
                   dplyr::across(.cols = non_promiscuous_pair,
                                 .fns = stringr::str_replace_all,

@@ -8,14 +8,13 @@ Description: The package is a collection of functions which clean and handle a l
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: 
     usethis,
     testthat,
     knitr,
     rmarkdown,
     stringr,
-    purrr,
     dplyr,
     ggplot2,
     magrittr,

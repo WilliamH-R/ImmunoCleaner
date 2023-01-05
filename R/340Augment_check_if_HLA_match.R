@@ -40,7 +40,9 @@ check_if_HLA_match <- function(.data) {
                                                  stringr::str_detect(string = allele,
                                                                      pattern = "^B") ~ "UNKNOWN",
                                                is.na(HLA_match) ~ "FALSE",
-                                               TRUE ~ HLA_match))
+                                               TRUE ~ HLA_match)) %>%
+    dplyr::mutate(HLA_match = factor(HLA_match,
+                                     levels = c("TRUE", "UNKNOWN", "FALSE")))
 
   return(data_aug)
 }
