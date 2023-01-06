@@ -81,8 +81,10 @@ umap_of_protein_expressions <- function(.data,
                                  color = eval(parse(text = color_by)))) +
     ggplot2::geom_point() +
     ggplot2::scale_color_continuous(type = "viridis",
-                                    direction = -1) +
-    ggplot2::guides(color = ggplot2::guide_colourbar(barheight = 10)) +
+                                    direction = -1,
+                                    guide = ggplot2::guide_colourbar(barheight = 10),
+                                    limits = c(-8.6, 8.6),
+                                    breaks = c(-8.5, -5, 0, 5, 8.5)) +
     ggplot2::labs(title = stringr::str_c("UMAP model for the expression of ",
                                          color_by),
                   caption = "clr transformed, log2",
