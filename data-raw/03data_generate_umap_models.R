@@ -7,7 +7,7 @@ for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
     dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-    compositions::clr() %>%
+    TCRSequenceFunctions:::clr_log2() %>%
     as.matrix() %>%
     uwot::umap(n_neighbors = 15,
                min_dist = 0.2,

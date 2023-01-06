@@ -28,7 +28,7 @@ boxplot_protein_expressions <- function(.data,
 
   .data <- dplyr::bind_cols(.data %>%
                               dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-                              compositions::clr() %>%
+                              TCRSequenceFunctions:::clr_log2() %>%
                               tibble::as_tibble(),
                             .data %>%
                               dplyr::select(donor, {{identifier}}))
@@ -57,10 +57,12 @@ boxplot_protein_expressions <- function(.data,
                                  fill = donor)) +
       ggplot2::geom_boxplot(width = 0.5) +
       ggplot2::labs(x = "Donor",
-                    caption = "clr transformed",
+                    caption = "clr transformed, log2",
                     y = stringr::str_c("Expression of ", plot_protein),
                     title = stringr::str_c("Protein expression of ", plot_protein, " stratified on donor")) +
-      ggplot2::theme(legend.position = "none")
+      ggplot2::theme(legend.position = "none") +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0)),
+                                  limits = c(-10, 10))
 
   return(boxplot)
 

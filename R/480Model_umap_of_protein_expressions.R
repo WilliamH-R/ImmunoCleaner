@@ -48,7 +48,7 @@ umap_of_protein_expressions <- function(.data,
 
     data_combined_tidy_temp <- dplyr::bind_cols(data_combined_tidy_temp %>%
                                                   dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-                                                  compositions::clr() %>%
+                                                  TCRSequenceFunctions:::clr_log2() %>%
                                                   tibble::as_tibble(),
                                                 data_combined_tidy_temp %>%
                                                   dplyr::select(donor))
@@ -85,6 +85,7 @@ umap_of_protein_expressions <- function(.data,
     ggplot2::guides(color = ggplot2::guide_colourbar(barheight = 10)) +
     ggplot2::labs(title = stringr::str_c("UMAP model for the expression of ",
                                          color_by),
+                  caption = "clr transformed, log2",
                   color = stringr::str_c("Expression\nof ",
                                          color_by)) +
     ggplot2::facet_wrap(~ donor)
