@@ -45,6 +45,7 @@ alpha_beta_category_distribution <- function(.data,
                       y = "Frequencies",
                       title = "Frequency distribution of \ndifferent combinations of TCR") +
         ggplot2::theme(legend.position = "none") +
+        ggplot2::scale_y_continuous(expand = c(0, 0), limits = c(0, 1)) +
         ggplot2::facet_wrap(~  donor)
 
   return(frequency_barplot)
