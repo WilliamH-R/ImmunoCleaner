@@ -41,34 +41,16 @@ summarise_with_filter <- function(.data,
                                                    "peptide_source"),
                                   identifier = barcode) {
 
-  prep_data_for_summarise <- function (.data_to_prep) {
-    data_prep <- .data_to_prep %>%
-      dplyr::select(barcode, donor, pMHC, allele,
-                    peptide, peptide_source, is_binder) %>%
-      dplyr::filter(is_binder == TRUE) %>%
-      dplyr::distinct({{identifier}},
-                      pMHC,
-                      .keep_all = TRUE) %>%
-      dplyr::group_by_at(summarise_by) %>%
-      dplyr::count(donor,
-                   name = "count") %>%
-      dplyr::ungroup() %>%
-      dplyr::arrange(donor) %>%
-      tidyr::pivot_wider(names_from = donor,
-                         values_from = count)
-    return(data_prep)
-  }
-
   donors_present <- .data %>%
     dplyr::distinct(donor) %>%
     dplyr::pull()
 
   data_old <- TCRSequenceFunctions::data_combined_tidy %>%
     dplyr::filter(donor %in% donors_present) %>%
-    prep_data_for_summarise()
+    TCRSequenceFunctions:::prep_data_for_summarise()
 
   data_new  <- .data %>%
-    prep_data_for_summarise()
+    TCRSequenceFunctions:::prep_data_for_summarise()
 
 
   data_model <-

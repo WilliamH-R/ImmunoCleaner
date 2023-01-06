@@ -21,29 +21,12 @@
 
 percentage_rows_kept <- function(.data,
                                   identifier = barcode) {
-  prep_data <- function(.data_to_prep,
-                        name) {
-    data_prep <- .data_to_prep %>%
-      dplyr::select(is_binder,
-                    {{identifier}},
-                    donor,
-                    pMHC) %>%
-      dplyr::filter(is_binder == TRUE) %>%
-      dplyr::distinct(donor,
-                      {{identifier}},
-                      pMHC,
-                      .keep_all = TRUE) %>%
-      dplyr::count(donor,
-                   name = name)
-
-    return(data_prep)
-  }
 
   data_old <- TCRSequenceFunctions::data_combined_tidy %>%
-    prep_data(name = "count_old")
+    TCRSequenceFunctions:::prep_data_percentage_kept(name = "count_old")
 
   data_new <- .data %>%
-    prep_data(name = "count_new")
+    TCRSequenceFunctions:::prep_data_percentage_kept(name = "count_new")
 
   data_model <- data_new %>%
     dplyr::left_join(data_old,
