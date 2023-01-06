@@ -16,7 +16,7 @@
 #'
 
 remove_unnecessary_columns <- function(.data,
-                                       cols = c("_binder","cell_clono_cdr3_nt")) {
+                                       cols = c("_binder","cell_clono_cdr3_nt", "IgG")) {
   data_clean <-
     .data %>%
     dplyr::select(-dplyr::matches(cols))
