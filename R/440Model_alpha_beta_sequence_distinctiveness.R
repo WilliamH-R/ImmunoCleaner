@@ -51,13 +51,16 @@ alpha_beta_sequence_distinctiveness <- function(.data,
                                            fill = chain)) +
       ggplot2::geom_bar(stat = "identity",
                         width = 0.5) +
+      ggplot2::geom_text(ggplot2::aes(label = round(distinctiveness, 2),
+                                      color = chain),
+                         vjust = -0.5) +
       ggplot2::labs(x = "Chain",
                     y = "Relative distinctiveness",
                     title = "Relative distinctiveness \nfor the alpha and beta chain") +
       ggplot2::theme(legend.position = "none") +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.05))) +
-      ggplot2::facet_wrap(~ donor,
-                          scales = "free_y")
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.05)),
+                                  limits = c(0, 1)) +
+      ggplot2::facet_wrap(~ donor)
 
   return(distinctiveness_barplot)
 }
