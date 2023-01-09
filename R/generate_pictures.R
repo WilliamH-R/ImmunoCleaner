@@ -113,7 +113,6 @@
 #
 # ##  alpha_beta_sequence_distinctiveness
 # # Mild filter
-# # Remember to correct limits of y-axis
 # data_combined_tidy %>%
 #   dplyr::filter(donor == "donor1") %>%
 #   dplyr::filter(is_binder == TRUE) %>%
@@ -133,7 +132,6 @@
 #
 #
 # # Strict filter
-# # Remember to correct limits of y-axis
 # data_combined_tidy %>%
 #   dplyr::filter(donor == "donor1") %>%
 #   evaluate_binder(UMI_count_min = 40,
