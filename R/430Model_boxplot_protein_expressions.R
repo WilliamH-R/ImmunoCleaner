@@ -22,7 +22,7 @@
 
 boxplot_protein_expressions <- function(.data,
                                         identifier = barcode,
-                                        plot_protein = "CD4") {
+                                        plot_protein = "CD8a") {
   plot_protein <- plot_protein %>%
     make.names()
 
