@@ -223,28 +223,28 @@ Naturally, the dimensions of all included data sets change after being piped thr
 
 ::: {#tbl-dimensions layout-ncol="2"}
 |      **Donor 1**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------:|:---------------:|:------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 | **Number of columns** | `r ncol(data_donor_one_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_one_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor1", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_one}
 
 |      **Donor 2**      |          **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------:|:---------------:|:------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 | **Number of columns** | `r ncol(data_donor_two_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_two_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor2", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_two}
 
 |      **Donor 3**      |           **`raw`**            |                                                             **`tidy`**                                                              |
-|:---------------:|:---------------:|:------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 | **Number of columns** | `r ncol(data_donor_three_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_three_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor3", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
 : {#tbl-dimensions_donor_three}
 
 |      **Donor 4**      |           **`raw`**           |                                                             **`tidy`**                                                              |
-|:---------------:|:---------------:|:------------------------------------:|
+|:----------------:|:----------------:|:----------------------------------:|
 | **Number of columns** | `r ncol(data_donor_four_raw)` | `r ncol(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 |  **Number of rows**   | `r nrow(data_donor_four_raw)` | `r nrow(data_combined_tidy %>% dplyr::filter(donor == "donor4", is_binder == TRUE) %>% dplyr::distinct(barcode, .keep_all = TRUE))` |
 
@@ -340,7 +340,7 @@ data_combined_tidy %>%
 
 ## `boxplot_protein_expressions()` {#sec-boxplot_protein_expressions}
 
-By supplying a tidy data frame and a protein name present in the data (with the default being CD4), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. Before plotting, the data is transformed via Centered Log Ratio (clr). The boxplots contain the name of the donor on the x-axis and the `clr-transformed` values of the expressions on the y-axis.
+By supplying a tidy data frame and a protein name present in the data (with the default being CD8a), the output will be boxplots showing the distribution of expression levels of the provided protein for each donor in the data. Before plotting, the data is transformed via Centered Log Ratio (clr). The boxplots contain the name of the donor on the x-axis and the distribution of the `clr-transformed` values of the expressions on the y-axis.
 
 ```{r}
 #| label: fig-boxplot_protein_expressions
@@ -397,12 +397,11 @@ data_combined_tidy %>%
 
 As the function above, this also takes a tidy data frame as input. The model shows which pMHC have a relevant binding to which non-promiscuous pairs stratified on donor. From this model, the output is a plotly (i.e., interactive) plot where each dot represent a relevant binding event between pMHC and a non-promiscuous pair. For each specific relevant match between TCR-sequence and pMHC, the number of barcodes supporting that match was counted and used as size for the dots. Further, a concordance is calculated which represent the fraction of barcodes supporting a match out of all barcodes carrying that specific TCR-sequence.
 
-The x-axis text have been disabled due to cluttering, but the values can be found by hovering a dot. It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of filtering will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something lower than `1`. For a demonstration on how to use the model see @fig-relevant_binders_plot (will only work properly when rendering in HTML format).
+It is important to mention, that only interactions evaluated to relevant by `evaluate_binder()` is included. Hence, a change of filtering will directly change the output of this function. Furthermore, it is possible to provide the function with a maximum frequency. If one is interested in only ambiguous sequences (i.e., TCR-sequences which bind multiple pMHC), the max frequency should be set to something lower than `1`. For a demonstration on how to use the model see @fig-relevant_binders_plot (will only work properly when rendering in HTML-format).
 
 ```{r}
 #| label: fig-relevant_binders_plot
 #| fig-cap: "Output of the function `relevant_binders_plot`. Each dot represent a relevant binding between a non-promiscous TCR-sequence and pMHC."
-#| fig-height: 15
 
 data_combined_tidy %>%
   dplyr::filter(donor == "donor1") %>% 
@@ -411,9 +410,9 @@ data_combined_tidy %>%
 
 ## `umap_of_protein_expressions()` {#sec-umap_of_protein_expressions}
 
-As mentioned in @sec-DataCuration a script has been made for generating a UMAP model for each donor. This is done by using the package `uwot`. It takes the protein expressions of all 11 proteins in the tidy data frame, and creates a model which reduces the dimension to 2D. This allows better visual representation of the tendencies by applying coloring [@McInnes2018].
+As mentioned in @sec-DataCuration a script has been made for generating a UMAP-model for each donor. This is done by using the package `uwot`. It takes the protein expressions of all 11 proteins in the tidy data frame, and creates a model which reduces the dimension to 2D. This allows better visual representation of the tendencies by applying coloring [@McInnes2018].
 
-The function `umap_of_protein_expressions()` loads the created models mentioned above and project the piped in data frame onto the model outputting a 2D scatter plot. By supplying a protein name present in the data as a string, it is possible to color by the expression of said protein. This allows us to tell which protein can explain the largest amount of variability in the expressions. In the examples shown in @fig-umap_of_protein_expressions it can be seen, that the protein CD45RA can explain a lot of the variability whereas the protein CD8a doesn't show any clear tendencies.
+The function `umap_of_protein_expressions()` loads the created models mentioned above and project the piped data frame onto the model outputting a 2D scatter plot. By supplying a protein name present in the data as a string, it is possible to color by the expression of said protein. In the examples shown in @fig-umap_of_protein_expressions it can be seen, that the expression of CD45RA is approximately zero at the left hand side of the plot, and carry positive values on the right hand side. For CD8a, the transformed values are constitutively high.
 
 ```{r}
 #| label: fig-umap_of_protein_expressions
@@ -432,10 +431,16 @@ data_combined_tidy %>%
 
 # Shiny Integration {#sec-Shiny}
 
+There exist a tight interplay between the functions package and the shiny package - a big flow of information. When running the app, all the necessary data files have already been created as they are an export of the functions app. They are prepared in the orange circles of @fig-data_flow. Besides data preparation, the flow starts in the front-end of the app, where the user selects a series of filters to apply (green rectangles). The data imported from the functions package is filtered in the back-end of the app package (purple diamond) and then piped to the functions (grey polygons). The different functions each produce an output which is shown at the front-end of the app (red parallelogram).
+
+![In the functions package, the raw data is downloaded, combined, tidied and the UMAP-models are created (orange circles). The data is then either sent to the UMAP-function (grey polygon) or to the App (purple diamond). In the front-end of the app, filters are chosen by the user (green rectangles) and sent to the filtering in the app (purple diamond). The filtered data is piped to the functions in the package (grey polygons) and is outputted to the front-end of the app (red parallelogram).](package_flow.drawio.png){#fig-data_flow}
+
 # Data documentation {#sec-data_documentation}
 
+@tbl-data_documentation shows all the variable names present in the tidy data frame in the first column. The second column includes a short description of each of the variables. Lastly, the data type of each variable is noted.
+
 | **Variable**            | **Description**                                                                                                                                             | **Type**  |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+|------------------|-------------------------------------|------------------|
 | barcode                 | Unique identifier for each cell in Single Cell experiment                                                                                                   | character |
 | TCR_sequence            | Amino acid sequence of either the alpha or beta chain. Specified in chain                                                                                   | character |
 | TCR_combination         | Category to note types of chain belonging to the barcode                                                                                                    | factor    |
@@ -457,10 +462,10 @@ data_combined_tidy %>%
 | allele                  | The specific allele in the pMHC                                                                                                                             | character |
 | peptide                 | The specific peptide in the pMHC                                                                                                                            | character |
 | peptide_source          | The origin of the peptide in the pMHC                                                                                                                       | character |
-| UMI_count               | The number of transcripts observed. Used to score how trustworthy an interaction is. Higher number   means more trustworthy                                 | numeric   |
+| UMI_count               | The number of transcripts observed. Used to score how trustworthy an interaction is. Higher number means more trustworthy                                   | numeric   |
 | max_non_specific_binder | The UMI_count of the highest scoring non-specific binder to the barcode. If no binder, 0                                                                    | numeric   |
 | is_binder               | If the UMI_count complies with a set of thresholds, the value is TRUE, otherwise FALSE. When TRUE the interaction between TCR_sequence and pMHC is relevant | boolean   |
-| HLA_match               | Check of whether allele match the HLA-typing belonging to donor, in that case TRUE. If typing for donor is   missing, UNKNOWN. Otherwise FALSE              | character |
+| HLA_match               | Check of whether allele match the HLA-typing belonging to donor, in that case TRUE. If typing for donor is missing, UNKNOWN. Otherwise FALSE                | character |
 | unique_binder           | Check if the binding between TCR_sequence and pMHC is only observed once, then TRUE. Otherwise, FALSE                                                       | boolean   |
 
 : Includes the variable names, a short description of them and the data type for all the columns present in the tidy data set. {#tbl-data_documentation}
