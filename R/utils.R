@@ -9,9 +9,7 @@ clr_log2 <- function(x) {
 
 prep_data_for_summarise <- function (.data_to_prep,
                                      identifier = barcode,
-                                     summarise_by = c("allele",
-                                                      "peptide",
-                                                      "peptide_source")) {
+                                     summarise_by = summarise_by) {
   data_prep <- .data_to_prep %>%
     dplyr::select({{identifier}}, donor, pMHC, allele,
                   peptide, peptide_source, is_binder) %>%

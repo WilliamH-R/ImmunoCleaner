@@ -47,10 +47,10 @@ summarise_with_filter <- function(.data,
 
   data_old <- TCRSequenceFunctions::data_combined_tidy %>%
     dplyr::filter(donor %in% donors_present) %>%
-    TCRSequenceFunctions:::prep_data_for_summarise()
+    TCRSequenceFunctions:::prep_data_for_summarise(summarise_by = summarise_by)
 
   data_new  <- .data %>%
-    TCRSequenceFunctions:::prep_data_for_summarise()
+    TCRSequenceFunctions:::prep_data_for_summarise(summarise_by = summarise_by)
 
 
   data_model <-
