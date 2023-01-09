@@ -4,7 +4,7 @@
 \alias{boxplot_protein_expressions}
 \title{Umap of the protein expression levels}
 \usage{
-boxplot_protein_expressions(.data, identifier = barcode, plot_protein = "CD4")
+boxplot_protein_expressions(.data, identifier = barcode, plot_protein = "CD8a")
 }
 \arguments{
 \item{.data}{An prepared data frame ready for modelling.}
