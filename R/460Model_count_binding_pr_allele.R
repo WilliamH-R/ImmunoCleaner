@@ -50,7 +50,7 @@ count_binding_pr_allele <- function(.data,
                                           "UNKNOWN"="#00BFC4",
                                           "FALSE"="#F8766D"),
                                  guide = "none") +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.05)))
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))
 
   return(scatter_plot)
 }
