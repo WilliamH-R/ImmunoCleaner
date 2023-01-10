@@ -20,14 +20,14 @@
 #'
 
 add_max_negative_control_binder <- function(.data,
-                                        identifier = barcode){
-  # Tibble of the non-specific binders
+                                            identifier = barcode){
+  # Tibble of the negative controls
   negative_control_binders_vector <- c("A0101_SLEGGGLGY_NC",
-                                   "A0101_STEGGGLAY_NC",
-                                   "A0201_ALIAPVHAV_NC",
-                                   "A2402_AYSSAGASI_NC",
-                                   "B0702_GPAESAAGL_NC",
-                                   "NR(B0801)_AAKGRGAAL_NC")
+                                       "A0101_STEGGGLAY_NC",
+                                       "A0201_ALIAPVHAV_NC",
+                                       "A2402_AYSSAGASI_NC",
+                                       "B0702_GPAESAAGL_NC",
+                                       "NR(B0801)_AAKGRGAAL_NC")
 
   data_aug <-
     .data %>%
