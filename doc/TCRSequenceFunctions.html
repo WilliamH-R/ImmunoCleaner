@@ -106,24 +106,24 @@ div.csl-indent {
 </style>
 
 
-<script src="TCRSequenceFunctions_files/libs/clipboard/clipboard.min.js"></script>
-<script src="TCRSequenceFunctions_files/libs/quarto-html/quarto.js"></script>
-<script src="TCRSequenceFunctions_files/libs/quarto-html/popper.min.js"></script>
-<script src="TCRSequenceFunctions_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="TCRSequenceFunctions_files/libs/quarto-html/anchor.min.js"></script>
-<link href="TCRSequenceFunctions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="TCRSequenceFunctions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="TCRSequenceFunctions_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="TCRSequenceFunctions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="TCRSequenceFunctions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="TCRSequenceFunctions_files/libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
-<script src="TCRSequenceFunctions_files/libs/plotly-binding-4.10.1/plotly.js"></script>
-<script src="TCRSequenceFunctions_files/libs/typedarray-0.1/typedarray.min.js"></script>
-<script src="TCRSequenceFunctions_files/libs/jquery-3.5.1/jquery.min.js"></script>
-<link href="TCRSequenceFunctions_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-<script src="TCRSequenceFunctions_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="TCRSequenceFunctions_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="TCRSequenceFunctions_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<script src="ImmunoCleaner_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ImmunoCleaner_files/libs/quarto-html/quarto.js"></script>
+<script src="ImmunoCleaner_files/libs/quarto-html/popper.min.js"></script>
+<script src="ImmunoCleaner_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ImmunoCleaner_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ImmunoCleaner_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ImmunoCleaner_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ImmunoCleaner_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ImmunoCleaner_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ImmunoCleaner_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="ImmunoCleaner_files/libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="ImmunoCleaner_files/libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="ImmunoCleaner_files/libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="ImmunoCleaner_files/libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="ImmunoCleaner_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="ImmunoCleaner_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="ImmunoCleaner_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="ImmunoCleaner_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 </head>
@@ -191,17 +191,17 @@ div.csl-indent {
 <section id="sec-Import" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Imports</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TCRSequenceFunctions)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ImmunoCleaner)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"../R/sysdata.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sec-Intro" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
-<p>This package, <a href="https://github.com/WilliamH-R/TCRSequenceFunctions">TCRSequenceFunctions</a>, is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment by 10x Genomics <span class="citation" data-cites="10XGenomics2022">[<a href="#ref-10XGenomics2022" role="doc-biblioref">1</a>]</span>. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their respective donor.</p>
+<p>This package, <a href="https://github.com/WilliamH-R/ImmunoCleaner">ImmunoCleaner</a>, is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment by 10x Genomics <span class="citation" data-cites="10XGenomics2022">[<a href="#ref-10XGenomics2022" role="doc-biblioref">1</a>]</span>. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their respective donor.</p>
 <p>The data sets contain binding counts between the donors’ library of T-Cell Receptors (TCRs) and a set of peptide-major histocompatibility complexes (pMHCs). The before-mentioned binding counts are the so called unique molecular identifier (UMI)-counts. Additionally, the data set contains the surface protein expression levels for a range of 11 different proteins. For an explanation of all columns see <a href="#sec-data_documentation">Chapter&nbsp;7</a>.</p>
-<p>In the following sections, each of the functions contained in <a href="https://github.com/WilliamH-R/TCRSequenceFunctions">TCRSequenceFunctions</a> will be explained, demonstrated and reasoned for. Generally, they can be divided into three types: Cleaning, Augmenting and Modelling where the main goal of the two first is to make the data tidy.</p>
-<p>Lastly will be a short section on a Shiny Package, <a href="https://github.com/WilliamH-R/TCRSequenceShiny">TCRSequenceShiny</a>, which utilizes these functions to make a user-friendly interactive interface for data filtering and exploration.</p>
+<p>In the following sections, each of the functions contained in <a href="https://github.com/WilliamH-R/ImmunoCleaner">ImmunoCleaner</a> will be explained, demonstrated and reasoned for. Generally, they can be divided into three types: Cleaning, Augmenting and Modelling where the main goal of the two first is to make the data tidy.</p>
+<p>Lastly will be a short section on a Shiny Package, <a href="https://github.com/WilliamH-R/ImmunoViz">ImmunoViz</a>, which utilizes these functions to make a user-friendly interactive interface for data filtering and exploration.</p>
 </section>
 <section id="sec-DataCuration" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Data curation</h1>
@@ -2425,7 +2425,7 @@ div.csl-indent {
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-boxplot_protein_expressions-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-boxplot_protein_expressions-1.png" class="img-fluid figure-img" data-ref-parent="fig-boxplot_protein_expressions" width="672"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-boxplot_protein_expressions-1.png" class="img-fluid figure-img" data-ref-parent="fig-boxplot_protein_expressions" width="672"></p>
 <p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
 </figure>
 </div>
@@ -2435,7 +2435,7 @@ div.csl-indent {
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-boxplot_protein_expressions-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-boxplot_protein_expressions-2.png" class="img-fluid figure-img" data-ref-parent="fig-boxplot_protein_expressions" width="672"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-boxplot_protein_expressions-2.png" class="img-fluid figure-img" data-ref-parent="fig-boxplot_protein_expressions" width="672"></p>
 <p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
 </figure>
 </div>
@@ -2455,7 +2455,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div id="fig-alpha_beta_sequence_distinctiveness" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-alpha_beta_sequence_distinctiveness-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-alpha_beta_sequence_distinctiveness-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;5.2: Output of the function <code>alpha_beta_sequence_distinctiveness()</code>. Each bar represent the distinctiveness of that chain type.</figcaption><p></p>
 </figure>
 </div>
@@ -2471,7 +2471,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div id="fig-alpha_beta_category_distribution" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-alpha_beta_category_distribution-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-alpha_beta_category_distribution-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;5.3: Output of the function <code>alpha_beta_category_distribution</code>. Each bar represent the freuqency of that respective category.</figcaption><p></p>
 </figure>
 </div>
@@ -2487,7 +2487,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div id="fig-count_binding_pr_allele" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-count_binding_pr_allele-1.png" class="img-fluid figure-img" width="1440"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-count_binding_pr_allele-1.png" class="img-fluid figure-img" width="1440"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;5.4: Output of the function <code>count_binding_pr_allele()</code>. The y-axis shows the count of relevant binders for each allele.</figcaption><p></p>
 </figure>
 </div>
@@ -2529,7 +2529,7 @@ div.csl-indent {
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-umap_of_protein_expressions-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-umap_of_protein_expressions-1.png" class="img-fluid figure-img" data-ref-parent="fig-umap_of_protein_expressions" width="672"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-umap_of_protein_expressions-1.png" class="img-fluid figure-img" data-ref-parent="fig-umap_of_protein_expressions" width="672"></p>
 <p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
 </figure>
 </div>
@@ -2537,7 +2537,7 @@ div.csl-indent {
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-umap_of_protein_expressions-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="TCRSequenceFunctions_files/figure-html/fig-umap_of_protein_expressions-2.png" class="img-fluid figure-img" data-ref-parent="fig-umap_of_protein_expressions" width="672"></p>
+<p><img src="ImmunoCleaner_files/figure-html/fig-umap_of_protein_expressions-2.png" class="img-fluid figure-img" data-ref-parent="fig-umap_of_protein_expressions" width="672"></p>
 <p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
 </figure>
 </div>

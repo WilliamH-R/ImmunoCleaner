@@ -1,5 +1,5 @@
-Package: TCRSequenceFunctions
-Title: TCR-Sequence Functions (One Line, Title Case)
+Package: ImmunoCleaner
+Title: ImmunoCleaner
 Version: 0.0.0.9000
 Authors@R: 
     person("William", "Hagedorn-Rasmussen", , "s194545@dtu.dk", role = c("aut", "cre"),

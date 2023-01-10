@@ -2,7 +2,7 @@
 #'
 #' `percentage_rows_kept()` takes a prepared data frame as input, and compares
 #'     the number of rows to the unfiltered tidy data
-#'     `TCRSequenceFunctions::data_combined_tidy` for each donor. The comparison
+#'     `ImmunoCleaner::data_combined_tidy` for each donor. The comparison
 #'     is shown in a table.
 #'
 #' @inheritParams summarise_with_filter
@@ -22,11 +22,11 @@
 percentage_rows_kept <- function(.data,
                                   identifier = barcode) {
 
-  data_old <- TCRSequenceFunctions::data_combined_tidy %>%
-    TCRSequenceFunctions:::prep_data_percentage_kept(name = "count_old")
+  data_old <- ImmunoCleaner::data_combined_tidy %>%
+    ImmunoCleaner:::prep_data_percentage_kept(name = "count_old")
 
   data_new <- .data %>%
-    TCRSequenceFunctions:::prep_data_percentage_kept(name = "count_new")
+    ImmunoCleaner:::prep_data_percentage_kept(name = "count_new")
 
   data_model <- data_new %>%
     dplyr::left_join(data_old,

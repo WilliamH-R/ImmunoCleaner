@@ -35,19 +35,19 @@ All of the tidy-functions needed to prepare the data as gathered in the wrapper 
 
 ## Shiny Integration
 
-This entire package is made to work with a Shiny App found [here](https://github.com/WilliamH-R/TCRSequenceShiny). The Shiny App gives an interactive interface for exploring and modelling the data sets mentioned in the above.
+This entire package is made to work with a Shiny App found [here](https://github.com/WilliamH-R/ImmunoViz). The Shiny App gives an interactive interface for exploring and modelling the data sets mentioned in the above.
 
 ## Installation
 
 ```R
 # Install the package from GitHub
-devtools::install_github("WilliamH-R/TCRSequenceFunctions")
+devtools::install_github("WilliamH-R/ImmunoCleaner")
 ```
 
 ## Usage
 
 ```R
-library(TCRSequenceFunctions)
+library(ImmunoCleaner)
 
 data_donor_one_raw %>% 
     run_all_prep()

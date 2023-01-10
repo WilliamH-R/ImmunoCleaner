@@ -28,7 +28,7 @@ boxplot_protein_expressions <- function(.data,
 
   .data <- dplyr::bind_cols(.data %>%
                               dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-                              TCRSequenceFunctions:::clr_log2() %>%
+                              ImmunoCleaner:::clr_log2() %>%
                               tibble::as_tibble(),
                             .data %>%
                               dplyr::select(donor, {{identifier}}))

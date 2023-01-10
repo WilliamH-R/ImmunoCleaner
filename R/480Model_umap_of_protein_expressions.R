@@ -48,7 +48,7 @@ umap_of_protein_expressions <- function(.data,
 
     data_combined_tidy_temp <- dplyr::bind_cols(data_combined_tidy_temp %>%
                                                   dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-                                                  TCRSequenceFunctions:::clr_log2() %>%
+                                                  ImmunoCleaner:::clr_log2() %>%
                                                   tibble::as_tibble(),
                                                 data_combined_tidy_temp %>%
                                                   dplyr::select(donor))
@@ -59,7 +59,7 @@ umap_of_protein_expressions <- function(.data,
 
     umap_model <- uwot::load_uwot(file = system.file(stringr::str_c("data/umap_model_",
                                                                     chosen_donor),
-                                                     package = "TCRSequenceFunctions"))
+                                                     package = "ImmunoCleaner"))
 
     umap_embed <- data_combined_tidy_temp %>%
       dplyr::select(dplyr::matches("CD|HLA.DR")) %>%

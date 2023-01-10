@@ -1,6 +1,6 @@
 source("dev/LoadPackage.R")
 
-detach(name = "package:TCRSequenceFunctions",
+detach(name = "package:ImmunoCleaner",
        unload = TRUE)
 devtools::install()
 

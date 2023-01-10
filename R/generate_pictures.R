@@ -297,7 +297,7 @@
 #                     dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
 #                     colnames() %>%
 #                     make.names()) {
-#   for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
+#   for (chosen_donor in ImmunoCleaner::data_combined_tidy %>%
 #         dplyr::distinct(donor) %>%
 #         dplyr::pull()) {
 #

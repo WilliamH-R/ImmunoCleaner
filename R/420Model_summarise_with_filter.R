@@ -45,12 +45,12 @@ summarise_with_filter <- function(.data,
     dplyr::distinct(donor) %>%
     dplyr::pull()
 
-  data_old <- TCRSequenceFunctions::data_combined_tidy %>%
+  data_old <- ImmunoCleaner::data_combined_tidy %>%
     dplyr::filter(donor %in% donors_present) %>%
-    TCRSequenceFunctions:::prep_data_for_summarise(summarise_by = summarise_by)
+    ImmunoCleaner:::prep_data_for_summarise(summarise_by = summarise_by)
 
   data_new  <- .data %>%
-    TCRSequenceFunctions:::prep_data_for_summarise(summarise_by = summarise_by)
+    ImmunoCleaner:::prep_data_for_summarise(summarise_by = summarise_by)
 
 
   data_model <-

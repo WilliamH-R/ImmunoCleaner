@@ -19,7 +19,7 @@ to unfiltered tidy data.
 \description{
 \code{percentage_rows_kept()} takes a prepared data frame as input, and compares
 the number of rows to the unfiltered tidy data
-\code{TCRSequenceFunctions::data_combined_tidy} for each donor. The comparison
+\code{ImmunoCleaner::data_combined_tidy} for each donor. The comparison
 is shown in a table.
 }
 \examples{

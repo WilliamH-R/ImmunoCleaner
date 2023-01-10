@@ -21,20 +21,20 @@ format: html
 # Imports {#sec-Import}
 
 ```{r setup}
-library(TCRSequenceFunctions)
+library(ImmunoCleaner)
 library(gt)
 load("../R/sysdata.rda")
 ```
 
 # Introduction {#sec-Intro}
 
-This package, [TCRSequenceFunctions](https://github.com/WilliamH-R/TCRSequenceFunctions), is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment by 10x Genomics @10XGenomics2022. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their respective donor.
+This package, [ImmunoCleaner](https://github.com/WilliamH-R/ImmunoCleaner), is a collection of functions made for working with data sets from a Single Cell Immune Profiling experiment by 10x Genomics @10XGenomics2022. There is a total of four data sets which all follow the same general structure. They differ in that, they contain data from each their respective donor.
 
 The data sets contain binding counts between the donors' library of T-Cell Receptors (TCRs) and a set of peptide-major histocompatibility complexes (pMHCs). The before-mentioned binding counts are the so called unique molecular identifier (UMI)-counts. Additionally, the data set contains the surface protein expression levels for a range of 11 different proteins. For an explanation of all columns see @sec-data_documentation.
 
-In the following sections, each of the functions contained in [TCRSequenceFunctions](https://github.com/WilliamH-R/TCRSequenceFunctions) will be explained, demonstrated and reasoned for. Generally, they can be divided into three types: Cleaning, Augmenting and Modelling where the main goal of the two first is to make the data tidy.
+In the following sections, each of the functions contained in [ImmunoCleaner](https://github.com/WilliamH-R/ImmunoCleaner) will be explained, demonstrated and reasoned for. Generally, they can be divided into three types: Cleaning, Augmenting and Modelling where the main goal of the two first is to make the data tidy.
 
-Lastly will be a short section on a Shiny Package, [TCRSequenceShiny](https://github.com/WilliamH-R/TCRSequenceShiny), which utilizes these functions to make a user-friendly interactive interface for data filtering and exploration.
+Lastly will be a short section on a Shiny Package, [ImmunoViz](https://github.com/WilliamH-R/ImmunoViz), which utilizes these functions to make a user-friendly interactive interface for data filtering and exploration.
 
 # Data curation {#sec-DataCuration}
 

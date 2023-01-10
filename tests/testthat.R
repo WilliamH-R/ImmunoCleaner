@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(TCRSequenceFunctions)
+library(ImmunoCleaner)
 
-test_check("TCRSequenceFunctions")
+test_check("ImmunoCleaner")

@@ -1,13 +1,13 @@
-for (chosen_donor in TCRSequenceFunctions::data_combined_tidy %>%
+for (chosen_donor in ImmunoCleaner::data_combined_tidy %>%
                         dplyr::distinct(donor) %>%
                         dplyr::pull()) {
 
-  umap_model <- TCRSequenceFunctions::data_combined_tidy %>%
+  umap_model <- ImmunoCleaner::data_combined_tidy %>%
     dplyr::filter(donor == chosen_donor) %>%
     dplyr::distinct(barcode,
                     .keep_all = TRUE) %>%
     dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
-    TCRSequenceFunctions:::clr_log2() %>%
+    ImmunoCleaner:::clr_log2() %>%
     as.matrix() %>%
     uwot::umap(n_neighbors = 15,
                min_dist = 0.2,
