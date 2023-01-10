@@ -1,0 +1,108 @@
+---
+title: "ImmunoCleaner Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ImmunoCleaner Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction
+
+The main purpose if this package is two fold. Firstly, it can download, combine and tidy data sets from 10x Genomics (see README) while setting up for filtering. Secondly, the data can be visualised in a plethora of ways through the exported functions in the package.
+
+In the following, a work flow will be showcased. A certain baseline filtering is compared to a stricter filtering by inspected the output of certain functions. It is important to mention, that not all functions are showcased. For that, and to get a better understanding of the methodology, see the Technical Report in `doc/TechnicalReport/ImmunoCleaner.html`.
+
+Tidying and filtering of the data is important if further analyses are needed. It contains a lot of cluttering. E.g., the avidity of an interaction between a TCR and a pMHC is measured through the UMI-counts. There is no ground truth as to what threshold lets us trust an interaction. Therefore, we need tools to change these thresholds while also visualising the outcome until some goal is reached.
+
+# Example of a work flow
+
+Firstly, the package is loaded along with `gt` to format tables:
+
+```{r setup}
+library(ImmunoCleaner)
+library(gt)
+```
+
+We will define the baseline filtering as the exported data set, but with 10x Genomics standards applied. This means, that a relevant binding between a TCR and a pMHC has an UMI-count greater than 10, and 5 times greater than the negative control with the highest UMI-count for that cell. This is the default already applied to the data set, so we simpler filter:
+
+```{r}
+data_baseline <- data_combined_tidy %>% 
+  dplyr::filter(is_binder == TRUE)
+```
+
+For the stricter filtering, we will only include HLA-matches which are `TRUE`, and increase the UMI-count threshold to 40. A `TRUE` match means, that the allele of the pMHC matches the haplotype of the donor.
+
+```{r}
+data_strict <- data_combined_tidy %>% 
+  dplyr::filter(HLA_match == "TRUE") %>% 
+  evaluate_binder(UMI_count_min = 40) %>% 
+  dplyr::filter(is_binder == TRUE)
+```
+
+After applying the stricter filtering, it would be interesting to see how much data is retained:
+
+```{r eval=FALSE}
+data_strict %>%
+  filter(HLA_match == "TRUE") %>% 
+  percentage_rows_kept
+```
+
+```{r echo=FALSE}
+data_strict %>%
+  percentage_rows_kept() %>% 
+  gt() %>%
+  cols_label(donor = gt::md("**donor**"),
+             percentage_left = gt::md("**percentage_left**")) %>% 
+  tab_options(
+    heading.border.bottom.width = 10,
+    table.width = pct(80)
+  ) %>% 
+  cols_align(
+    align = "left",
+    columns = everything()
+  ) %>%
+  fmt_number(columns = percentage_left,
+             decimals = 2)
+```
+
+Approximately 40% are gone for donor1 and donor2. More than 99% are gone for donor3 and donor4.
+It could be interesting to investigate why the change in data points are so different across donors. We see the count of relevant binders stratified in `HLA-match` and `donor` for the baseline:
+
+```{r}
+data_baseline %>% 
+  count_binding_pr_allele()
+```
+For donor1 and donor2, the vast majority of interactions are `TRUE` matches. For donor3 and donor4, we see the opposite. When applying the filters, we remove all but the `TRUE` matches, hence the vast drop in retained data points.
+
+The implications of the filtering can be observed through `relevant_binders_plot()`. This function outputs a scatter plot where a point represents a relevant binder. The size of a dots represents the support for the specific interaction. The colouring, called concordance, represents the number of interactions supporting the specific TCR and pMHC out of all interactions for that TCR. Firstly, we see the plot with baseline filtering:
+
+```{r}
+data_baseline %>% 
+  relevant_binders_plot()
+```
+
+As shown, there is a large amount of cluttering. Many of the data points carry a low concordance, meaning the TCR only interacted with the specific pMHC few times compared to other pMHC the same TCR interacts with. We expect a TCR to be specific for a single pMHC, whereas a pMHC can interact with different TCRs.
+
+When using the strict filtering, the plot is as follows:
+
+```{r}
+data_strict %>% 
+  relevant_binders_plot()
+```
+
+The plot for donor1 and donor2 are less cluttered, and less ambiguity is shown. As we saw in the beginning of the section, the amount of data points left for donor3 and donor4 while applying strict filtering are very limited. Less than 30 data points are left in total for the two donors, which would make further analyses negligible.
+
+The option to apply another set of filters, and rerunning the functions, would be a good option as to reach optimal settings. The filters could even be applied donor-wise if desirable.
+
+# Shiny integration
+
+The above filters and visualisations have been implemented into a Shiny App allowing for user-friendly interaction instead of writing code. As the Shiny App is build using this package, there is no difference in the filters or the output of the functions. The App can be found [here](https://github.com/WilliamH-R/ImmunoViz).
