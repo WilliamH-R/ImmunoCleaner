@@ -311,3 +311,31 @@
 #                   dpi = 400, scale = 0.5, width = 9, height = 6, units = "in")
 #   }
 # }
+#
+#
+# ### Generate cover picture
+# # Add the following to theme() in relevant_binders_plot:
+# # panel.background = ggplot2::element_rect(fill = "transparent"),
+# # plot.background = ggplot2::element_rect(fill = "transparent"),
+# # legend.background = ggplot2::element_rect(fill = "transparent"),
+# # legend.box.background = ggplot2::element_rect(fill = "transparent"),
+# # legend.key = ggplot2::element_rect(fill = "transparent"),
+# # strip.background = ggplot2::element_blank(),
+# # strip.text.x = ggplot2::element_blank(),
+# # text = ggplot2::element_text(size = 7,
+# #                              color = "white"),
+# # axis.text = ggplot2::element_text(size = 7,
+# #                                   color = "white"),
+# # axis.ticks.y = ggplot2::element_line(color = "white")
+#
+# data_combined_tidy %>%
+#   dplyr::filter(donor == "donor1",
+#                 HLA_match == "TRUE") %>%
+#   evaluate_binder(UMI_count_min = 40) %>%
+#   dplyr::filter(is_binder == TRUE) %>%
+#   relevant_binders_plot(plotly_option = FALSE)
+#
+# ggplot2::ggsave("cover_picture.png",
+#                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
+#                 scale = 0.6,
+#                 bg = "steelblue")
