@@ -339,3 +339,84 @@
 #                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
 #                 scale = 0.6,
 #                 bg = "steelblue")
+#
+# # Another example
+# umap_model <- ImmunoCleaner::data_combined_tidy %>%
+#   dplyr::filter(donor == "donor4") %>%
+#   dplyr::distinct(barcode,
+#                   .keep_all = TRUE) %>%
+#   dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+#   #dplyr::slice_head(n = 100) %>%
+#   as.matrix() %>%
+#   uwot::umap(n_neighbors = 15,
+#              min_dist = 0.2,
+#              metric = "euclidean",
+#              ret_model = TRUE)
+#
+#
+# data_combined_tidy_temp <- data_combined_tidy %>%
+#   dplyr::filter(donor == "donor4") %>%
+#   dplyr::distinct(barcode,
+#                   .keep_all = TRUE) %>%
+#   #dplyr::slice_head(n = 100) %>%
+#   dplyr::select(dplyr::matches("CD|HLA-DR"))
+#
+# umap_embed <- data_combined_tidy_temp %>%
+#   dplyr::select(dplyr::matches("CD|HLA-DR")) %>%
+#   uwot::umap_transform(model = umap_model) %>%
+#   as.data.frame() %>%
+#   tibble::as_tibble()
+#
+#
+# umap_coords <- dplyr::bind_cols(umap_embed,
+#                                 data_combined_tidy_temp)
+#
+# umap_coords %>%
+#   ggplot2::ggplot(ggplot2::aes(x = V1,
+#                                y = V2,
+#                                color = CD45RA)) +
+#   ggplot2::geom_point() +
+#   ggplot2::scale_color_continuous(type = "viridis",
+#                                   direction = -1) +
+#   ggplot2::theme(
+#     axis.ticks = ggplot2::element_blank(),
+#     axis.text = ggplot2::element_blank(),
+#     axis.title = ggplot2::element_blank(),
+#     panel.grid = ggplot2::element_blank(),
+#     panel.border = ggplot2::element_blank(),
+#     panel.background = ggplot2::element_rect(fill = "transparent"),
+#     plot.background = ggplot2::element_rect(fill = "transparent"),
+#     legend.position = "none",
+#     strip.background = ggplot2::element_blank(),
+#   )
+#
+# ggplot2::ggsave("cover_picture_2.png",
+#                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
+#                 bg = "transparent")
+#
+#
+#
+# ### For presentation
+# x <- tibble::tribble(~Cell, ~CD8a, ~CD3, ~CD45RA,
+#                      "A", 43, 43, 14,
+#                      "B", 50, 43, 7,
+#                      "C", 43, 37, 20,
+#                      "D", 39, 42, 19,
+#                      "E", 40, 46, 14)
+#
+# x %>%
+#   tidyr::pivot_longer(cols = dplyr::matches("CD"),
+#                       names_to = "Protein",
+#                       values_to = "Composition") %>%
+#   ggplot2::ggplot(ggplot2::aes(x = Cell,
+#                                y = Composition,
+#                                fill = Protein)) +
+#   ggplot2::geom_bar(position = "stack",
+#                     stat = "identity", width = 0.5) +
+#   ggplot2::labs(
+#     title = "Mock protein expression data"
+#   )
+#
+# ggplot2::ggsave("mock_compositional_data.png",
+#                 path = "C:\\Users\\William\\OneDrive - Danmarks Tekniske Universitet\\Bachelor\\Pictures",
+#                 scale = 0.5)
