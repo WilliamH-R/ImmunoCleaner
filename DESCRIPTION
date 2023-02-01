@@ -22,7 +22,9 @@ Imports:
     tidyr,
     tibble,
     compositions,
-    uwot
+    uwot,
+    gt,
+    forcats
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
